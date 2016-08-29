@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".activities.MenuActivity">
+
+    <group>
+        <item
+            android:id="@+id/perfilLink"
+            android:title="Perfil"
+            android:orderInCategory="1">
+        </item>
+        <item
+            android:id="@+id/tutorialLink"
+            android:title="Tutorial"
+            android:orderInCategory="2">
+        </item>
+        <item
+            android:id="@+id/sistemaLink"
+            android:title="Sistema"
+            android:orderInCategory="3">
+        </item>
+        <item
+            android:id="@+id/logoutLink"
+            android:title="Logout"
+            android:orderInCategory="4">
+        </item>
+
+    </group>
+
+</menu>
