@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 Usuario user = usrDAO.login(args, LoginActivity.this);
 
                 if (user == null) {
-                    //Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Erro no login", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent menuIntent = new Intent(LoginActivity.this, MenuActivity.class);
 

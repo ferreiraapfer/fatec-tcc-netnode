@@ -15,13 +15,12 @@ import com.fatec.fernanda.appredes.domain.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    UsuarioDAO usrDAO;
+    UsuarioDAO usrDAO = new UsuarioDAO(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-        usrDAO = new UsuarioDAO(this);
 
         final EditText edtNome = (EditText) findViewById(R.id.edtNome);
         final EditText edtEmail = (EditText) findViewById(R.id.edtEmail);
