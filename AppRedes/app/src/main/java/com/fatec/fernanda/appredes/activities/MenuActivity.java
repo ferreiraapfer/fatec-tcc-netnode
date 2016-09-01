@@ -7,9 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.dao.ManageJsonFile;
 import com.fatec.fernanda.appredes.domain.Usuario;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -23,6 +29,25 @@ public class MenuActivity extends AppCompatActivity {
         final TextView txtTestes = (TextView) findViewById(R.id.testesLink);
         final TextView txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
 
+        ManageJsonFile manageJsonFile = new ManageJsonFile();
+
+        InputStream in;
+        try {
+            in = getApplicationContext().openFileInput("Usuario.json");
+            Usuario user = manageJsonFile.readJsonStream(in);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            Intent cadastroIntent = new Intent(MenuActivity.this, CadastroActivity.class);
+            cadastroIntent.setAction(Intent.ACTION_MAIN);
+            cadastroIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            MenuActivity.this.startActivity(cadastroIntent);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         txtConteudos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,8 +59,8 @@ public class MenuActivity extends AppCompatActivity {
         txtTestes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-         //       Intent menuTestesIntent = new Intent(MenuActivity.this, MenuTestesActivity.class);
-         //       MenuActivity.this.startActivity(menuTestesIntent);
+                //       Intent menuTestesIntent = new Intent(MenuActivity.this, MenuTestesActivity.class);
+                //       MenuActivity.this.startActivity(menuTestesIntent);
 
             }
         });
@@ -43,8 +68,8 @@ public class MenuActivity extends AppCompatActivity {
         txtRevisoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        //        Intent menuRevisoesIntent = new Intent(MenuActivity.this, MenuRevisoesActivity.class);
-        //        MenuActivity.this.startActivity(menuRevisoesIntent);
+                //        Intent menuRevisoesIntent = new Intent(MenuActivity.this, MenuRevisoesActivity.class);
+                //        MenuActivity.this.startActivity(menuRevisoesIntent);
             }
         });
     }
@@ -66,7 +91,7 @@ public class MenuActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
             case R.id.perfilLink:
                 Intent perfilIntent = new Intent(MenuActivity.this, PerfilActivity.class);
                 //perfilIntent.putExtra("usuario", user);

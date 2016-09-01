@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.adapter.ConteudoConcluidoAdapter;
 import com.fatec.fernanda.appredes.dao.ManageJsonFile;
-import com.fatec.fernanda.appredes.dao.CustomSQLiteOpenHelper;
 import com.fatec.fernanda.appredes.domain.ConteudoConcluido;
 import com.fatec.fernanda.appredes.domain.Usuario;
 
