@@ -11,14 +11,13 @@
         <activity android:name=".activities.CadastroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.MenuActivity" />
         <activity android:name=".activities.PerfilActivity" />
-        <activity android:name=".activities.MenuConteudosActivity"></activity>
+        <activity android:name=".activities.MenuConteudosActivity" />
+        <activity android:name=".FileTesteActivity"></activity>
     </application>
 
 </manifest>

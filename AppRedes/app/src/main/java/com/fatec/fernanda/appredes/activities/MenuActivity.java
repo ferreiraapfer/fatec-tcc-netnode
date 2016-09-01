@@ -19,10 +19,6 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        Bundle extras = getIntent().getExtras();
-        user = extras.getParcelable("usuario");
-
         final TextView txtConteudos = (TextView) findViewById(R.id.conteudosLink);
         final TextView txtTestes = (TextView) findViewById(R.id.testesLink);
         final TextView txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
@@ -73,7 +69,7 @@ public class MenuActivity extends AppCompatActivity {
         switch(id){
             case R.id.perfilLink:
                 Intent perfilIntent = new Intent(MenuActivity.this, PerfilActivity.class);
-                perfilIntent.putExtra("usuario", user);
+                //perfilIntent.putExtra("usuario", user);
 
                 MenuActivity.this.startActivity(perfilIntent);
                 return true;
