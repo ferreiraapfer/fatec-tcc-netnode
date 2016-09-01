@@ -8,19 +8,18 @@ import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.adapter.ConteudoConcluidoAdapter;
+import com.fatec.fernanda.appredes.dao.ManageJsonFile;
 import com.fatec.fernanda.appredes.dao.CustomSQLiteOpenHelper;
 import com.fatec.fernanda.appredes.domain.ConteudoConcluido;
-import com.fatec.fernanda.appredes.domain.ManageFile;
 import com.fatec.fernanda.appredes.domain.Usuario;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import java.io.FileNotFoundException;
+
 public class PerfilActivity extends AppCompatActivity {
-
-    CustomSQLiteOpenHelper myDB;
-    Usuario user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +31,25 @@ public class PerfilActivity extends AppCompatActivity {
         final ProgressBar progresso = (ProgressBar) findViewById(R.id.progresso_barra);
         final TextView progressoTexto = (TextView) findViewById(R.id.progresso);
 
-        ManageFile fileread = new ManageFile(getBaseContext());
-        emailUsuario.setText(fileread.readFromFile());
+
+        ManageJsonFile manageJsonFile = new ManageJsonFile();
+
+
+        InputStream in;
+        try {
+            in = getApplicationContext().openFileInput("Usuario.json");
+            Usuario user = manageJsonFile.readJsonStream(in);
+
+            emailUsuario.setText(user.getEmail());
+            nomeUsuario.setText(user.getNome());
+            progresso.setProgress(user.getPontuacao());
+            progressoTexto.setText(String.valueOf(user.getPontuacao())+"%");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //TODO arrumar pontuação texto, maximo e barra
 

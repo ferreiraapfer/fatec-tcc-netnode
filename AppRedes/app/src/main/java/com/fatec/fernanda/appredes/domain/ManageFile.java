@@ -64,8 +64,14 @@ public class ManageFile {
     public void writeToFile(String[] data) {
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("config.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(String.valueOf(data));
-            outputStreamWriter.close();
+
+            for(int i = 0; i < data.length; i++) {
+                outputStreamWriter.write(data[i]);
+                outputStreamWriter.flush();
+                outputStreamWriter.close();
+
+            }
+
         }
         catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());

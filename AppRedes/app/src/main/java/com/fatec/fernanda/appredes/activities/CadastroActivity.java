@@ -1,6 +1,7 @@
 package com.fatec.fernanda.appredes.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,15 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.dao.CustomSQLiteOpenHelper;
-import com.fatec.fernanda.appredes.dao.UsuarioDAO;
-import com.fatec.fernanda.appredes.domain.ManageFile;
+import com.fatec.fernanda.appredes.dao.ManageJsonFile;
 import com.fatec.fernanda.appredes.domain.Usuario;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class CadastroActivity extends AppCompatActivity {
-
-    UsuarioDAO usrDAO = new UsuarioDAO(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,29 +51,28 @@ public class CadastroActivity extends AppCompatActivity {
 
                 Usuario user = new Usuario(edtEmail.getText().toString(), edtNome.getText().toString());
 
-                String[] argsUsuario = {user.getEmail()};
+                //Salvando dados num arquivo
 
-                ManageFile filewrite = new ManageFile(getBaseContext());
+                ManageJsonFile manageJsonFile = new ManageJsonFile();
 
-                // Avisa o usuário se a gravação foi bem sucedida
-                filewrite.writeToFile(argsUsuario);
-                Toast.makeText(getBaseContext(), "Texto gravado com sucesso.", Toast.LENGTH_SHORT).show();
+                File arquivoUsuario = new File(getFilesDir(), "Usuario.json");
 
-                Intent menuIntent = new Intent(CadastroActivity.this, MenuActivity.class);
-                CadastroActivity.this.startActivity(menuIntent);
+                try {
+                    FileOutputStream out = new FileOutputStream(arquivoUsuario);
+                    manageJsonFile.writeJsonStream(out, user);
 
-                /*
+                    Toast.makeText(getBaseContext(), "Texto gravado com sucesso.", Toast.LENGTH_SHORT).show();
 
-                if(usrDAO.insertUsuario(user, CadastroActivity.this)){
-                    Intent loginIntent = new Intent(CadastroActivity.this, LoginActivity.class);
-                    CadastroActivity.this.startActivity(loginIntent);
-                } else{
-                    Toast.makeText(CadastroActivity.this, "Erro no cadastro", Toast.LENGTH_LONG).show();
+                    Intent menuIntent = new Intent(CadastroActivity.this, MenuActivity.class);
+                    CadastroActivity.this.startActivity(menuIntent);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                */
             }
         });
-
 
     }
 }
