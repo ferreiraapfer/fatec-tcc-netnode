@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:text="Login do Usuário"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
@@ -25,7 +25,7 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:hint="Email válido"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"/>
@@ -34,7 +34,7 @@
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:hint="Senha (mínimo de 6 caracteres)"
             android:imeOptions="actionNext"
             android:inputType="textPassword"/>
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:background="@color/colorPrimary"
             android:text="Login"
             android:textColor="#ffffff"/>
@@ -53,7 +53,7 @@
             android:id="@+id/txtCadastroLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:text="Não possui cadastro? Cadastre-se aqui"
             android:textAlignment="center"/>
 

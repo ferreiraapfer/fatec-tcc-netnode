@@ -45,7 +45,9 @@ public class PerfilActivity extends AppCompatActivity {
 
         FirebaseUser usuario = firebaseAuth.getCurrentUser();
 
-        emailUsuario.setText(firebaseAuth.getCurrentUser().getEmail());
+        emailUsuario.setText(usuario.getEmail());
+        nomeUsuario.setText(usuario.getDisplayName());
+
 
         /*
 

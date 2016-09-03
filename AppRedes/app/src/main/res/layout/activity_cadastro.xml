@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:text="Cadastro do Usuário"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
@@ -25,7 +25,7 @@
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:hint="Nome completo"
             android:imeOptions="actionNext"
             android:inputType="textPersonName"/>
@@ -34,7 +34,7 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:hint="Email válido"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"/>
@@ -43,7 +43,7 @@
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:hint="Senha (mínimo de 6 caracteres)"
             android:imeOptions="actionNext"
             android:inputType="textPassword"/>
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:background="@color/colorPrimary"
             android:text="Cadastrar Usuário"
             android:textColor="#ffffff"/>
@@ -62,7 +62,7 @@
             android:id="@+id/txtLoginLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/default_layout_margin"
             android:text="Já possui cadastro? Faça Login aqui"
             android:textAlignment="center"/>
 
