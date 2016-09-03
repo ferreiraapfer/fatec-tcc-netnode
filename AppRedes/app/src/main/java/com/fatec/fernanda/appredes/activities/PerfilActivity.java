@@ -1,42 +1,74 @@
 package com.fatec.fernanda.appredes.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.fatec.fernanda.appredes.LoginActivity;
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.adapter.ConteudoConcluidoAdapter;
-import com.fatec.fernanda.appredes.dao.CustomSQLiteOpenHelper;
 import com.fatec.fernanda.appredes.domain.ConteudoConcluido;
-import com.fatec.fernanda.appredes.domain.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+
 public class PerfilActivity extends AppCompatActivity {
 
-    CustomSQLiteOpenHelper myDB;
-    Usuario user;
+    private TextView emailUsuario;
+    private TextView nomeUsuario;
+    private ProgressBar progresso;
+    private TextView progressoTexto;
 
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        Bundle extras = getIntent().getExtras();
-        user = extras.getParcelable("usuario");
+        emailUsuario = (TextView) findViewById(R.id.email_usuario);
+        nomeUsuario = (TextView) findViewById(R.id.nome_usuario);
+        progresso = (ProgressBar) findViewById(R.id.progresso_barra);
+        progressoTexto = (TextView) findViewById(R.id.progresso);
 
-        final TextView emailUsuario = (TextView) findViewById(R.id.email_usuario);
-        final TextView nomeUsuario = (TextView) findViewById(R.id.nome_usuario);
-        final ProgressBar progresso = (ProgressBar) findViewById(R.id.progresso_barra);
-        final TextView progressoTexto = (TextView) findViewById(R.id.progresso);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        emailUsuario.setText(user.getEmail());
-        nomeUsuario.setText(user.getNome());
-        progresso.setProgress(user.getPontuacao());
-        progressoTexto.setText((user.getPontuacao()) + "%");
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(PerfilActivity.this, LoginActivity.class));
+        }
+
+        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+
+        emailUsuario.setText(firebaseAuth.getCurrentUser().getEmail());
+
+        /*
+
+        ManageJsonFile manageJsonFile = new ManageJsonFile();
+
+
+        InputStream in;
+        try {
+            in = getApplicationContext().openFileInput("Usuario.json");
+            Usuario user = manageJsonFile.readJsonStream(in);
+
+            emailUsuario.setText(user.getEmail());
+            nomeUsuario.setText(user.getNome());
+            progresso.setProgress(user.getPontuacao());
+            progressoTexto.setText(String.valueOf(user.getPontuacao())+"%");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+*/
         //TODO arrumar pontuação texto, maximo e barra
 
         initConteudosConcluidosListView();

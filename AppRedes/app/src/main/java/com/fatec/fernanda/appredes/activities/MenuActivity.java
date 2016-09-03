@@ -7,25 +7,64 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fatec.fernanda.appredes.LoginActivity;
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.dao.ManageJsonFile;
 import com.fatec.fernanda.appredes.domain.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MenuActivity extends AppCompatActivity {
 
-    Usuario user;
+    private TextView txtConteudos;
+    private TextView txtTestes;
+    private TextView txtRevisoes;
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        Bundle extras = getIntent().getExtras();
-        user = extras.getParcelable("usuario");
+        txtConteudos = (TextView) findViewById(R.id.conteudosLink);
+        txtTestes = (TextView) findViewById(R.id.testesLink);
+        txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
 
-        final TextView txtConteudos = (TextView) findViewById(R.id.conteudosLink);
-        final TextView txtTestes = (TextView) findViewById(R.id.testesLink);
-        final TextView txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null) {
+            Toast.makeText(this, "Usuário logado!", Toast.LENGTH_LONG).show();
+        }
+
+
+
+        /*
+
+        ManageJsonFile manageJsonFile = new ManageJsonFile();
+
+        InputStream in;
+        try {
+            in = getApplicationContext().openFileInput("Usuariooo.json");
+            Usuario user = manageJsonFile.readJsonStream(in);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            Intent cadastroIntent = new Intent(MenuActivity.this, CadastroActivity.class);
+            cadastroIntent.setAction(Intent.ACTION_MAIN);
+            cadastroIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            MenuActivity.this.startActivity(cadastroIntent);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        */
 
         txtConteudos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,8 +77,8 @@ public class MenuActivity extends AppCompatActivity {
         txtTestes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-         //       Intent menuTestesIntent = new Intent(MenuActivity.this, MenuTestesActivity.class);
-         //       MenuActivity.this.startActivity(menuTestesIntent);
+                //       Intent menuTestesIntent = new Intent(MenuActivity.this, MenuTestesActivity.class);
+                //       MenuActivity.this.startActivity(menuTestesIntent);
 
             }
         });
@@ -47,8 +86,8 @@ public class MenuActivity extends AppCompatActivity {
         txtRevisoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        //        Intent menuRevisoesIntent = new Intent(MenuActivity.this, MenuRevisoesActivity.class);
-        //        MenuActivity.this.startActivity(menuRevisoesIntent);
+                //        Intent menuRevisoesIntent = new Intent(MenuActivity.this, MenuRevisoesActivity.class);
+                //        MenuActivity.this.startActivity(menuRevisoesIntent);
             }
         });
     }
@@ -70,11 +109,9 @@ public class MenuActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
             case R.id.perfilLink:
                 Intent perfilIntent = new Intent(MenuActivity.this, PerfilActivity.class);
-                perfilIntent.putExtra("usuario", user);
-
                 MenuActivity.this.startActivity(perfilIntent);
                 return true;
             case R.id.tutorialLink:
@@ -82,6 +119,8 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.sistemaLink:
 
             case R.id.logoutLink:
+                firebaseAuth.signOut();
+                startActivity(new Intent(this, LoginActivity.class));
 
             default:
                 return super.onOptionsItemSelected(item);

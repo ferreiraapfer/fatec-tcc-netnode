@@ -1,73 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.fatec.fernanda.appredes.activities.CadastroActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtNome"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/edt_bottom_margin"
-        android:layout_marginLeft="@dimen/edt_left_margin"
-        android:layout_marginRight="@dimen/edt_right_margin"
-        android:hint="Nome completo"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/edt_bottom_margin"
-        android:layout_marginLeft="@dimen/edt_left_margin"
-        android:layout_marginRight="@dimen/edt_right_margin"
-        android:hint="Email"
-        android:imeOptions="actionNext"
-        android:inputType="textEmailAddress"/>
+        <TextView
+            android:id="@+id/txtCadastro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="Cadastro do Usuário"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <EditText
-        android:id="@+id/edtSenha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/edt_bottom_margin"
-        android:layout_marginLeft="@dimen/edt_left_margin"
-        android:layout_marginRight="@dimen/edt_right_margin"
-        android:hint="Senha"
-        android:imeOptions="actionNext"
-        android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/edtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Nome completo"
+            android:imeOptions="actionNext"
+            android:inputType="textPersonName"/>
 
-    <Button
-        android:id="@+id/btnCadastrar"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/btn_top_margin"
-        android:layout_marginBottom="@dimen/btn_bottom_margin"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:text="Cadastrar"/>
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Email válido"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"/>
 
-    <TextView
-        android:id="@+id/txtLoginLink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/txt_top_margin"
-        android:text="Já possui cadastro?"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"/>
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Senha (mínimo de 6 caracteres)"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/btn_top_margin"
-        android:layout_marginBottom="@dimen/btn_bottom_margin"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
-        android:text="Login"/>
+        <Button
+            android:id="@+id/btnCadastrar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:background="@color/colorPrimary"
+            android:text="Cadastrar Usuário"
+            android:textColor="#ffffff"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/txtLoginLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Já possui cadastro? Faça Login aqui"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
+</RelativeLayout>

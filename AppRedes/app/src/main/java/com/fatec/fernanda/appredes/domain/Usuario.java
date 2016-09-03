@@ -9,16 +9,13 @@ import android.os.Parcelable;
 
 public class Usuario implements Parcelable{
 
-    int id;
     String email;
     String nome;
-    String senha;
     int pontuacao;
 
-    public Usuario(String email, String nome, String senha) {
+    public Usuario(String email, String nome) {
         this.email = email;
         this.nome = nome;
-        this.senha = senha;
         pontuacao = 0;
     }
 
@@ -38,28 +35,12 @@ public class Usuario implements Parcelable{
         this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public int getPontuacao() {
         return pontuacao;
     }
 
     public void setPontuacao(int pontuacao) {
         this.pontuacao = pontuacao;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
@@ -71,7 +52,6 @@ public class Usuario implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(email);
         parcel.writeString(nome);
-        parcel.writeString(senha);
         parcel.writeInt(pontuacao);
     }
 
@@ -88,7 +68,6 @@ public class Usuario implements Parcelable{
     private Usuario(Parcel in) {
         email = in.readString();
         nome = in.readString();
-        senha = in.readString();
         pontuacao = in.readInt();
     }
 }
