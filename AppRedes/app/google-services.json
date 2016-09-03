@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "924428730335",
+    "firebase_url": "https://appredes-a8895.firebaseio.com",
+    "project_id": "appredes-a8895",
+    "storage_bucket": "appredes-a8895.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924428730335:android:c1a8ad8839361b2b",
+        "android_client_info": {
+          "package_name": "com.fatec.fernanda.appredes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924428730335-csd6cug1nkhe4g99djg4njncme132e93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fatec.fernanda.appredes",
+            "certificate_hash": "D8092562C915C9CB32A9F14FCDF65C58A74123BE"
+          }
+        },
+        {
+          "client_id": "924428730335-cu8v3noijl0u2qmsb2mbk5rl8n3pnhup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWA0BGBHQU5O9zKfmuaPkOqVcR2pNSBJ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
