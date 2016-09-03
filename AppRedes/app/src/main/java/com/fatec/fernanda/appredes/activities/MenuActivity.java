@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fatec.fernanda.appredes.LoginActivity;
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.dao.ManageJsonFile;
 import com.fatec.fernanda.appredes.domain.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,21 +21,35 @@ import java.io.InputStream;
 
 public class MenuActivity extends AppCompatActivity {
 
-    Usuario user;
+    private TextView txtConteudos;
+    private TextView txtTestes;
+    private TextView txtRevisoes;
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        final TextView txtConteudos = (TextView) findViewById(R.id.conteudosLink);
-        final TextView txtTestes = (TextView) findViewById(R.id.testesLink);
-        final TextView txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
+
+        txtConteudos = (TextView) findViewById(R.id.conteudosLink);
+        txtTestes = (TextView) findViewById(R.id.testesLink);
+        txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() != null) {
+            Toast.makeText(this, "Usuário logado!", Toast.LENGTH_LONG).show();
+        }
+
+
+
+        /*
 
         ManageJsonFile manageJsonFile = new ManageJsonFile();
 
         InputStream in;
         try {
-            in = getApplicationContext().openFileInput("Usuario.json");
+            in = getApplicationContext().openFileInput("Usuariooo.json");
             Usuario user = manageJsonFile.readJsonStream(in);
 
         } catch (FileNotFoundException e) {
@@ -47,6 +63,8 @@ public class MenuActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        */
 
         txtConteudos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +112,6 @@ public class MenuActivity extends AppCompatActivity {
         switch (id) {
             case R.id.perfilLink:
                 Intent perfilIntent = new Intent(MenuActivity.this, PerfilActivity.class);
-                //perfilIntent.putExtra("usuario", user);
-
                 MenuActivity.this.startActivity(perfilIntent);
                 return true;
             case R.id.tutorialLink:
@@ -103,6 +119,8 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.sistemaLink:
 
             case R.id.logoutLink:
+                firebaseAuth.signOut();
+                startActivity(new Intent(this, LoginActivity.class));
 
             default:
                 return super.onOptionsItemSelected(item);

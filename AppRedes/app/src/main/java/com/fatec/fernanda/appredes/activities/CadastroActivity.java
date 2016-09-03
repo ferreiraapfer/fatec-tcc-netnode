@@ -1,78 +1,104 @@
 package com.fatec.fernanda.appredes.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
+import com.fatec.fernanda.appredes.LoginActivity;
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.dao.ManageJsonFile;
-import com.fatec.fernanda.appredes.domain.Usuario;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class CadastroActivity extends AppCompatActivity {
+public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private EditText edtNome;
+    private EditText edtEmail;
+    private EditText edtSenha;
+    private Button btnCadastrar;
+    private TextView txtLoginLink;
+
+    private ProgressDialog progressDialog;
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        final EditText edtNome = (EditText) findViewById(R.id.edtNome);
-        final EditText edtEmail = (EditText) findViewById(R.id.edtEmail);
-        final Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        edtNome = (EditText) findViewById(R.id.edtNome);
+        edtEmail = (EditText) findViewById(R.id.edtEmail);
+        edtSenha = (EditText) findViewById(R.id.edtSenha);
+        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        txtLoginLink = (TextView) findViewById(R.id.txtLoginLink);
+
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
-        btnCadastrar.setOnClickListener(new View.OnClickListener() {
-            //TODO Método Autenticar Cadastro
-            //TODO Exibir que a senha deve ter pelo menso 5 caracteres
+        btnCadastrar.setOnClickListener(this);
+        txtLoginLink.setOnClickListener(this);
 
+    }
+
+    private void cadastrarUsuario() {
+        String nome = edtNome.getText().toString().trim();
+        String email = edtEmail.getText().toString().trim();
+        String senha = edtSenha.getText().toString().trim();
+
+
+        if (TextUtils.isEmpty(nome)) {
+            Toast.makeText(this, "Digite um nome", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Digite um email", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(senha)) {
+            Toast.makeText(this, "Digite uma senha", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        progressDialog.setMessage("Cadastrando usuário...");
+        progressDialog.show();
+
+        firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onClick(View view) {
-                if (edtEmail.getText().toString().isEmpty()) {
-                    Toast.makeText(CadastroActivity.this, "Digite um email", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (edtNome.getText().toString().isEmpty()) {
-                    Toast.makeText(CadastroActivity.this, "Digite um nome", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                Usuario user = new Usuario(edtEmail.getText().toString(), edtNome.getText().toString());
-
-                //Salvando dados num arquivo
-
-                ManageJsonFile manageJsonFile = new ManageJsonFile();
-
-                File arquivoUsuario = new File(getFilesDir(), "Usuario.json");
-
-                try {
-                    FileOutputStream out = new FileOutputStream(arquivoUsuario);
-                    manageJsonFile.writeJsonStream(out, user);
-
-                    Toast.makeText(getBaseContext(), "Texto gravado com sucesso.", Toast.LENGTH_SHORT).show();
-
-                    Intent menuIntent = new Intent(CadastroActivity.this, MenuActivity.class);
-                    CadastroActivity.this.startActivity(menuIntent);
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    progressDialog.dismiss();
+                    Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                } else {
+                    Toast.makeText(CadastroActivity.this, "Erro no cadastrado. Por favor, tente novamente", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == btnCadastrar) {
+            cadastrarUsuario();
+        }
+
+        if (view == txtLoginLink) {
+            startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+        }
     }
 }
