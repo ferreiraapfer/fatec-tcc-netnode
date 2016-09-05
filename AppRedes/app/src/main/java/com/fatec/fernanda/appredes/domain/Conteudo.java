@@ -6,7 +6,7 @@ package com.fatec.fernanda.appredes.domain;
 
 public class Conteudo {
 
-    String id;
+    int id;
     String titulo;
     String subtitulo;
 
@@ -14,17 +14,17 @@ public class Conteudo {
         //
     }
 
-    public Conteudo(String id, String titulo, String subtitulo) {
+    public Conteudo(int id, String titulo, String subtitulo) {
         this.id = id;
         this.titulo = titulo;
         this.subtitulo = subtitulo;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
