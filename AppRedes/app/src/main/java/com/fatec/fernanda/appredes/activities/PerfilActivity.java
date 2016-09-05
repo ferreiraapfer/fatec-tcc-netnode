@@ -7,10 +7,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.fatec.fernanda.appredes.LoginActivity;
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.adapter.ConteudoConcluidoAdapter;
 import com.fatec.fernanda.appredes.domain.ConteudoConcluido;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,32 +25,17 @@ public class PerfilActivity extends AppCompatActivity {
     private TextView emailUsuario;
     private TextView nomeUsuario;
     private ProgressBar progresso;
+    private TextView conteudosConcluidos;
     private TextView progressoTexto;
 
+
     FirebaseAuth firebaseAuth;
+    Firebase mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
-
-        emailUsuario = (TextView) findViewById(R.id.email_usuario);
-        nomeUsuario = (TextView) findViewById(R.id.nome_usuario);
-        progresso = (ProgressBar) findViewById(R.id.progresso_barra);
-        progressoTexto = (TextView) findViewById(R.id.progresso);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        if (firebaseAuth.getCurrentUser() == null) {
-            finish();
-            startActivity(new Intent(PerfilActivity.this, LoginActivity.class));
-        }
-
-        FirebaseUser usuario = firebaseAuth.getCurrentUser();
-
-        emailUsuario.setText(usuario.getEmail());
-        nomeUsuario.setText(usuario.getDisplayName());
-
 
         /*
 
@@ -74,6 +62,46 @@ public class PerfilActivity extends AppCompatActivity {
         //TODO arrumar pontuação texto, maximo e barra
 
         initConteudosConcluidosListView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        emailUsuario = (TextView) findViewById(R.id.email_usuario);
+        nomeUsuario = (TextView) findViewById(R.id.nome_usuario);
+        progresso = (ProgressBar) findViewById(R.id.progresso_barra);
+        progressoTexto = (TextView) findViewById(R.id.progresso);
+        conteudosConcluidos = (TextView) findViewById(R.id.textConteudosConcluidos);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(PerfilActivity.this, LoginActivity.class));
+        }
+
+        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+
+        emailUsuario.setText(usuario.getEmail());
+        nomeUsuario.setText(usuario.getDisplayName());
+
+
+        mRef = new Firebase("https://appredes-a8895.firebaseio.com/");
+
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                conteudosConcluidos.setText(text);
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private ArrayList<ConteudoConcluido> createConteudosConcluidosList() {

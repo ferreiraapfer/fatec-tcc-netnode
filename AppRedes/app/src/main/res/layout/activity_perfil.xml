@@ -107,16 +107,16 @@
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/conteudosConcluidos"
+                android:id="@+id/textConteudosConcluidos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="20dp"
-                android:layout_toRightOf="@id/icone_conteudosConcluidos"
                 android:lines="1"
                 android:text="Conteúdos Concluídos"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/icone_conteudosConcluidos"
+                android:layout_toEndOf="@+id/icone_conteudosConcluidos"/>
 
         </RelativeLayout>
 

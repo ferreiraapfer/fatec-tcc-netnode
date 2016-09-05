@@ -9,15 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fatec.fernanda.appredes.LoginActivity;
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.dao.ManageJsonFile;
-import com.fatec.fernanda.appredes.domain.Usuario;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class MenuActivity extends AppCompatActivity {
 
