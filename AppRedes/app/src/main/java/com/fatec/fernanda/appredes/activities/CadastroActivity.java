@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -55,9 +55,9 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void cadastrarUsuario() {
-        String nome = edtNome.getText().toString().trim();
-        String email = edtEmail.getText().toString().trim();
-        String senha = edtSenha.getText().toString().trim();
+        final String nome = edtNome.getText().toString().trim();
+        final String email = edtEmail.getText().toString().trim();
+        final String senha = edtSenha.getText().toString().trim();
 
 
         if (TextUtils.isEmpty(nome)) {
@@ -83,12 +83,16 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser usuario = firebaseAuth.getCurrentUser();
-
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(edtNome.getText().toString())
-                            .build();
+                    Log.e("Usuário cadastrado", usuario.getDisplayName() + " " + usuario.getEmail() + " ");
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(nome).build();
 
                     usuario.updateProfile(profileUpdates);
+
+                    Log.e("Usuário modificado", usuario.getDisplayName() + " " + usuario.getEmail() + " ");
+
+                    if(usuario.getEmail() == email && usuario.getDisplayName() == nome){
+                        Log.e("Validação", "Validação nome e email conferem");
+                    }
 
                     progressDialog.dismiss();
                     Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();

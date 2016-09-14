@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.adapter.ConteudoConcluidoAdapter;
@@ -81,10 +82,16 @@ public class PerfilActivity extends AppCompatActivity {
             startActivity(new Intent(PerfilActivity.this, LoginActivity.class));
         }
 
-        FirebaseUser usuario = firebaseAuth.getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        emailUsuario.setText(usuario.getEmail());
-        nomeUsuario.setText(usuario.getDisplayName());
+
+        emailUsuario.setText(user.getEmail());
+
+        if(user.getDisplayName() != null){
+            nomeUsuario.setText(user.getDisplayName());
+        } else  {
+            Toast.makeText(this, "Sem nome", Toast.LENGTH_LONG);
+        }
 
 
         mRef = new Firebase("https://appredes-a8895.firebaseio.com/");
