@@ -1,12 +1,12 @@
 package com.fatec.fernanda.appredes.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by Fernanda on 05/09/2016.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Conteudo {
-
-    int id;
     String titulo;
     String subtitulo;
 
@@ -14,18 +14,9 @@ public class Conteudo {
         //
     }
 
-    public Conteudo(int id, String titulo, String subtitulo) {
-        this.id = id;
+    public Conteudo(String titulo, String subtitulo) {
         this.titulo = titulo;
         this.subtitulo = subtitulo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitulo() {

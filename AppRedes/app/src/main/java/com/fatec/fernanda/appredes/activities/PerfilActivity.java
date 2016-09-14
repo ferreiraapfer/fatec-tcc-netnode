@@ -96,6 +96,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         mRef = new Firebase("https://appredes-a8895.firebaseio.com/");
 
+        /*
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -109,7 +110,9 @@ public class PerfilActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
+
 
     private ArrayList<ConteudoConcluido> createConteudosConcluidosList() {
         ArrayList<ConteudoConcluido> list = new ArrayList<ConteudoConcluido>();
