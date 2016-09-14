@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -50,6 +51,15 @@ public class MenuConteudosActivity extends AppCompatActivity {
         //ADAPTER
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, helper.retrieve());
         conteudosList.setAdapter(adapter);
+
+
+
+        conteudosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MenuConteudosActivity.this, "Item clicado: " + i, Toast.LENGTH_SHORT).show();
+            }
+        });
 /*
 
         db = FirebaseDatabase.getInstance().getReference();
