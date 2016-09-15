@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.activities;
+package com.fatec.fernanda.appredes.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

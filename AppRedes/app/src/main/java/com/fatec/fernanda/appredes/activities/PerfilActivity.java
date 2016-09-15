@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.activities;
+package com.fatec.fernanda.appredes.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.adapter.ConteudoConcluidoAdapter;
-import com.fatec.fernanda.appredes.domain.ConteudoConcluido;
+import com.fatec.fernanda.appredes.Adapter.ConteudoConcluidoAdapter;
+import com.fatec.fernanda.appredes.Domain.ConteudoConcluido;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;

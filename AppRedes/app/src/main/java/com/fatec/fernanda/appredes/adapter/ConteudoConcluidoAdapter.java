@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.adapter;
+package com.fatec.fernanda.appredes.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.domain.ConteudoConcluido;
+import com.fatec.fernanda.appredes.Domain.ConteudoConcluido;
 
 import java.util.List;
 

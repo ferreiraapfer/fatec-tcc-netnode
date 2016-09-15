@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.domain;
+package com.fatec.fernanda.appredes.Domain;
 
 import java.util.Random;
 

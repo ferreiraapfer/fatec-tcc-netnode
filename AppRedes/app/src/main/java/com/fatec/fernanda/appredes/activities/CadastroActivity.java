@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.activities;
+package com.fatec.fernanda.appredes.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -47,6 +47,12 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        if(firebaseAuth.getCurrentUser() != null){
+            //Usuário logado
+            startActivity(new Intent(CadastroActivity.this, MenuActivity.class));
+        }
+
 
 
         btnCadastrar.setOnClickListener(this);

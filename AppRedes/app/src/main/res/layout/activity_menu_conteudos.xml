@@ -5,7 +5,7 @@
                                              android:id="@+id/activity_menu_conteudos"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context="com.fatec.fernanda.appredes.activities.MenuConteudosActivity">
+                                             tools:context="com.fatec.fernanda.appredes.Activities.MenuConteudosActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

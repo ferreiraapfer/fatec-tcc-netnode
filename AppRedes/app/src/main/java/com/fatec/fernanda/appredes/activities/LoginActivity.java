@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.activities;
+package com.fatec.fernanda.appredes.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

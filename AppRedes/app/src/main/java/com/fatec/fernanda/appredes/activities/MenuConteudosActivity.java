@@ -1,19 +1,16 @@
-package com.fatec.fernanda.appredes.activities;
+package com.fatec.fernanda.appredes.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.dao.FirebaseHelper;
-import com.fatec.fernanda.appredes.domain.Conteudo;
+import com.fatec.fernanda.appredes.Dao.FirebaseHelper;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -23,13 +20,7 @@ import com.firebase.ui.FirebaseListAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-
 public class MenuConteudosActivity extends AppCompatActivity {
-
-    String firebaseURL = "https://appredes-a8895.firebaseio.com/tb_conteudo";
 
     ArrayAdapter<String> adapter;
     ListView conteudosList;
@@ -57,7 +48,12 @@ public class MenuConteudosActivity extends AppCompatActivity {
         conteudosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MenuConteudosActivity.this, "Item clicado: " + i, Toast.LENGTH_SHORT).show();
+                Intent menuTopicosIntent = new Intent(MenuConteudosActivity.this, MenuTopicosActivity.class);
+
+                //Enviando id do Tópico para a nova Activity
+                menuTopicosIntent.putExtra("idConteudo", i);
+
+                MenuConteudosActivity.this.startActivity(menuTopicosIntent);
             }
         });
 /*

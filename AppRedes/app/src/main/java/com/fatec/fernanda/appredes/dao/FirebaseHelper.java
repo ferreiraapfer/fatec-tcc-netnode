@@ -1,6 +1,5 @@
-package com.fatec.fernanda.appredes.dao;
+package com.fatec.fernanda.appredes.Dao;
 
-import com.fatec.fernanda.appredes.domain.Conteudo;
 import com.google.android.gms.common.api.BooleanResult;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;

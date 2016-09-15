@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                tools:context="com.fatec.fernanda.appredes.activities.MenuActivity">
+                tools:context="com.fatec.fernanda.appredes.Activities.MenuActivity">
 
     <TextView
         android:id="@+id/conteudosLink"

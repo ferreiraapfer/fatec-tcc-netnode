@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.domain;
+package com.fatec.fernanda.appredes.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -8,6 +8,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Conteudo {
     String titulo;
+    /*
+
+    List<Topico> topicos;
+
+     */
 
     public Conteudo() {
         //

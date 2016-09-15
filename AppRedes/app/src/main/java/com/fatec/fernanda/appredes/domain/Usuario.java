@@ -1,17 +1,20 @@
-package com.fatec.fernanda.appredes.domain;
+package com.fatec.fernanda.appredes.Domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.List;
 
 /**
  * Created by Fernanda on 27/08/2016.
  */
 
-public class Usuario implements Parcelable{
+public class Usuario implements Parcelable {
 
     String email;
     String nome;
     int pontuacao;
+    List<Teste> testesRealizados;
 
     public Usuario(String email, String nome) {
         this.email = email;
@@ -70,4 +73,18 @@ public class Usuario implements Parcelable{
         nome = in.readString();
         pontuacao = in.readInt();
     }
+
+    public List<Teste> getTestesRealizados() {
+        return testesRealizados;
+    }
+
+    public void setTestesRealizados(List<Teste> testesRealizados) {
+        this.testesRealizados = testesRealizados;
+    }
+
+    public static Creator<Usuario> getCREATOR() {
+        return CREATOR;
+    }
 }
+
+ 
