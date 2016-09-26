@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.Domain;
+package com.fatec.fernanda.appredes.models;
 
 import java.util.List;
 

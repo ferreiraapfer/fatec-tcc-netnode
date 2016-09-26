@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.Activities;
+package com.fatec.fernanda.appredes.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,14 +8,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.fatec.fernanda.appredes.Dao.FirebaseHelper;
+import com.fatec.fernanda.appredes.dao.FirebaseHelper;
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.models.Topico;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 public class MenuTopicosActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<Topico> adapter;
     ListView topicosList;
     DatabaseReference db;
     FirebaseHelper helper;
@@ -29,19 +32,18 @@ public class MenuTopicosActivity extends AppCompatActivity {
         //RECEBENDO O ID DO CONTEUDO
         Intent originIntent = getIntent();
         idConteudo = originIntent.getExtras().getInt("idConteudo");
-        System.out.println("id do conteudo: "+ idConteudo);
 
         topicosList = (ListView) findViewById(R.id.lstMenuTopicos);
 
         //SETUP FIREBASE
-        db = FirebaseDatabase.getInstance().getReference("tb_topicos");
+        db = FirebaseDatabase.getInstance().getReference("tb_topico");
         helper = new FirebaseHelper(db);
 
 
         //TODO RETRIEVE DO HELPER PARA TOPICOS A PARTIR DO ID DO CONTEUDO SELECIONADO
 
         //ADAPTER
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, helper.retrieve());
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,(List<Topico>) helper.getTopicosConteudo(idConteudo));
         topicosList.setAdapter(adapter);
 
 

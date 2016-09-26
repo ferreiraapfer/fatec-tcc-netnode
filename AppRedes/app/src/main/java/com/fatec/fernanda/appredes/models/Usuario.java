@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.Domain;
+package com.fatec.fernanda.appredes.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

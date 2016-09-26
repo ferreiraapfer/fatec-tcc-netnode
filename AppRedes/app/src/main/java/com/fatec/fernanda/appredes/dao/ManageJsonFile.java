@@ -1,9 +1,9 @@
-package com.fatec.fernanda.appredes.Dao;
+package com.fatec.fernanda.appredes.dao;
 
 import android.util.JsonReader;
 import android.util.JsonWriter;
 
-import com.fatec.fernanda.appredes.Domain.Usuario;
+import com.fatec.fernanda.appredes.models.Usuario;
 
 import java.io.IOException;
 import java.io.InputStream;
