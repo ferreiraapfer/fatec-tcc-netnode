@@ -30,7 +30,7 @@ public class MenuConteudosActivity extends AppCompatActivity {
         conteudosList = (ListView) findViewById(R.id.menuConteudos);
 
         //SETUP FIREBASE
-        db = FirebaseDatabase.getInstance().getReference("tb_conteudo");
+        db = FirebaseDatabase.getInstance().getReference("conteudos");
         helper = new FirebaseHelper(db);
 
 

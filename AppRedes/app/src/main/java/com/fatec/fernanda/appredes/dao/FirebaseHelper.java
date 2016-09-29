@@ -1,10 +1,14 @@
 package com.fatec.fernanda.appredes.dao;
 
+import android.util.Log;
+
 import com.fatec.fernanda.appredes.models.Topico;
+import com.google.common.collect.ObjectArrays;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -16,7 +20,7 @@ public class FirebaseHelper {
 
     DatabaseReference db;
     ArrayList<String> conteudos = new ArrayList<>();
-    ArrayList<Topico> topicos = new ArrayList<>();
+    ArrayList<String> topicos = new ArrayList<>();
 
     public FirebaseHelper(DatabaseReference db) {
         this.db = db;
@@ -62,13 +66,13 @@ public class FirebaseHelper {
         }
     }
 
-    //PEGAR TOPICOS DO CONTEUDO SELECIONADO
+    //READ TOPICOS DO CONTEUDO
+    public ArrayList<?> getTopicos() {
 
-    public ArrayList<?> getTopicosConteudo(final int idConteudo) {
         db.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                getListaTopicos(dataSnapshot, idConteudo);
+                setArrayTopicos(dataSnapshot);
             }
 
             @Override
@@ -88,26 +92,23 @@ public class FirebaseHelper {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.i("OnCancelled", "Erro Child Event Listener");
 
             }
         });
+
         return topicos;
     }
 
-    private void getListaTopicos(DataSnapshot dataSnapshot, int idConteudo) {
+    public void setArrayTopicos(DataSnapshot dataSnapshot) {
 
-        /*
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            DataSnapshot topicoCorrente = ds.child(String.valueOf(idConteudo));
+            topicos.add(ds.getKey().toString());
+            Log.i("adicionando", ds.getKey().toString());
+        }
 
-
-
-            Topico novoTopido = ds.getValue(Topico.class);
-            if (novoTopido.getIdConteudo() == idConteudo) {
-                topicos.add(novoTopido);
-                System.out.println("Novo topico: " + novoTopido.getTituloTopico());
-            }
-            */
+        if(!dataSnapshot.hasChildren()){
+            Log.i("VAZIO", "datasnapshot não possui filhos");
+        }
     }
-
 }

@@ -6,9 +6,8 @@ package com.fatec.fernanda.appredes.models;
 
 public class Topico {
 
-    int idConteudo;
-    int idTopico;
-    String tituloTopico;
+    int id;
+    String titulo;
 
     //String tituloTopico;
     //List<Trecho> trechos;
@@ -18,27 +17,19 @@ public class Topico {
         //
     }
 
-    public int getIdTopico() {
-        return idTopico;
+    public int getId() {
+        return id;
     }
 
-    public void setIdTopico(int idTopico) {
-        this.idTopico = idTopico;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getIdConteudo() {
-        return idConteudo;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setIdConteudo(int idConteudo) {
-        this.idConteudo = idConteudo;
-    }
-
-    public String getTituloTopico() {
-        return tituloTopico;
-    }
-
-    public void setTituloTopico(String tituloTopico) {
-        this.tituloTopico = tituloTopico;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 }
