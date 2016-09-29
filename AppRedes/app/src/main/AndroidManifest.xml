@@ -11,19 +11,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CadastroActivity">
+        <activity android:name=".activities.CadastroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MenuActivity" />
-        <activity android:name=".Activities.PerfilActivity" />
-        <activity android:name=".Activities.MenuConteudosActivity" />
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.MenuTopicosActivity" />
-        <activity android:name=".Activities.TopicoActivity"></activity>
+        <activity android:name=".activities.MenuActivity" />
+        <activity android:name=".activities.PerfilActivity" />
+        <activity android:name=".activities.MenuConteudosActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MenuTopicosActivity" />
+        <activity android:name=".activities.TopicoActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.Domain;
+package com.fatec.fernanda.appredes.models;
 
 /**
  * Created by Fernanda on 15/09/2016.

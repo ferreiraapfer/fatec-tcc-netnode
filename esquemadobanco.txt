@@ -1,0 +1,28 @@
+esquema do banco
+
+conteudos
+- titulo
+
+usuarios
+- usuario1
+-- email
+-- conteudosConcluidos
+--- capitulo1
+--- nota1
+
+topicos
+- topico1
+-- idConteudo
+-- tituloTopico
+
+questoes
+- questao1
+-- conteudo1
+-- descricaoQuestao
+-- respostaCerta
+-- explicacaoResposta
+
+respostas
+- resposta1
+-- questao1
+-- descricaoResposta

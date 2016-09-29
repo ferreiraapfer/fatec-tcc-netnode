@@ -1,12 +1,12 @@
-package com.fatec.fernanda.appredes.Activities;
+package com.fatec.fernanda.appredes.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.Adapter.ConteudoConcluidoAdapter;
-import com.fatec.fernanda.appredes.Domain.ConteudoConcluido;
+import com.fatec.fernanda.appredes.adapters.ConteudoConcluidoAdapter;
+import com.fatec.fernanda.appredes.models.ConteudoConcluido;
 
 import java.util.ArrayList;
 
