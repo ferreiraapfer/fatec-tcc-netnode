@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class MenuTopicosActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> adapter;
+    ArrayAdapter adapter;
 
     ListView topicosList;
 
@@ -80,7 +80,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
                 titulosTopicos = new ArrayList<>();
                 arrayTopicos = new ArrayList<>();
 
-                for (String topicoCorrente : arrayStringTopicos) {
+                for (final String topicoCorrente : arrayStringTopicos) {
                     umTituloRef = topicosRef.child(topicoCorrente).child("tituloTopico");
 
                     umTituloRef.addValueEventListener(new ValueEventListener() {
@@ -89,7 +89,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
                             titulosTopicos.add(dataSnapshot.getValue(String.class));
 
                             topico = new Topico();
-                            //topico.setId(Integer.parseInt(dataSnapshot.getKey()));
+                            topico.setId(Integer.parseInt(topicoCorrente.substring(6)));
                             topico.setTitulo(dataSnapshot.getValue(String.class));
                             arrayTopicos.add(topico);
                         }
@@ -116,10 +116,9 @@ public class MenuTopicosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent topicoIntent = new Intent(MenuTopicosActivity.this, TopicoActivity.class);
 
-
                 //TODO enviar o nome "chave" do titulo
 
-                topicoIntent.putExtra("idTopico", i);
+                topicoIntent.putExtra("topico", adapterView.getAdapter().getItem(i).toString());
 
                 MenuTopicosActivity.this.startActivity(topicoIntent);
 
