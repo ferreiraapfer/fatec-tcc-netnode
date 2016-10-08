@@ -23,7 +23,8 @@
         <activity android:name=".activities.MenuConteudosActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.MenuTopicosActivity" />
-        <activity android:name=".activities.TopicoActivity"></activity>
+        <activity android:name=".activities.TopicoActivity" />
+        <activity android:name=".activities.MenuTestesActivity"></activity>
     </application>
 
 </manifest>
