@@ -36,6 +36,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
 
     ArrayList<String> arrayStringTopicos;
     ArrayList<String> titulosTopicos;
+    ArrayList<Integer> idTopicos;
 
     Topico topico;
 
@@ -116,9 +117,12 @@ public class MenuTopicosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent topicoIntent = new Intent(MenuTopicosActivity.this, TopicoActivity.class);
 
-                //TODO enviar o nome "chave" do titulo
-
-                topicoIntent.putExtra("topico", adapterView.getAdapter().getItem(i).toString());
+                for (Topico t : arrayTopicos) {
+                    if (t.getTitulo() == adapterView.getAdapter().getItem(i).toString()) {
+                        topicoIntent.putExtra("idTopico", t.getId());
+                        topicoIntent.putExtra("tituloTopico",t.getTitulo());
+                    }
+                }
 
                 MenuTopicosActivity.this.startActivity(topicoIntent);
 
