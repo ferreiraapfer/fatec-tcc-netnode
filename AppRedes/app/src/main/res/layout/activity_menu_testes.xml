@@ -55,6 +55,27 @@
             android:text="RadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:visibility="invisible" />
     </RadioGroup>
+
+    <Button
+        android:id="@+id/btnProxima"
+        android:text="Próxima Questão"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rgrpRespostas"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="81dp" />
+
+    <Button
+        android:id="@+id/btnConcluirTeste"
+        android:text="Concluir Teste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"/>
 </RelativeLayout>

@@ -30,7 +30,7 @@ public class MenuActivity extends AppCompatActivity {
         txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null) {
             Toast.makeText(this, "Usuário logado!", Toast.LENGTH_LONG).show();
         }
 
@@ -70,8 +70,10 @@ public class MenuActivity extends AppCompatActivity {
         txtTestes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //       Intent menuTestesIntent = new Intent(MenuActivity.this, MenuTestesActivity.class);
-                //       MenuActivity.this.startActivity(menuTestesIntent);
+                Intent menuTestesIntent = new Intent(MenuActivity.this, MenuTestesActivity.class);
+                menuTestesIntent.putExtra("idQuestao", 1);
+                MenuActivity.this.startActivity(menuTestesIntent);
+
 
             }
         });
