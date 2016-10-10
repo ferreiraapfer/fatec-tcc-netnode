@@ -14,12 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.dao.FirebaseHelper;
+import com.fatec.fernanda.appredes.models.Usuario;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.client.util.Data;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,12 +54,10 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             //Usuário logado
             startActivity(new Intent(CadastroActivity.this, MenuActivity.class));
         }
-
-
 
         btnCadastrar.setOnClickListener(this);
         txtLoginLink.setOnClickListener(this);
@@ -89,26 +93,37 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser usuario = firebaseAuth.getCurrentUser();
-                    Log.e("Usuário cadastrado", usuario.getDisplayName() + " " + usuario.getEmail() + " ");
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(nome).build();
 
-                    usuario.updateProfile(profileUpdates);
+                    if (usuario.getEmail() == email && usuario.getDisplayName() == nome) {
+                        /* TODO aDICIONAR AO BANCO
 
-                    Log.e("Usuário modificado", usuario.getDisplayName() + " " + usuario.getEmail() + " ");
 
-                    if(usuario.getEmail() == email && usuario.getDisplayName() == nome){
-                        Log.e("Validação", "Validação nome e email conferem");
+                        DatabaseReference mDatabase;
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        mDatabase.child("usuarios").child("usuario3").setValue(email);
+
+                        */
+
                     }
-
                     progressDialog.dismiss();
-                    Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("message");
+
+                    myRef.setValue("Hello, World!");
+
+
+                    DatabaseReference mDatabase;
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+                    mDatabase.child("usuarios").child("usuario3").setValue(email);
+
                     startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(CadastroActivity.this, "Erro no cadastrado. Por favor, tente novamente", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
     }
 
     @Override
