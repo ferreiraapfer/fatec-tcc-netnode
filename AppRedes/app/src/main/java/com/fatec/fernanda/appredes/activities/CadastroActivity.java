@@ -14,12 +14,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.dao.FirebaseHelper;
+import com.fatec.fernanda.appredes.models.Usuario;
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.client.util.Data;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +42,9 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
+
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mUsuarioRef = mRootRef.child("usuarios");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +61,10 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             //Usuário logado
             startActivity(new Intent(CadastroActivity.this, MenuActivity.class));
         }
-
-
 
         btnCadastrar.setOnClickListener(this);
         txtLoginLink.setOnClickListener(this);
@@ -88,27 +99,33 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    FirebaseUser usuario = firebaseAuth.getCurrentUser();
-                    Log.e("Usuário cadastrado", usuario.getDisplayName() + " " + usuario.getEmail() + " ");
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(nome).build();
 
-                    usuario.updateProfile(profileUpdates);
+                    final FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
 
-                    Log.e("Usuário modificado", usuario.getDisplayName() + " " + usuario.getEmail() + " ");
 
-                    if(usuario.getEmail() == email && usuario.getDisplayName() == nome){
-                        Log.e("Validação", "Validação nome e email conferem");
-                    }
+                    mUsuarioRef.child(user.getUid()).child("email").setValue(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
 
-                    progressDialog.dismiss();
-                    Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                                mUsuarioRef.child(user.getUid()).child("nome").setValue(nome);
+
+                                progressDialog.dismiss();
+
+                                startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                            } else {
+                                Toast.makeText(CadastroActivity.this, "Erro no cadastrado ao banco de dados. Por favor, tente novamente", Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    });
+
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(CadastroActivity.this, "Erro no cadastrado. Por favor, tente novamente", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
     }
 
     @Override
