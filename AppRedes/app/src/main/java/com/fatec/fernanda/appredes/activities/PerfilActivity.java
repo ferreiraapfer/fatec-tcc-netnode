@@ -14,49 +14,37 @@ import com.fatec.fernanda.appredes.models.ConteudoConcluido;
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 
 public class PerfilActivity extends AppCompatActivity {
 
-    private TextView emailUsuario;
-    private TextView nomeUsuario;
+    private TextView txtEmailUsuario;
+    private TextView txtNomeUsuario;
     private ProgressBar progresso;
     private TextView conteudosConcluidos;
     private TextView progressoTexto;
 
-
     FirebaseAuth firebaseAuth;
-    Firebase mRef;
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference mUserRef;
+
+    String idUsuario;
+
+    String nomeUsuario;
+    String emailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        /*
-
-        ManageJsonFile manageJsonFile = new ManageJsonFile();
-
-
-        InputStream in;
-        try {
-            in = getApplicationContext().openFileInput("Usuario.json");
-            Usuario user = manageJsonFile.readJsonStream(in);
-
-            emailUsuario.setText(user.getEmail());
-            nomeUsuario.setText(user.getNome());
-            progresso.setProgress(user.getPontuacao());
-            progressoTexto.setText(String.valueOf(user.getPontuacao())+"%");
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-*/
         //TODO arrumar pontuação texto, maximo e barra
 
         initConteudosConcluidosListView();
@@ -66,8 +54,8 @@ public class PerfilActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        emailUsuario = (TextView) findViewById(R.id.email_usuario);
-        nomeUsuario = (TextView) findViewById(R.id.nome_usuario);
+        txtEmailUsuario = (TextView) findViewById(R.id.email_usuario);
+        txtNomeUsuario = (TextView) findViewById(R.id.nome_usuario);
         progresso = (ProgressBar) findViewById(R.id.progresso_barra);
         progressoTexto = (TextView) findViewById(R.id.progresso);
         conteudosConcluidos = (TextView) findViewById(R.id.textConteudosConcluidos);
@@ -81,17 +69,25 @@ public class PerfilActivity extends AppCompatActivity {
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+        idUsuario = user.getUid();
 
-        emailUsuario.setText(user.getEmail());
+        mUserRef = mRootRef.child("usuarios").child(idUsuario);
 
-        if(user.getDisplayName() != null){
-            nomeUsuario.setText(user.getDisplayName());
-        } else  {
-            Toast.makeText(this, "Sem nome", Toast.LENGTH_LONG);
-        }
+        mUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nomeUsuario = dataSnapshot.child("nome").getValue(String.class);
+                emailUsuario = dataSnapshot.child("email").getValue(String.class);
 
+                txtNomeUsuario.setText(nomeUsuario);
+                txtEmailUsuario.setText(emailUsuario);
+            }
 
-        mRef = new Firebase("https://appredes-a8895.firebaseio.com/");
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         /*
         mRef.addValueEventListener(new ValueEventListener() {

@@ -24,8 +24,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,6 +42,9 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
+
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mUsuarioRef = mRootRef.child("usuarios");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,32 +99,27 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    FirebaseUser usuario = firebaseAuth.getCurrentUser();
 
-                    if (usuario.getEmail() == email && usuario.getDisplayName() == nome) {
-                        /* TODO aDICIONAR AO BANCO
+                    final FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
 
 
-                        DatabaseReference mDatabase;
-                        mDatabase = FirebaseDatabase.getInstance().getReference();
-                        mDatabase.child("usuarios").child("usuario3").setValue(email);
+                    mUsuarioRef.child(user.getUid()).child("email").setValue(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
 
-                        */
+                                mUsuarioRef.child(user.getUid()).child("nome").setValue(nome);
 
-                    }
-                    progressDialog.dismiss();
+                                progressDialog.dismiss();
 
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("message");
+                                startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                            } else {
+                                Toast.makeText(CadastroActivity.this, "Erro no cadastrado ao banco de dados. Por favor, tente novamente", Toast.LENGTH_LONG).show();
+                            }
 
-                    myRef.setValue("Hello, World!");
+                        }
+                    });
 
-
-                    DatabaseReference mDatabase;
-                    mDatabase = FirebaseDatabase.getInstance().getReference();
-                    mDatabase.child("usuarios").child("usuario3").setValue(email);
-
-                    startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(CadastroActivity.this, "Erro no cadastrado. Por favor, tente novamente", Toast.LENGTH_LONG).show();

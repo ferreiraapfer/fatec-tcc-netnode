@@ -1,0 +1,137 @@
+{
+  "conteudos" : [ {
+    "titulo" : "Redes de Computadores e a Internet",
+    "topicos" : {
+      "topico1" : true,
+      "topico2" : true,
+      "topico3" : true,
+      "topico4" : true,
+      "topico5" : true,
+      "topico6" : true,
+      "topico7" : true
+    }
+  }, {
+    "titulo" : "Camada de Aplicação",
+    "topicos" : {
+      "topico10" : true,
+      "topico8" : true,
+      "topico9" : true
+    }
+  }, {
+    "titulo" : "Camada de Transporte",
+    "topicos" : {
+      "topico11" : true
+    }
+  }, {
+    "titulo" : "Camada de Rede"
+  }, {
+    "titulo" : "Camada de Enlace e Redes Locais"
+  }, {
+    "titulo" : "Redes sem fio e redes móveis"
+  }, {
+    "titulo" : "Redes Multimídia"
+  } ],
+  "questoes" : {
+    "questao1" : {
+      "conteudo1" : true,
+      "descricaoQuestao" : "Essa é a pergunta?",
+      "explicaçãoResposta" : "Porque sim",
+      "respostaCerta" : "resposta1",
+      "respostas" : {
+        "resposta1" : "Sim",
+        "resposta2" : "Não"
+      }
+    },
+    "questao2" : {
+      "conteudo1" : true,
+      "descricaoQuestao" : "Essa não é uma pergunta?",
+      "explicaçãoResposta" : "Porque não",
+      "respostaCerta" : "resposta3",
+      "respostas" : {
+        "resposta1" : "A",
+        "resposta2" : "B",
+        "resposta3" : "A e B"
+      }
+    }
+  },
+  "respostas" : {
+    "resposta1" : {
+      "descricaoResposta" : "Sim",
+      "questao1" : true
+    },
+    "resposta2" : {
+      "descricaoResposta" : "Não",
+      "questao1" : true
+    },
+    "resposta3" : {
+      "descricaoResposta" : "Sim",
+      "questao2" : true
+    },
+    "resposta4" : {
+      "descricaoResposta" : "Não",
+      "questao2" : true
+    }
+  },
+  "topicos" : {
+    "topico1" : {
+      "texto" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nCurabitur maximus orci ac mauris dignissim placerat. Duis euismod massa dolor, mollis tincidunt felis eleifend tristique. Duis justo nunc, hendrerit at tristique vel, commodo nec dui. Praesent et lectus vitae orci pulvinar ultricies. Proin sed velit elit. Ut at consequat ligula, quis vestibulum velit. Duis blandit ac ipsum quis facilisis. Nunc euismod fermentum orci et tempor. Vivamus eu lacus et justo efficitur convallis. Nullam porta lobortis porttitor. Ut sit amet odio at quam rutrum suscipit at eu dui. In vel dignissim sem. Phasellus consectetur libero et ligula dignissim placerat.  Etiam nisi diam, condimentum eu faucibus nec, scelerisque eu neque. Etiam ac vehicula quam. Nulla faucibus sed nisl vel iaculis. Vivamus ullamcorper risus ut pulvinar consequat. Aliquam eget odio at purus sagittis cursus at ac libero. Morbi ut ante non ipsum semper rhoncus. Duis iaculis odio libero. Morbi efficitur mauris maximus venenatis dignissim. In purus est, dictum vitae metus in, convallis ultrices nunc. Maecenas luctus elit ut vestibulum pellentesque. Aliquam non arcu pulvinar, dapibus leo et, feugiat orci. Praesent dapibus consequat est, vitae porttitor lectus efficitur vitae. Nulla condimentum purus eget tellus tincidunt, eu pretium eros interdum.  Vestibulum sodales nec magna ac ultricies. Curabitur est nibh, imperdiet at metus eu, eleifend suscipit ligula. Aliquam vestibulum mattis dui, a pharetra eros tempor at. Morbi tristique molestie justo. Pellentesque sagittis varius arcu ac varius. Etiam aliquam ornare vehicula. Pellentesque scelerisque est eu condimentum ultricies. Cras a porttitor est.",
+      "tituloTopico" : "O que é a Internet?"
+    },
+    "topico10" : {
+      "tituloTopico" : "Transferência de arquivo: FTP"
+    },
+    "topico11" : {
+      "tituloTopico" : "Introdução e serviços de camada de transporte"
+    },
+    "topico2" : {
+      "tituloTopico" : "A periferia da Internet"
+    },
+    "topico3" : {
+      "tituloTopico" : "O núcleo da rede"
+    },
+    "topico4" : {
+      "tituloTopico" : "Atraso"
+    },
+    "topico5" : {
+      "tituloTopico" : "Camadas de protocolo e seus modelos de serviço"
+    },
+    "topico6" : {
+      "tituloTopico" : "Redes sob ameaça"
+    },
+    "topico7" : {
+      "tituloTopico" : "História das redes de computadores e da Internet"
+    },
+    "topico8" : {
+      "tituloTopico" : "Princípios de aplicações de rede"
+    },
+    "topico9" : {
+      "tituloTopico" : "A Web e o HTTP"
+    }
+  },
+  "trecho" : {
+    "topico2" : {
+      "texto" : "Esse é o texto do tópico 2.",
+      "topico2" : true
+    },
+    "trechoTopico1" : {
+      "texto" : "Esse é o texto do tópico 1.",
+      "topico1" : true
+    }
+  },
+  "usuarios" : {
+    "usuario1" : {
+      "conteudosConcluidos" : {
+        "capitulo1" : true,
+        "nota1" : 7
+      },
+      "email" : "fernanda.ap96@gmail.com"
+    },
+    "usuario2" : {
+      "conteudosConcluidos" : {
+        "capitulo1" : true,
+        "nota1" : "6"
+      },
+      "email" : "cristian@gmail.com"
+    }
+  }
+}
