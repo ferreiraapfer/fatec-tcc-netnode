@@ -45,7 +45,7 @@ public class MenuConteudosActivity extends AppCompatActivity {
                 Intent menuTopicosIntent = new Intent(MenuConteudosActivity.this, MenuTopicosActivity.class);
 
                 //Enviando id do Tópico para a nova Activity
-                menuTopicosIntent.putExtra("idConteudo", i);
+                menuTopicosIntent.putExtra("idConteudo", i+1);
 
                 MenuConteudosActivity.this.startActivity(menuTopicosIntent);
             }

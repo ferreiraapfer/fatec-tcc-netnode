@@ -67,7 +67,6 @@ public class FirebaseHelper {
     private void fetchData(DataSnapshot dataSnapshot) {
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             String titulo = ds.getValue(String.class);
-            System.out.println("titulo: " + titulo);
             conteudos.add(titulo);
             return;
         }

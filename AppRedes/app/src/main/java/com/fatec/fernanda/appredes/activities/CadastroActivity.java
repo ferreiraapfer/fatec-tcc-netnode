@@ -140,3 +140,4 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 }
+

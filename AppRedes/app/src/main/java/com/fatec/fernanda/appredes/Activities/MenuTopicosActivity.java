@@ -60,6 +60,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
         databaseRef = FirebaseDatabase.getInstance().getReference();
 
         topicosConteudoRef = databaseRef.child("conteudos").child("conteudo"+idConteudo).child("topicos");
+        System.out.println(topicosConteudoRef.toString());
 
         helper = new FirebaseHelper(topicosConteudoRef);
 
@@ -68,7 +69,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
 
         ////TESTANDO MENU
         arrayTopicos = new ArrayList<>();
-        arrayStringTopicos = new ArrayList<>();
+        arrayStringTopicos = new ArrayList<>(); // topicos que eu tenho no conteudo
 
         topicosConteudoRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,7 +83,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
                 arrayTopicos = new ArrayList<>();
 
                 for (final String topicoCorrente : arrayStringTopicos) {
-                    umTituloRef = topicosRef.child(topicoCorrente).child("tituloTopico");
+                    umTituloRef = topicosRef.child(topicoCorrente).child("titulo");
 
                     umTituloRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -90,7 +91,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
                             titulosTopicos.add(dataSnapshot.getValue(String.class));
 
                             topico = new Topico();
-                            topico.setId(Integer.parseInt(topicoCorrente.substring(6)));
+                            topico.setId(Integer.parseInt(topicoCorrente.substring(6))); //TODO Deixar id como string
                             topico.setTitulo(dataSnapshot.getValue(String.class));
                             arrayTopicos.add(topico);
                         }

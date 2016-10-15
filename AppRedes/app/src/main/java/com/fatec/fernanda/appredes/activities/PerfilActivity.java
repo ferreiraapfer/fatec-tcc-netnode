@@ -39,6 +39,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     String nomeUsuario;
     String emailUsuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
