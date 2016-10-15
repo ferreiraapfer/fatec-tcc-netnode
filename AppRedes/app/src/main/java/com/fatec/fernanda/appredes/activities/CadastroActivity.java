@@ -109,6 +109,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                             if (task.isSuccessful()) {
 
                                 mUsuarioRef.child(user.getUid()).child("nome").setValue(nome);
+                                mUsuarioRef.child(user.getUid()).child("progresso").setValue(0);
 
                                 progressDialog.dismiss();
 

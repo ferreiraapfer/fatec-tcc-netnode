@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Conteudo {
     String titulo;
+    String id;
     /*
 
     List<Topico> topicos;
@@ -18,8 +19,9 @@ public class Conteudo {
         //
     }
 
-    public Conteudo(String titulo) {
+    public Conteudo(String titulo, String id) {
         this.titulo = titulo;
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -28,5 +30,13 @@ public class Conteudo {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

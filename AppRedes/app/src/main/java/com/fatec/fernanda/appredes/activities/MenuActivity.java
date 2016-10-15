@@ -34,31 +34,6 @@ public class MenuActivity extends AppCompatActivity {
             Toast.makeText(this, "Usuário logado!", Toast.LENGTH_LONG).show();
         }
 
-
-
-        /*
-
-        ManageJsonFile manageJsonFile = new ManageJsonFile();
-
-        InputStream in;
-        try {
-            in = getApplicationContext().openFileInput("Usuariooo.json");
-            Usuario user = manageJsonFile.readJsonStream(in);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-
-            Intent cadastroIntent = new Intent(MenuActivity.this, CadastroActivity.class);
-            cadastroIntent.setAction(Intent.ACTION_MAIN);
-            cadastroIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            MenuActivity.this.startActivity(cadastroIntent);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        */
-
         txtConteudos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

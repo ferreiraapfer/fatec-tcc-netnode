@@ -27,9 +27,9 @@ public class PerfilActivity extends AppCompatActivity {
 
     private TextView txtEmailUsuario;
     private TextView txtNomeUsuario;
-    private ProgressBar progresso;
+    private ProgressBar pbarProgresso;
     private TextView conteudosConcluidos;
-    private TextView progressoTexto;
+    private TextView txtProgressoUsuario;
 
     FirebaseAuth firebaseAuth;
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -39,7 +39,6 @@ public class PerfilActivity extends AppCompatActivity {
 
     String nomeUsuario;
     String emailUsuario;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,27 +47,21 @@ public class PerfilActivity extends AppCompatActivity {
         //TODO arrumar pontuação texto, maximo e barra
 
         initConteudosConcluidosListView();
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+        }
 
         txtEmailUsuario = (TextView) findViewById(R.id.email_usuario);
         txtNomeUsuario = (TextView) findViewById(R.id.nome_usuario);
-        progresso = (ProgressBar) findViewById(R.id.progresso_barra);
-        progressoTexto = (TextView) findViewById(R.id.progresso);
+        pbarProgresso = (ProgressBar) findViewById(R.id.progressoBarra);
+        txtProgressoUsuario = (TextView) findViewById(R.id.progresso);
         conteudosConcluidos = (TextView) findViewById(R.id.textConteudosConcluidos);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() == null) {
-            finish();
-            startActivity(new Intent(PerfilActivity.this, LoginActivity.class));
-        }
-
         FirebaseUser user = firebaseAuth.getCurrentUser();
-
         idUsuario = user.getUid();
 
         mUserRef = mRootRef.child("usuarios").child(idUsuario);
@@ -78,9 +71,6 @@ public class PerfilActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 nomeUsuario = dataSnapshot.child("nome").getValue(String.class);
                 emailUsuario = dataSnapshot.child("email").getValue(String.class);
-
-                txtNomeUsuario.setText(nomeUsuario);
-                txtEmailUsuario.setText(emailUsuario);
             }
 
             @Override
@@ -88,6 +78,10 @@ public class PerfilActivity extends AppCompatActivity {
 
             }
         });
+
+        txtNomeUsuario.setText(nomeUsuario);
+        txtEmailUsuario.setText(emailUsuario);
+
 
         /*
         mRef.addValueEventListener(new ValueEventListener() {
@@ -104,6 +98,13 @@ public class PerfilActivity extends AppCompatActivity {
             }
         });
         */
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
 

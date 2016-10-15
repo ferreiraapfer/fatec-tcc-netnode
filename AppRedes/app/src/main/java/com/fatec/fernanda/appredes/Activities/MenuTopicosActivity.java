@@ -59,7 +59,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
         //SETUP FIREBASE
         databaseRef = FirebaseDatabase.getInstance().getReference();
 
-        topicosConteudoRef = databaseRef.child("conteudos").child(String.valueOf(idConteudo)).child("topicos");
+        topicosConteudoRef = databaseRef.child("conteudos").child("conteudo"+idConteudo).child("topicos");
 
         helper = new FirebaseHelper(topicosConteudoRef);
 
