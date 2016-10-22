@@ -34,8 +34,8 @@ public class TopicoActivity extends AppCompatActivity {
     Topico topico;
     String tituloTopico;
     int idTopico;
+    int idConteudo;
 
-    TextView txtTituloTopico;
     TextView txtConteudoTopico;
 
     DatabaseReference topicoRef;
@@ -46,7 +46,6 @@ public class TopicoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topico);
 
-        txtTituloTopico = (TextView) findViewById(R.id.txtTituloTopico);
         txtConteudoTopico = (TextView) findViewById(R.id.txtConteudoTopico);
 
         topicoRef = FirebaseDatabase.getInstance().getReference().child("topicos");
@@ -60,29 +59,32 @@ public class TopicoActivity extends AppCompatActivity {
         topico.setId(idTopico);
         topico.setTitulo(tituloTopico);
 
+
+        //RECEBENDO ID DO CONTEUDO
+        idConteudo = originIntent.getExtras().getInt("idConteudo");
+
+
         //POSICIONA PARA A ÁREA DO TOPICO NO BANCO
         topicoRef = topicoRef.child("topico" + idTopico).child("texto");
 
         System.out.println("topico" + idTopico);
 
-        txtTituloTopico.setText(topico.getTitulo());
-
         //PEGANDO TEXTO PELO ARQUIVO HTML @ FIREBASE STORAGE
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://appredes-a8895.appspot.com");
-        storageRef = storageRef.child("conteudo.html");
+        storageRef = storageRef.child("conteudos").child("conteudo"+idConteudo).child("topico"+idTopico+".html");
 
         File arquivoTopico = null;
         try {
             //ARQUIVO TEMPORARIO QUE RECEBERÁ O HTML
-            arquivoTopico = File.createTempFile("conteudo", "html");
+            arquivoTopico = File.createTempFile("topico"+idTopico, "html");
             final File finalArquivoTopico = arquivoTopico;
 
             //PEGANDO CONTEUDO DA REFERENCIA E ADICIONANDO AO ARQUIVO TEMPORARIO
             storageRef.getFile(finalArquivoTopico).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    
+
                     StringBuilder text = new StringBuilder();
 
                     try {

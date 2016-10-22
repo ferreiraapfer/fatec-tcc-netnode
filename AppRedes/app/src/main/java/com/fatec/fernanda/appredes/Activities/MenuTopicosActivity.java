@@ -121,7 +121,8 @@ public class MenuTopicosActivity extends AppCompatActivity {
                 for (Topico t : arrayTopicos) {
                     if (t.getTitulo() == adapterView.getAdapter().getItem(i).toString()) {
                         topicoIntent.putExtra("idTopico", t.getId());
-                        topicoIntent.putExtra("tituloTopico",t.getTitulo());
+                        topicoIntent.putExtra("tituloTopico", t.getTitulo());
+                        topicoIntent.putExtra("idConteudo", idConteudo);
                     }
                 }
 
