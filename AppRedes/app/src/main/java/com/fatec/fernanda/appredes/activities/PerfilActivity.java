@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.adapters.ConteudoConcluidoAdapter;
-import com.fatec.fernanda.appredes.models.ConteudoConcluido;
-import com.firebase.client.Firebase;
+import com.fatec.fernanda.appredes.adapters.TesteRealizadoAdapter;
+import com.fatec.fernanda.appredes.models.TesteRealizado;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +38,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     String nomeUsuario;
     String emailUsuario;
+    int progressoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         //TODO arrumar pontuação texto, maximo e barra
 
-        initConteudosConcluidosListView();
+        initTesteRealizadoListView();
 
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -70,8 +70,17 @@ public class PerfilActivity extends AppCompatActivity {
         mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 nomeUsuario = dataSnapshot.child("nome").getValue(String.class);
                 emailUsuario = dataSnapshot.child("email").getValue(String.class);
+                progressoUsuario = dataSnapshot.child("progresso").getValue(Integer.class);
+
+                txtNomeUsuario.setText(nomeUsuario);
+                txtEmailUsuario.setText(emailUsuario);
+
+                pbarProgresso.setProgress(progressoUsuario);
+                txtProgressoUsuario.setText(String.valueOf(progressoUsuario)); //TODO Porcentagem do total de conteudos
+
             }
 
             @Override
@@ -79,10 +88,6 @@ public class PerfilActivity extends AppCompatActivity {
 
             }
         });
-
-        txtNomeUsuario.setText(nomeUsuario);
-        txtEmailUsuario.setText(emailUsuario);
-
 
         /*
         mRef.addValueEventListener(new ValueEventListener() {
@@ -109,26 +114,26 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
 
-    private ArrayList<ConteudoConcluido> createConteudosConcluidosList() {
-        ArrayList<ConteudoConcluido> list = new ArrayList<ConteudoConcluido>();
+    private ArrayList<TesteRealizado> createTesteRealizadoList() {
+        ArrayList<TesteRealizado> list = new ArrayList<TesteRealizado>();
 
         for (int i = 1; i <= 5; i++) {
-            list.add(ConteudoConcluido.novaInstancia(i));
+            list.add(TesteRealizado.novaInstancia(i));
         }
 
         return list;
     }
 
-    private void initConteudosConcluidosListView() {
+    private void initTesteRealizadoListView() {
         ListView listView = (ListView) findViewById(R.id.advanced_list_view);
 
         if (listView == null) {
             return;
         }
 
-        ArrayList<ConteudoConcluido> list = createConteudosConcluidosList();
+        ArrayList<TesteRealizado> list = createTesteRealizadoList();
 
-        ConteudoConcluidoAdapter adapter = new ConteudoConcluidoAdapter(this, R.layout.lista_conteudos_concluidos_item, list);
+        TesteRealizadoAdapter adapter = new TesteRealizadoAdapter(this, R.layout.lista_testes_realizados_item, list);
         listView.setAdapter(adapter);
     }
 

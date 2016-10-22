@@ -1,19 +1,11 @@
 package com.fatec.fernanda.appredes.dao;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.fatec.fernanda.appredes.models.Topico;
-import com.fatec.fernanda.appredes.models.Usuario;
-import com.firebase.client.Firebase;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.common.collect.ObjectArrays;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -110,7 +102,6 @@ public class FirebaseHelper {
 
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             topicos.add(ds.getKey().toString());
-            Log.i("adicionando", ds.getKey().toString());
         }
 
         if(!dataSnapshot.hasChildren()){

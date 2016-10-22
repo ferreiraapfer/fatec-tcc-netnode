@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.models.ConteudoConcluido;
+import com.fatec.fernanda.appredes.models.TesteRealizado;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import java.util.List;
  * Created by Fernanda on 24/08/2016.
  */
 
-public class ConteudoConcluidoAdapter extends ArrayAdapter<ConteudoConcluido> {
+public class TesteRealizadoAdapter extends ArrayAdapter<TesteRealizado> {
 
     private int resource;
 
-    public ConteudoConcluidoAdapter(Context context, int resource, List<ConteudoConcluido> objects){
+    public TesteRealizadoAdapter(Context context, int resource, List<TesteRealizado> objects){
         super(context, resource, objects);
         this.resource = resource;
     }
@@ -35,13 +35,13 @@ public class ConteudoConcluidoAdapter extends ArrayAdapter<ConteudoConcluido> {
             row = inflater.inflate(this.resource, parent, false);
         }
 
-        ConteudoConcluido conteudo = getItem(position);
+        TesteRealizado testeRealizado = getItem(position);
 
         TextView titulo = (TextView) row.findViewById(R.id.tituloConteudo);
-        titulo.setText(conteudo.getNomeConteudo());
+        titulo.setText(testeRealizado.getNomeConteudo());
 
         TextView nota = (TextView) row.findViewById(R.id.notaTesteConteudo);
-        nota.setText(String.valueOf(conteudo.getNotaTeste()));
+        nota.setText(String.valueOf(testeRealizado.getNotaTeste()));
 
         return row;
     }

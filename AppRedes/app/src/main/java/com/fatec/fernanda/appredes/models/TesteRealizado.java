@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by Fernanda on 24/08/2016.
  */
 
-public class ConteudoConcluido {
+public class TesteRealizado {
     private int idConteudo;
     private String nomeConteudo;
     private int notaTeste;
@@ -14,10 +14,10 @@ public class ConteudoConcluido {
     private static String[] conteudos = new String[]{
             "Introdução", "História", "Redes sem Fio", "Camada de Aplicação", "Camada de Rede"};
 
-    public static ConteudoConcluido novaInstancia(int id) {
+    public static TesteRealizado novaInstancia(int id) {
         Random random = new Random();
 
-        ConteudoConcluido conteudo = new ConteudoConcluido();
+        TesteRealizado conteudo = new TesteRealizado();
         conteudo.setNomeConteudo(conteudos[id - 1]);
         conteudo.setNotaTeste(1 + random.nextInt(10));
 
