@@ -12,4 +12,5 @@
     <dimen name="edt_left_margin">10dp</dimen>
     <dimen name="edt_right_margin">10dp</dimen>
     <dimen name="txt_top_margin">30dp</dimen>
+    <dimen name="max_htmlview">50dp</dimen>
 </resources>
