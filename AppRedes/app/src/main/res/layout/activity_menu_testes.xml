@@ -13,69 +13,9 @@
     android:orientation="horizontal"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/txtPergunta"
-        android:text="TextView"
+    <ListView
+        android:id="@+id/menuConteudosTestes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_height="wrap_content"></ListView>
 
-    <ImageView
-        android:id="@+id/imgIlustracao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:layout_below="@+id/txtPergunta"
-        android:layout_centerHorizontal="true" />
-
-    <RadioGroup
-        android:id="@+id/rgrpRespostas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imgIlustracao"
-        android:layout_marginTop="14dp" >
-
-        <RadioButton
-            android:id="@+id/rbtnResposta1"
-            android:text="RadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:id="@+id/rbtnResposta2"
-            android:text="RadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:id="@+id/rbtnResposta3"
-            android:text="RadioButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="invisible" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/btnProxima"
-        android:text="Próxima Questão"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/rgrpRespostas"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="81dp" />
-
-    <Button
-        android:id="@+id/btnConcluirTeste"
-        android:text="Concluir Teste"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="invisible"/>
 </RelativeLayout>

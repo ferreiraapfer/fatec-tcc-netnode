@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.common.primitives.Bytes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +46,9 @@ public class TopicoActivity extends AppCompatActivity {
     Button btnConcluirTopico;
 
     DatabaseReference topicoRef;
+    DatabaseReference usuarioRef;
+
+    String uIdUsuario;
 
 
     @Override
@@ -73,22 +77,42 @@ public class TopicoActivity extends AppCompatActivity {
 
 
         //TODO Antes de carregar o topico, ver se o usuário já não concluiu esse topico. Se já concluiu, desabilitar o botão
+        uIdUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(uIdUsuario);
+
+        usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                //TODO se terminou o topico em questão
+                if(dataSnapshot.child("topico"+idTopico).exists()){
+                    invalidaBotao();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
         //POSICIONA PARA A ÁREA DO TOPICO NO BANCO
         topicoRef = topicoRef.child("topico" + idTopico).child("texto");
 
@@ -97,12 +121,12 @@ public class TopicoActivity extends AppCompatActivity {
         //PEGANDO TEXTO PELO ARQUIVO HTML @ FIREBASE STORAGE
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReferenceFromUrl("gs://appredes-a8895.appspot.com");
-        storageRef = storageRef.child("conteudos").child("conteudo"+idConteudo).child("topico"+idTopico+".html");
+        storageRef = storageRef.child("conteudos").child("conteudo" + idConteudo).child("topico" + idTopico + ".html");
 
         File arquivoTopico = null;
         try {
             //ARQUIVO TEMPORARIO QUE RECEBERÁ O HTML
-            arquivoTopico = File.createTempFile("topico"+idTopico, "html");
+            arquivoTopico = File.createTempFile("topico" + idTopico, "html");
             final File finalArquivoTopico = arquivoTopico;
 
             //PEGANDO CONTEUDO DA REFERENCIA E ADICIONANDO AO ARQUIVO TEMPORARIO
@@ -143,22 +167,41 @@ public class TopicoActivity extends AppCompatActivity {
         btnConcluirTopico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final Long[] stringProgUsuario = new Long[1];
 
-                String uIdUsuario  = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(uIdUsuario);
 
-                DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(uIdUsuario);
-
-                usuarioRef.child("topicosConcluidos").child("conteudo"+idConteudo).child("topico"+idTopico).setValue(true);
-
-                usuarioRef.child("progresso").setValue("10");
+                usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).child("topico" + idTopico).setValue(true);
 
 
-                Toast.makeText(TopicoActivity.this, "Tópico Concluído", Toast.LENGTH_SHORT);
+                usuarioRef.child("progresso").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        stringProgUsuario[0] = dataSnapshot.getValue(Long.class);
+                        usuarioRef.child("progresso").removeEventListener(this);
 
-                btnConcluirTopico.setEnabled(false);
-                btnConcluirTopico.setText("Tópico Concluído");
-                btnConcluirTopico.setBackgroundColor(getResources().getColor(R.color.buttonUnenable));
+                        int novoProgresso = stringProgUsuario[0].intValue();
+                        novoProgresso = novoProgresso + 10;
+
+                        usuarioRef.child("progresso").setValue(novoProgresso);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+               invalidaBotao();
             }
         });
+    }
+
+    private void invalidaBotao() {
+        btnConcluirTopico.setEnabled(false);
+        btnConcluirTopico.setText("Tópico Concluído");
+        btnConcluirTopico.setBackgroundColor(getResources().getColor(R.color.buttonUnenable));
     }
 }

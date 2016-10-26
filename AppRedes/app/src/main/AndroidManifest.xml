@@ -24,7 +24,8 @@
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.MenuTopicosActivity" />
         <activity android:name=".activities.TopicoActivity" />
-        <activity android:name=".activities.MenuTestesActivity"></activity>
+        <activity android:name=".activities.MenuTestesActivity" />
+        <activity android:name=".activities.TesteActivity"></activity>
     </application>
 
 </manifest>
