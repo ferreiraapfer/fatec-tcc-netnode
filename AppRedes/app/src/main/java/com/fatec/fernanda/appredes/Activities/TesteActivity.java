@@ -33,12 +33,13 @@ public class TesteActivity extends AppCompatActivity {
     Button btnProxQuestao;
     Button btnConcluirTeste;
 
-    DatabaseReference testeRef;
+    DatabaseReference questaoRef;
     DatabaseReference todasQuestoesRef;
     DatabaseReference respostasRef;
 
     ArrayList<String> arrayRespostas;
 
+    int idConteudo;
     int idQuestao;
     int numQuestoes;
     int idProxQuestao;
@@ -60,21 +61,22 @@ public class TesteActivity extends AppCompatActivity {
         btnProxQuestao = (Button) findViewById(R.id.btnProxima);
         btnConcluirTeste = (Button) findViewById(R.id.btnConcluirTeste);
 
-        todasQuestoesRef = FirebaseDatabase.getInstance().getReference().child("questoes");
 
         arrayRespostas = new ArrayList<>();
 
         /*
-        Receber index da questao pelo intent. TODO Colocar intent a partir da seleção no menu
+        Receber index da questao pelo intent. Colocar intent a partir da seleção no menu
         Contar quantas questoes tem. Se essa não for aúltima, colocar o index no intent seguinte
          */
 
         //RECEBENDO O ID DA QUESTAO
         Intent originIntent = getIntent();
         idQuestao = originIntent.getExtras().getInt("idQuestao");
+        idConteudo = originIntent.getExtras().getInt("idConteudo");
 
-        testeRef = FirebaseDatabase.getInstance().getReference().child("questoes").child("questao"+idQuestao);
-        respostasRef = testeRef.child("respostas");
+        todasQuestoesRef = FirebaseDatabase.getInstance().getReference().child("questoes").child("conteudo"+idConteudo);
+        questaoRef = todasQuestoesRef.child("questao"+idQuestao);
+        respostasRef = questaoRef.child("respostas");
 
         //CONTANDO QUANTAS QUESTOES TEM
         todasQuestoesRef.addChildEventListener(new ChildEventListener() {
@@ -116,9 +118,10 @@ public class TesteActivity extends AppCompatActivity {
         //CRIANDO INTENT
         final Intent proxQuestaoIntent = new Intent(TesteActivity.this, TesteActivity.class);
         proxQuestaoIntent.putExtra("idQuestao", idProxQuestao);
+
         //TODO adicionar asquestões certas/erradas do usuario
 
-        testeRef.addValueEventListener(new ValueEventListener() {
+        questaoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // exibir questao
@@ -142,7 +145,7 @@ public class TesteActivity extends AppCompatActivity {
                     }
                 }
 
-                //TODO FAZER UM CASE pra cada numero de respostas possivveis (até 5)
+                //TODO FAZER UM CASE pra cada numero de respostas possivveis (até 5?)
                 if (qtdRespostas < 3) {
                     rbResposta3.setVisibility(View.INVISIBLE);
                 }

@@ -57,6 +57,7 @@ public class MenuTestesActivity extends AppCompatActivity {
 
                 //Enviando id do Conteudo para a nova Activity
                 testeIntent.putExtra("idConteudo", i+1);
+                testeIntent.putExtra("idQuestao", 1);
 
                 //TODO Mandar no intent o numero da primeira questão do teste
 
