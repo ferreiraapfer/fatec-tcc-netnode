@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PerfilActivity extends AppCompatActivity {
@@ -36,6 +37,8 @@ public class PerfilActivity extends AppCompatActivity {
 
     String idUsuario;
 
+    ArrayList<TesteRealizado> testesRealizados;
+
     String nomeUsuario;
     String emailUsuario;
     int progressoUsuario;
@@ -46,8 +49,6 @@ public class PerfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil);
 
         //TODO arrumar pontuação texto, maximo e barra
-
-        initTesteRealizadoListView();
 
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -66,6 +67,9 @@ public class PerfilActivity extends AppCompatActivity {
         idUsuario = user.getUid();
 
         mUserRef = mRootRef.child("usuarios").child(idUsuario);
+
+        initTesteRealizadoListView(mUserRef);
+
 
         mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,17 +128,50 @@ public class PerfilActivity extends AppCompatActivity {
         return list;
     }
 
-    private void initTesteRealizadoListView() {
+    private void initTesteRealizadoListView(DatabaseReference usuarioRef) {
         ListView listView = (ListView) findViewById(R.id.advanced_list_view);
 
         if (listView == null) {
             return;
         }
 
+        /*TODO Pegar a lista de conteudos. Comparar com os testes realizados, pegar no array o nome, id do conteudo e a nota no teste
+
+        usuarioRef.child("testesRealizados").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        */
+
+
         ArrayList<TesteRealizado> list = createTesteRealizadoList();
 
         TesteRealizadoAdapter adapter = new TesteRealizadoAdapter(this, R.layout.lista_testes_realizados_item, list);
         listView.setAdapter(adapter);
+
     }
 
 
