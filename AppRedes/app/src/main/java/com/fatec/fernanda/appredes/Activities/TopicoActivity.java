@@ -50,6 +50,8 @@ public class TopicoActivity extends AppCompatActivity {
     TextView txtTopico3;
 
     ImageView img1;
+    ImageView img2;
+    ImageView img3;
 
     Button btnConcluirTopico;
 
@@ -71,6 +73,8 @@ public class TopicoActivity extends AppCompatActivity {
         txtTopico3 = (TextView) findViewById(R.id.txtTopico3);
 
         img1 = (ImageView) findViewById(R.id.imgTopico1);
+        img2 = (ImageView) findViewById(R.id.imgTopico2);
+        img3 = (ImageView) findViewById(R.id.imgTopico3);
 
 
         btnConcluirTopico = (Button) findViewById(R.id.btnConcluirTopico);
@@ -254,7 +258,9 @@ public class TopicoActivity extends AppCompatActivity {
         }
 
         try {
-            showImagens(storageRef);
+            showImagens(storageRef, 1, img1);
+            showImagens(storageRef, 2, img2);
+            showImagens(storageRef, 3, img3);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -295,16 +301,18 @@ public class TopicoActivity extends AppCompatActivity {
         });
     }
 
-    private void showImagens(StorageReference storageRef) throws IOException {
+    private void showImagens(StorageReference storageRef, final int id, final ImageView img) throws IOException {
 
-        storageRef = storageRef.child("img1.png");
+        storageRef = storageRef.child("img" + id + ".png");
 
         storageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                img1.setImageBitmap(bmp);
-                img1.setVisibility(View.VISIBLE);
+
+                img.setImageBitmap(bmp);
+                img.setVisibility(View.VISIBLE);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
