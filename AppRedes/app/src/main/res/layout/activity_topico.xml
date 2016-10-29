@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtConteudoTopico"
+                android:id="@+id/txtTopico1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -40,6 +40,51 @@
                 android:text="Conteúdo do tópico"
                 android:textSize="28px"
                 android:textIsSelectable="true" />
+
+            <ImageView
+                android:id="@+id/imgTopico1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txtTopico2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="30dp"
+                android:text="Conteúdo do tópico"
+                android:textSize="28px"
+                android:textIsSelectable="true"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/imgTopico2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/txtTopico3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="30dp"
+                android:text="Conteúdo do tópico"
+                android:textSize="28px"
+                android:textIsSelectable="true"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/imgTopico3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/btnConcluirTopico"
@@ -51,7 +96,8 @@
                 android:layout_marginTop="30dp"
                 android:background="@color/colorPrimary"
                 android:text="Concluir Tópico"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:visibility="visible" />
 
         </LinearLayout>
 
