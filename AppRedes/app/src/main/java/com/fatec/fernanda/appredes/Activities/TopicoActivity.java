@@ -1,18 +1,23 @@
 package com.fatec.fernanda.appredes.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.models.Topico;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,6 +49,8 @@ public class TopicoActivity extends AppCompatActivity {
     TextView txtTopico2;
     TextView txtTopico3;
 
+    ImageView img1;
+
     Button btnConcluirTopico;
 
     DatabaseReference topicoRef;
@@ -61,6 +69,8 @@ public class TopicoActivity extends AppCompatActivity {
         txtTopico1 = (TextView) findViewById(R.id.txtTopico1);
         txtTopico2 = (TextView) findViewById(R.id.txtTopico2);
         txtTopico3 = (TextView) findViewById(R.id.txtTopico3);
+
+        img1 = (ImageView) findViewById(R.id.imgTopico1);
 
 
         btnConcluirTopico = (Button) findViewById(R.id.btnConcluirTopico);
@@ -243,6 +253,11 @@ public class TopicoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        try {
+            showImagens(storageRef);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         //CONCLUIR TOPICO
@@ -278,6 +293,26 @@ public class TopicoActivity extends AppCompatActivity {
                 invalidaBotao();
             }
         });
+    }
+
+    private void showImagens(StorageReference storageRef) throws IOException {
+
+        storageRef = storageRef.child("img1.png");
+
+        storageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                img1.setImageBitmap(bmp);
+                img1.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
     }
 
 
