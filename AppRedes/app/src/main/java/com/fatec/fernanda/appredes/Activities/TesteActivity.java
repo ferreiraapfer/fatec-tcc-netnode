@@ -65,8 +65,15 @@ public class TesteActivity extends AppCompatActivity {
         arrayRespostas = new ArrayList<>();
 
         /*
-        Receber index da questao pelo intent. Colocar intent a partir da seleção no menu
-        Contar quantas questoes tem. Se essa não for aúltima, colocar o index no intent seguinte
+        TODO Receber index da questao pelo intent (Colocar intent a partir da seleção no menu).
+        TODO Pegar 10 questões referentes ao conteúdo selecionado
+        TODO Exibir perguntas
+        TODO Exibir respostas
+        TODO Contar quantas questoes tem. Se essa não for aúltima, colocar o index no intent seguinte
+        - Botão de concluir teste
+        TODO Calcular respostas certas e nota
+        TODO Ao final, exibir botão de voltar ao menu principal
+        TODO Ao final, exibir teste com resposta certa e explicações
          */
 
         //RECEBENDO O ID DA QUESTAO
