@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.dao.FirebaseHelper;
+import com.fatec.fernanda.appredes.models.Teste;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +33,8 @@ public class MenuTestesActivity extends AppCompatActivity {
     DatabaseReference db;
     FirebaseHelper helper;
 
+    DatabaseReference questoes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,8 @@ public class MenuTestesActivity extends AppCompatActivity {
         //TODO contar os testes já feitos
         db = FirebaseDatabase.getInstance().getReference("conteudos");
         helper = new FirebaseHelper(db);
+
+
 
 
         //ADAPTER
@@ -58,6 +63,9 @@ public class MenuTestesActivity extends AppCompatActivity {
                 //Enviando id do Conteudo para a nova Activity
                 testeIntent.putExtra("idConteudo", i+1);
                 testeIntent.putExtra("idQuestao", 1);
+
+                ArrayList<Teste> arrayMeuTeste = new ArrayList<>();
+                testeIntent.putExtra("arrayMeuTeste", arrayMeuTeste);
 
                 //TODO Mandar no intent o numero da primeira questão do teste
 

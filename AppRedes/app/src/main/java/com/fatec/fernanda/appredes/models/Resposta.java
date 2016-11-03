@@ -8,16 +8,16 @@ public class Resposta {
 
     int id;
     String descricao;
-    String justificativa;
+    String explicacao;
 
     public Resposta() {
         //
     }
 
-    public Resposta(int id, String descricao, String justificativa) {
+    public Resposta(int id, String descricao, String explicacao) {
         this.id = id;
         this.descricao = descricao;
-        this.justificativa = justificativa;
+        this.explicacao = explicacao;
     }
 
     public int getId() {
@@ -36,11 +36,11 @@ public class Resposta {
         this.descricao = descricao;
     }
 
-    public String getJustificativa() {
-        return justificativa;
+    public String getExplicacao() {
+        return explicacao;
     }
 
-    public void setJustificativa(String justificativa) {
-        this.justificativa = justificativa;
+    public void setExplicacao(String explicacao) {
+        this.explicacao = explicacao;
     }
 }
