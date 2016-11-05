@@ -1,10 +1,12 @@
 package com.fatec.fernanda.appredes.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Fernanda on 15/09/2016.
  */
 
-public class Resposta {
+public class Resposta implements Serializable {
 
     int id;
     String descricao;

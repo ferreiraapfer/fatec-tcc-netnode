@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.dao.FirebaseHelper;
+import com.fatec.fernanda.appredes.models.DataWrapper;
 import com.fatec.fernanda.appredes.models.Teste;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -48,8 +49,6 @@ public class MenuTestesActivity extends AppCompatActivity {
         helper = new FirebaseHelper(db);
 
 
-
-
         //ADAPTER
         adapterConteudosTestes = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, (List<String>) helper.retrieve());
         conteudosList.setAdapter(adapterConteudosTestes);
@@ -61,11 +60,14 @@ public class MenuTestesActivity extends AppCompatActivity {
                 Intent testeIntent = new Intent(MenuTestesActivity.this, TesteActivity.class);
 
                 //Enviando id do Conteudo para a nova Activity
-                testeIntent.putExtra("idConteudo", i+1);
+                testeIntent.putExtra("idConteudo", i + 1);
                 testeIntent.putExtra("idQuestao", 1);
 
                 ArrayList<Teste> arrayMeuTeste = new ArrayList<>();
-                testeIntent.putExtra("arrayMeuTeste", arrayMeuTeste);
+
+                DataWrapper dataWrapper = new DataWrapper();
+                dataWrapper.setArrayTeste(arrayMeuTeste);
+                testeIntent.putExtra("data", dataWrapper);
 
                 //TODO Mandar no intent o numero da primeira questão do teste
 

@@ -1,16 +1,18 @@
 package com.fatec.fernanda.appredes.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Fernanda on 15/09/2016.
  */
 
-public class Questao {
+public class Questao implements Serializable {
 
     int id;
     String descricao;
-    Topico topico;
+    String explicacao;
+    Conteudo conteudo;
     List<Resposta> respostas;
     Resposta respostaCorreta;
 
@@ -18,10 +20,6 @@ public class Questao {
         //
     }
 
-    public Questao(int id, String descricao) {
-        this.id = id;
-        this.descricao = descricao;
-    }
 
     public int getId() {
         return id;
@@ -39,14 +37,6 @@ public class Questao {
         this.descricao = descricao;
     }
 
-    public Topico getTopico() {
-        return topico;
-    }
-
-    public void setTopico(Topico topico) {
-        this.topico = topico;
-    }
-
     public List<Resposta> getRespostas() {
         return respostas;
     }
@@ -61,5 +51,21 @@ public class Questao {
 
     public void setRespostaCorreta(Resposta respostaCorreta) {
         this.respostaCorreta = respostaCorreta;
+    }
+
+    public Conteudo getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(Conteudo conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public String getExplicacao() {
+        return explicacao;
+    }
+
+    public void setExplicacao(String explicacao) {
+        this.explicacao = explicacao;
     }
 }

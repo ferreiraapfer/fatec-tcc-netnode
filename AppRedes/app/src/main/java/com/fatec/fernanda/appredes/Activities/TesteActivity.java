@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.models.DataWrapper;
+import com.fatec.fernanda.appredes.models.Questao;
 import com.fatec.fernanda.appredes.models.Resposta;
 import com.fatec.fernanda.appredes.models.Teste;
 import com.google.firebase.database.ChildEventListener;
@@ -45,18 +47,20 @@ public class TesteActivity extends AppCompatActivity {
     DatabaseReference questoesConteudoRef;
     DatabaseReference respostasRef;
 
+    Questao novaQuestao;
+    ArrayList<Resposta> respostas;
+    Resposta respostaCerta;
+
+    DataWrapper dataWrapper;
+
     ArrayList<String> arrayStringRespostas;
 
     int idConteudo;
-    int idQuestao;
     int numQuestoes;
     int idProxQuestao;
 
     int qtdRespostas;
 
-    String respostaCerta;
-
-    ArrayList<Resposta> arrayRespostas;
     ArrayList<Teste> arrayMeuTeste;
 
 
@@ -65,6 +69,8 @@ public class TesteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teste);
 
+
+        //INICIALIZANDO VALORES
         txtPergunta = (TextView) findViewById(R.id.txtPergunta);
         imgIlustracao = (ImageView) findViewById(R.id.imgIlustracao);
 
@@ -76,16 +82,20 @@ public class TesteActivity extends AppCompatActivity {
         btnProxQuestao = (Button) findViewById(R.id.btnProxima);
         btnConcluirTeste = (Button) findViewById(R.id.btnConcluirTeste);
 
-
         arrayStringRespostas = new ArrayList<>();
-        arrayRespostas = new ArrayList<>();
+        respostas = new ArrayList<>();
+
+
+        novaQuestao = new Questao();
+        respostas = new ArrayList<>();
+        respostaCerta = new Resposta();
 
         /*
         done Receber index da questao pelo intent (Colocar intent a partir da seleção no menu).
         done Exibir perguntas
         done Exibir respostas
         done Contar quantas questoes tem. Se essa não for aúltima, colocar o index no intent seguinte
-        TODO Botão de concluir teste
+        done Botão de concluir teste
         TODO Calcular respostas certas e nota
         TODO Ao final, exibir botão de voltar ao menu principal
         TODO Ao final, exibir teste com resposta certa e explicações
@@ -97,17 +107,22 @@ public class TesteActivity extends AppCompatActivity {
 
         //RECEBENDO O ID DA QUESTAO
         Intent originIntent = getIntent();
-        idQuestao = originIntent.getExtras().getInt("idQuestao");
+        novaQuestao.setId(originIntent.getExtras().getInt("idQuestao"));
         idConteudo = originIntent.getExtras().getInt("idConteudo");
         numQuestoes = originIntent.getExtras().getInt("numQuestoes");
-        arrayMeuTeste = (ArrayList<Teste>) originIntent.getExtras().getSerializable("arrayMeuTeste");
+
+        DataWrapper dw = (DataWrapper) getIntent().getSerializableExtra("data");
+        arrayMeuTeste = dw.getArrayTeste();
+
+        dataWrapper = new DataWrapper();
 
         questoesConteudoRef = FirebaseDatabase.getInstance().getReference().child("questoes").child("conteudo" + idConteudo);
-        questaoRef = questoesConteudoRef.child("questao" + idQuestao);
+        questaoRef = questoesConteudoRef.child("questao" + novaQuestao.getId());
         respostasRef = FirebaseDatabase.getInstance().getReference().child("respostas");
 
+
         //CONTANDO QUANTAS QUESTOES TEM
-        if (idQuestao == 1) {
+        if (novaQuestao.getId() == 1) {
             questoesConteudoRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -115,8 +130,8 @@ public class TesteActivity extends AppCompatActivity {
 
 
                     //Se não for a ultima questão, novoIntent
-                    if (idQuestao < numQuestoes) {
-                        idProxQuestao = idQuestao + 1;
+                    if (novaQuestao.getId() < numQuestoes) {
+                        idProxQuestao = novaQuestao.getId() + 1;
                     } else {
                         btnProxQuestao.setVisibility(View.INVISIBLE);
                         btnConcluirTeste.setVisibility(View.VISIBLE);
@@ -139,8 +154,8 @@ public class TesteActivity extends AppCompatActivity {
         } else {
 
             //Se não for a ultima questão, novoIntent
-            if (idQuestao < numQuestoes) {
-                idProxQuestao = idQuestao + 1;
+            if (novaQuestao.getId() < numQuestoes) {
+                idProxQuestao = novaQuestao.getId() + 1;
             } else {
                 btnProxQuestao.setVisibility(View.INVISIBLE);
                 btnConcluirTeste.setVisibility(View.VISIBLE);
@@ -170,12 +185,16 @@ public class TesteActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         if (dataSnapshot.getValue(Boolean.class)) {
-                            respostaCerta = dataSnapshot.getKey();
+                            respostaCerta.setId(Integer.parseInt(dataSnapshot.getKey().substring(8)));
+                            novaQuestao.setRespostaCorreta(respostaCerta);
+
+                            getResposta(novaQuestao.getRespostaCorreta().getId(), count[0]);
+                        } else {
+                            getResposta(Integer.parseInt(dataSnapshot.getKey().substring(8)), count[0]);
                         }
 
                         count[0] = count[0] + 1;
 
-                        getResposta(dataSnapshot.getKey(), count[0]);
                     }
 
                     @Override
@@ -215,19 +234,22 @@ public class TesteActivity extends AppCompatActivity {
                 if (radioGroup.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(TesteActivity.this, "Selecione uma resposta para continuar", Toast.LENGTH_SHORT);
                 } else {
-                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
+                    novaQuestao.setRespostas(respostas);
 
                     Teste meuTeste = new Teste();
-                    meuTeste.setIdQuestao(idQuestao);
+                    meuTeste.setQuestao(novaQuestao);
                     meuTeste.setIdRespostaDada(radioGroup.getCheckedRadioButtonId());
 
+                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
                     if (myResposta.equals(respostaCerta)) {
-                        meuTeste.setAcertou(TRUE);
+                        meuTeste.setAcertou(Boolean.TRUE);
                     }
 
                     arrayMeuTeste.add(meuTeste);
 
-                    proxQuestaoIntent.putExtra("arrayMeuTeste",arrayMeuTeste);
+                    dataWrapper.setArrayTeste(arrayMeuTeste);
+
+                    proxQuestaoIntent.putExtra("data", dataWrapper);
 
                     TesteActivity.this.startActivity(proxQuestaoIntent);
                 }
@@ -246,41 +268,63 @@ public class TesteActivity extends AppCompatActivity {
         btnConcluirTeste.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent explicacaoTeste = new Intent(TesteActivity.this, ExplicacaoTesteActivity.class);
 
-                explicacaoTeste.putExtra("idConteudo",idConteudo);
-                explicacaoTeste.putExtra("arrayMeuTeste", arrayMeuTeste);
-                explicacaoTeste.putExtra("numQuestoes", numQuestoes);
+                if (radioGroup.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(TesteActivity.this, "Selecione uma resposta para continuar", Toast.LENGTH_SHORT);
+                } else {
 
-                TesteActivity.this.startActivity(explicacaoTeste);
+                    novaQuestao.setRespostas(respostas);
+
+                    Teste meuTeste = new Teste();
+                    meuTeste.setQuestao(novaQuestao);
+                    meuTeste.setIdRespostaDada(radioGroup.getCheckedRadioButtonId());
+
+                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
+                    if (myResposta.equals(respostaCerta)) {
+                        meuTeste.setAcertou(Boolean.TRUE);
+                    }
+
+                    arrayMeuTeste.add(meuTeste);
+
+                    Intent explicacaoTeste = new Intent(TesteActivity.this, ExplicacaoTesteActivity.class);
+
+                    explicacaoTeste.putExtra("idConteudo", idConteudo);
+                    explicacaoTeste.putExtra("numQuestoes", numQuestoes);
+
+                    dataWrapper.setArrayTeste(arrayMeuTeste);
+
+                    explicacaoTeste.putExtra("data", dataWrapper);
+
+                    TesteActivity.this.startActivity(explicacaoTeste);
+                }
             }
         });
 
     }
 
-    public void getResposta(final String idResposta, final int num) {
-        respostasRef.child(idResposta).addValueEventListener(new ValueEventListener() {
+    public void getResposta(final int idResposta, final int num) {
+
+        respostasRef.child("resposta" + idResposta).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Resposta novaResposta = new Resposta();
                 novaResposta.setId(Integer.parseInt(dataSnapshot.getKey().substring(8)));
                 novaResposta.setDescricao(dataSnapshot.child("descricao").getValue().toString());
-                novaResposta.setExplicacao(dataSnapshot.child("explicacao").getValue().toString());
 
-                arrayRespostas.add(novaResposta);
+                respostas.add(novaResposta);
 
                 switch (num) {
+                    case 0:
+                        rbResposta1.setText(respostas.get(0).getDescricao());
+                        rbResposta1.setId(respostas.get(0).getId());
+                        break;
                     case 1:
-                        rbResposta1.setText(arrayRespostas.get(0).getDescricao());
-                        rbResposta1.setId(arrayRespostas.get(0).getId());
+                        rbResposta2.setText(respostas.get(1).getDescricao());
+                        rbResposta2.setId(respostas.get(1).getId());
                         break;
                     case 2:
-                        rbResposta2.setText(arrayRespostas.get(1).getDescricao());
-                        rbResposta2.setId(arrayRespostas.get(1).getId());
-                        break;
-                    case 3:
-                        rbResposta3.setText(arrayRespostas.get(2).getDescricao());
-                        rbResposta3.setId(arrayRespostas.get(2).getId());
+                        rbResposta3.setText(respostas.get(2).getDescricao());
+                        rbResposta3.setId(respostas.get(2).getId());
                         rbResposta3.setVisibility(View.VISIBLE);
                         break;
                     default:

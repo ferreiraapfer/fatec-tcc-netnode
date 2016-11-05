@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="25dp"
+    android:id="@+id/lista_correcao_teste"
+    android:layout_above="@id/activity_explicacao_teste">
+
+    <TextView
+        android:id="@+id/txtNumQuestao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nº"
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/txtPergunta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/txtNumQuestao"
+        android:text="Pergunta"
+        android:textAlignment="center"/>
+
+    <ImageView
+        android:id="@+id/imgPergunta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/txtPergunta"
+        android:src="@drawable/common_google_signin_btn_icon_dark_disabled"/>
+
+    <TextView
+        android:id="@+id/txtResposta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgPergunta"
+        android:layout_marginTop="10dp"
+        android:text="Resposta: "
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/txtExplicao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtResposta"
+        android:text="Explicação"/>
+
+</RelativeLayout>

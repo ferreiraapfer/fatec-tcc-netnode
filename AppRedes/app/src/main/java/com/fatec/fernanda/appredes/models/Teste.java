@@ -2,30 +2,28 @@ package com.fatec.fernanda.appredes.models;
 
 import java.io.Serializable;
 
+import static java.lang.Boolean.FALSE;
+
 /**
  * Created by Fernanda on 03/11/2016.
  */
 
 public class Teste implements Serializable{
 
-    int idQuestao;
-    boolean acertou;
+    Questao questao;
     int idRespostaDada;
+    boolean acertou;
 
-    public int getIdQuestao() {
-        return idQuestao;
+
+    public Teste() {
+        acertou = FALSE;
     }
 
-    public void setIdQuestao(int idQuestao) {
-        this.idQuestao = idQuestao;
+    public Questao getQuestao() {
+        return questao;
     }
-
-    public boolean isAcertou() {
-        return acertou;
-    }
-
-    public void setAcertou(boolean acertou) {
-        this.acertou = acertou;
+    public void setQuestao(Questao questao) {
+        this.questao = questao;
     }
 
     public int getIdRespostaDada() {
@@ -34,5 +32,13 @@ public class Teste implements Serializable{
 
     public void setIdRespostaDada(int idRespostaDada) {
         this.idRespostaDada = idRespostaDada;
+    }
+
+    public boolean isAcertou() {
+        return acertou;
+    }
+
+    public void setAcertou(boolean acertou) {
+        this.acertou = acertou;
     }
 }
