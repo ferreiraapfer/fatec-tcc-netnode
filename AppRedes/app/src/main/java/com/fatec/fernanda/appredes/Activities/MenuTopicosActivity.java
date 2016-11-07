@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.fatec.fernanda.appredes.dao.FirebaseHelper;
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.interfaces.MenuTopicosChildView;
 import com.fatec.fernanda.appredes.models.Topico;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,80 +29,86 @@ public class MenuTopicosActivity extends AppCompatActivity {
 
     ListView topicosList;
 
-    DatabaseReference databaseRef;
+
     DatabaseReference topicosConteudoRef;
     DatabaseReference topicosRef;
     DatabaseReference umTituloRef;
 
     FirebaseHelper helper;
 
-    int idConteudo;
 
     ArrayList<String> arrayStringTopicos;
     ArrayList<String> titulosTopicos;
 
     Topico topico;
 
-    ArrayList<Topico> arrayTopicos;
+
+    ArrayList<Topico> topicos;
+    LinearLayout linearLayout;
+    DatabaseReference databaseRef;
+    DatabaseReference usuarioRef;
+    int idConteudo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_topicos);
 
-        
+        linearLayout = (LinearLayout) findViewById(R.id.linLayoutMenuTopicos);
+        topicos = new ArrayList<>();
 
-
-        /*
-        linearLayout = (LinearLayout) findViewById(R.id.linLayoutMenuConteudos);
-
-        conteudos = new ArrayList<>();
+        //RECEBENDO O ID DO CONTEUDO
+        Intent originIntent = getIntent();
+        idConteudo = originIntent.getExtras().getInt("idConteudo");
 
         //SETUP FIREBASE
-        db = FirebaseDatabase.getInstance().getReference("conteudos");
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("topicos");
         usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("conteudosConcluidos");
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("topicosConcluidos").child("conteudo" + idConteudo);
 
-        db.addChildEventListener(new ChildEventListener() {
+        databaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final Conteudo novoConteudo = new Conteudo();
+                final Topico novoTopico = new Topico();
 
-                novoConteudo.setTitulo(dataSnapshot.child("titulo").getValue(String.class));
-                novoConteudo.setId(dataSnapshot.getKey());
+                novoTopico.setTitulo(dataSnapshot.child("titulo").getValue(String.class));
+                novoTopico.setId(Integer.parseInt(dataSnapshot.getKey().substring(6)));
 
-                final MenuConteudosChildView child = new MenuConteudosChildView(MenuConteudosActivity.this);
-                child.setCheckedTextView(novoConteudo.getTitulo());
+                final MenuTopicosChildView child = new MenuTopicosChildView(MenuTopicosActivity.this);
+                child.setCheckedTextView(novoTopico.getTitulo());
 
-                //VERIFICAR SE JÁ TERMINOU
+                //VERIFICA SE JÁ CONCLUIU
                 usuarioRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        if (novoConteudo.getId().equals(dataSnapshot.getKey())) {
+                        String idTopico = "topico" + novoTopico.getId();
+                        if (idTopico.equals(dataSnapshot.getKey())) {
                             child.setChecked();
                             child.setClickable(Boolean.FALSE);
+                        }
 
-                            conteudos.add(novoConteudo);
+                        topicos.add(novoTopico);
 
-                            child.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
+                        child.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                for (Topico t : topicos) {
+                                    if (t.getTitulo().equals(child.getCheckedTextView())) {
+                                        Intent topicoIntent = new Intent(MenuTopicosActivity.this, TopicoActivity.class);
 
-                                    for (Conteudo c : conteudos) {
-                                        if (c.getTitulo().equals(child.getCheckedTextView())) {
-                                            Intent menuTopicosIntent = new Intent(MenuConteudosActivity.this,
-                                                    MenuTopicosActivity.class);
-                                            menuTopicosIntent.putExtra("idConteudo",
-                                                    Integer.parseInt(c.getId().substring(8)));
+                                        topicoIntent.putExtra("idTopico", t.getId());
+                                        topicoIntent.putExtra("tituloTopico", t.getTitulo());
+                                        topicoIntent.putExtra("idConteudo", idConteudo);
 
-                                            MenuConteudosActivity.this.startActivity(menuTopicosIntent);
-                                        }
+                                        MenuTopicosActivity.this.startActivity(topicoIntent);
                                     }
                                 }
-                            });
 
-                            linearLayout.addView(child);
-                        }
+                            }
+                        });
+                        linearLayout.addView(child);
+
+
                     }
 
                     @Override
@@ -147,8 +157,9 @@ public class MenuTopicosActivity extends AppCompatActivity {
         });
 
 
-    }
-         */
+
+
+        /*
 
         topicosList = (ListView) findViewById(R.id.lstMenuTopicos);
 
@@ -231,5 +242,8 @@ public class MenuTopicosActivity extends AppCompatActivity {
 
             }
         });
+
+
+        */
     }
 }
