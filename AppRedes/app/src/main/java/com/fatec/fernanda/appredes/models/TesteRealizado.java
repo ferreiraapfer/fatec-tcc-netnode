@@ -9,7 +9,7 @@ import java.util.Random;
 public class TesteRealizado {
     private int idConteudo;
     private String nomeConteudo;
-    private int notaTeste;
+    private double notaTeste;
 
     private static String[] conteudos = new String[]{
             "Introdução", "História", "Redes sem Fio", "Camada de Aplicação", "Camada de Rede"};
@@ -40,11 +40,11 @@ public class TesteRealizado {
         this.nomeConteudo = nomeConteudo;
     }
 
-    public int getNotaTeste() {
+    public double getNotaTeste() {
         return notaTeste;
     }
 
-    public void setNotaTeste(int notaTeste) {
+    public void setNotaTeste(double notaTeste) {
         this.notaTeste = notaTeste;
     }
 

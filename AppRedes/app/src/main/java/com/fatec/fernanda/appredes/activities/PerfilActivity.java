@@ -48,8 +48,6 @@ public class PerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        //TODO arrumar pontuação texto, maximo e barra
-
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -68,8 +66,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         mUserRef = mRootRef.child("usuarios").child(idUsuario);
 
-        initTesteRealizadoListView(mUserRef);
-
+        //initTesteRealizadoListView(mUserRef);
 
         mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,6 +82,10 @@ public class PerfilActivity extends AppCompatActivity {
                 pbarProgresso.setProgress(progressoUsuario);
                 txtProgressoUsuario.setText(String.valueOf(progressoUsuario)); //TODO Porcentagem do total de conteudos
 
+                getConteudosConcluidos(mUserRef);
+
+                mUserRef.removeEventListener(this);
+
             }
 
             @Override
@@ -92,55 +93,43 @@ public class PerfilActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    private void getConteudosConcluidos(DatabaseReference mUserRef) {
         /*
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(String.class);
-                conteudosConcluidos.setText(text);
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+            TODO
+            -Pegar quais conteudos concluiu e as notas
+            -Pegar os nomes dos conteudos que concluiu
+            -Exibir Nome do conteudo, e a nota
         */
 
+        //idConteudo, nomeConteudo, nota
+        final ArrayList<TesteRealizado> testesRealizados = new ArrayList<>();
 
-    }
+        mUserRef = mUserRef.child("conteudosConcluidos");
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+        final DatabaseReference conteudosRef = FirebaseDatabase.getInstance().getReference().child("conteudos");
 
-
-    private ArrayList<TesteRealizado> createTesteRealizadoList() {
-        ArrayList<TesteRealizado> list = new ArrayList<TesteRealizado>();
-
-        for (int i = 1; i <= 5; i++) {
-            list.add(TesteRealizado.novaInstancia(i));
-        }
-
-        return list;
-    }
-
-    private void initTesteRealizadoListView(DatabaseReference usuarioRef) {
-        ListView listView = (ListView) findViewById(R.id.advanced_list_view);
-
-        if (listView == null) {
-            return;
-        }
-
-        /*TODO Pegar a lista de conteudos. Comparar com os testes realizados, pegar no array o nome, id do conteudo e a nota no teste
-
-        usuarioRef.child("testesRealizados").addChildEventListener(new ChildEventListener() {
+        mUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                final TesteRealizado novoTeste = new TesteRealizado();
+                novoTeste.setIdConteudo(Integer.parseInt(dataSnapshot.getKey().substring(8)));
+                novoTeste.setNotaTeste(dataSnapshot.getValue(double.class));
 
+                //Pegar nome do conteudo
+                conteudosRef.child("conteudo" + novoTeste.getIdConteudo()).child("titulo").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        novoTeste.setNomeConteudo(dataSnapshot.getValue(String.class));
+                        initTesteRealizadoListView(newTeste(novoTeste, testesRealizados));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override
@@ -163,16 +152,22 @@ public class PerfilActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        */
+    private ArrayList<TesteRealizado> newTeste(TesteRealizado novoTeste, ArrayList<TesteRealizado> testesRealizados) {
+        testesRealizados.add(novoTeste);
+        return testesRealizados;
+    }
 
+    private void initTesteRealizadoListView(ArrayList<TesteRealizado> list) {
+        ListView listView = (ListView) findViewById(R.id.advanced_list_view);
 
-        ArrayList<TesteRealizado> list = createTesteRealizadoList();
+        if (listView == null) {
+            return;
+        }
 
         TesteRealizadoAdapter adapter = new TesteRealizadoAdapter(this, R.layout.lista_testes_realizados_item, list);
         listView.setAdapter(adapter);
 
     }
-
-
 }

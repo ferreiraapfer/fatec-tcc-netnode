@@ -161,28 +161,44 @@ public class ExplicacaoTesteActivity extends AppCompatActivity {
 
             if (nota > 5) {
                 concluirConteudo();
-                alterarPontuaçao();
+                calcPontuacao();
             }
         }
 
     }
 
-    private void alterarPontuaçao() {
-        //TODO Alterar pontuacao do usuario
+    private void calcPontuacao() {
 
-        DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
-        usuarioRef = usuarioRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("pontuacao");
+        final DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("progresso");
 
+        usuarioRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                double progresso = 0;
+                progresso = dataSnapshot.getValue(double.class);
 
+                //todo PEGAR TOTAL DE CONTEUDOS ?
+                progresso = progresso + nota;
+
+                usuarioRef.removeEventListener(this);
+
+                usuarioRef.setValue(progresso);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
-
 
     private void concluirConteudo() {
         DatabaseReference conteudosConcluidosRef;
         DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
         usuarioRef = usuarioRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         conteudosConcluidosRef = usuarioRef.child("conteudosConcluidos");
-        conteudosConcluidosRef.child("conteudo" + idConteudo).setValue(true);
+        conteudosConcluidosRef.child("conteudo" + idConteudo).setValue(nota);
     }
 
     @Override

@@ -15,4 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 
+    <CheckedTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teste"
+        android:checked="true"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:clickable="false"/>
+
+
 </RelativeLayout>
