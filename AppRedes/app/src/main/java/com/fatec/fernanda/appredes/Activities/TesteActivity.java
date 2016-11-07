@@ -1,6 +1,9 @@
 package com.fatec.fernanda.appredes.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,12 +19,18 @@ import com.fatec.fernanda.appredes.models.DataWrapper;
 import com.fatec.fernanda.appredes.models.Questao;
 import com.fatec.fernanda.appredes.models.Resposta;
 import com.fatec.fernanda.appredes.models.Teste;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -96,9 +105,9 @@ public class TesteActivity extends AppCompatActivity {
         done Exibir respostas
         done Contar quantas questoes tem. Se essa não for aúltima, colocar o index no intent seguinte
         done Botão de concluir teste
-        TODO Calcular respostas certas e nota
-        TODO Ao final, exibir botão de voltar ao menu principal
-        TODO Ao final, exibir teste com resposta certa e explicações
+        done Calcular respostas certas e nota
+        done Ao final, exibir botão de voltar ao menu principal
+        done Ao final, exibir teste com resposta certa e explicações
          */
 
 
@@ -167,7 +176,6 @@ public class TesteActivity extends AppCompatActivity {
 
         }
 
-        //TODO adicionar as respostas certas/erradas do usuario
         questaoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -184,6 +192,7 @@ public class TesteActivity extends AppCompatActivity {
                 respostasRef.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        //se for a resposta certa
                         if (dataSnapshot.getValue(Boolean.class)) {
                             respostaCerta.setId(Integer.parseInt(dataSnapshot.getKey().substring(8)));
                             novaQuestao.setRespostaCorreta(respostaCerta);
@@ -192,6 +201,8 @@ public class TesteActivity extends AppCompatActivity {
                         } else {
                             getResposta(Integer.parseInt(dataSnapshot.getKey().substring(8)), count[0]);
                         }
+
+                        getImagem(Integer.parseInt(dataSnapshot.getKey().substring(8)));
 
                         count[0] = count[0] + 1;
 
@@ -297,6 +308,29 @@ public class TesteActivity extends AppCompatActivity {
 
                     TesteActivity.this.startActivity(explicacaoTeste);
                 }
+            }
+        });
+
+    }
+
+    private void getImagem(int idQuestao) {
+        StorageReference questaoRef = FirebaseStorage.getInstance().getReference().child("questoes")
+                .child("conteudo" + idConteudo).child("questao" + idQuestao + ".png");
+
+        questaoRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                imgIlustracao.setImageBitmap(bmp);
+                imgIlustracao.setVisibility(View.VISIBLE);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Handle any erros
+
             }
         });
 

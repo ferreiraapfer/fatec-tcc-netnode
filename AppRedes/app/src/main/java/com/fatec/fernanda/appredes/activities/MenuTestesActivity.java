@@ -75,4 +75,9 @@ public class MenuTestesActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MenuTestesActivity.this, MenuActivity.class));
+    }
 }
