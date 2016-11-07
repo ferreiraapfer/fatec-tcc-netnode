@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_menu_conteudos"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="500dp"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.fatec.fernanda.appredes.activities.MenuConteudosActivity">
 
-    <ListView
-        android:id="@+id/menuConteudos"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="match_parent">
 
-    <CheckedTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Teste"
-        android:checked="true"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:clickable="false"/>
+        <LinearLayout
+            android:id="@+id/linLayoutMenuConteudos"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

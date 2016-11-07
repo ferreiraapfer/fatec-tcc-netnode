@@ -36,19 +36,119 @@ public class MenuTopicosActivity extends AppCompatActivity {
 
     ArrayList<String> arrayStringTopicos;
     ArrayList<String> titulosTopicos;
-    ArrayList<Integer> idTopicos;
 
     Topico topico;
 
     ArrayList<Topico> arrayTopicos;
 
-
-    //TODO ALTERAR PARAMETODO ONLOAD?
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_topicos);
+
+        
+
+
+        /*
+        linearLayout = (LinearLayout) findViewById(R.id.linLayoutMenuConteudos);
+
+        conteudos = new ArrayList<>();
+
+        //SETUP FIREBASE
+        db = FirebaseDatabase.getInstance().getReference("conteudos");
+        usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("conteudosConcluidos");
+
+        db.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                final Conteudo novoConteudo = new Conteudo();
+
+                novoConteudo.setTitulo(dataSnapshot.child("titulo").getValue(String.class));
+                novoConteudo.setId(dataSnapshot.getKey());
+
+                final MenuConteudosChildView child = new MenuConteudosChildView(MenuConteudosActivity.this);
+                child.setCheckedTextView(novoConteudo.getTitulo());
+
+                //VERIFICAR SE JÁ TERMINOU
+                usuarioRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        if (novoConteudo.getId().equals(dataSnapshot.getKey())) {
+                            child.setChecked();
+                            child.setClickable(Boolean.FALSE);
+
+                            conteudos.add(novoConteudo);
+
+                            child.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    for (Conteudo c : conteudos) {
+                                        if (c.getTitulo().equals(child.getCheckedTextView())) {
+                                            Intent menuTopicosIntent = new Intent(MenuConteudosActivity.this,
+                                                    MenuTopicosActivity.class);
+                                            menuTopicosIntent.putExtra("idConteudo",
+                                                    Integer.parseInt(c.getId().substring(8)));
+
+                                            MenuConteudosActivity.this.startActivity(menuTopicosIntent);
+                                        }
+                                    }
+                                }
+                            });
+
+                            linearLayout.addView(child);
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+         */
 
         topicosList = (ListView) findViewById(R.id.lstMenuTopicos);
 

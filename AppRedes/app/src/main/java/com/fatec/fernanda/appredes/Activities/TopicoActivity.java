@@ -83,6 +83,8 @@ public class TopicoActivity extends AppCompatActivity {
 
         //RECEBENDO O ID/NOME DO TOPICO
         Intent originIntent = getIntent();
+        idConteudo = originIntent.getExtras().getInt("idConteudo");
+
         idTopico = originIntent.getExtras().getInt("idTopico");
         tituloTopico = originIntent.getExtras().getString("tituloTopico");
 
@@ -92,10 +94,7 @@ public class TopicoActivity extends AppCompatActivity {
 
 
         //RECEBENDO ID DO CONTEUDO
-        idConteudo = originIntent.getExtras().getInt("idConteudo");
 
-
-        //TODO Antes de carregar o topico, ver se o usuário já não concluiu esse topico. Se já concluiu, desabilitar o botão
         uIdUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(uIdUsuario);
@@ -103,9 +102,8 @@ public class TopicoActivity extends AppCompatActivity {
         usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                //TODO se terminou o topico em questão
-                if (dataSnapshot.child("topico" + idTopico).exists()) {
+                //Se terminou o topico em questão
+                if (dataSnapshot.getKey().equals("topico" + idTopico)) {
                     invalidaBotao();
                 }
             }
@@ -325,7 +323,7 @@ public class TopicoActivity extends AppCompatActivity {
 
 
     private void invalidaBotao() {
-        btnConcluirTopico.setEnabled(false);
+        btnConcluirTopico.setEnabled(Boolean.FALSE);
         btnConcluirTopico.setText("Tópico Concluído");
         btnConcluirTopico.setBackgroundColor(getResources().getColor(R.color.buttonUnenable));
     }
