@@ -113,13 +113,6 @@ public class PerfilActivity extends AppCompatActivity {
     }
 
     private void getConteudosConcluidos(DatabaseReference mUserRef) {
-        /*
-            TODO
-            -Pegar quais conteudos concluiu e as notas
-            -Pegar os nomes dos conteudos que concluiu
-            -Exibir Nome do conteudo, e a nota
-        */
-
         //idConteudo, nomeConteudo, nota
         final ArrayList<TesteRealizado> testesRealizados = new ArrayList<>();
 
@@ -130,23 +123,25 @@ public class PerfilActivity extends AppCompatActivity {
         mUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final TesteRealizado novoTeste = new TesteRealizado();
-                novoTeste.setIdConteudo(Integer.parseInt(dataSnapshot.getKey().substring(8)));
-                novoTeste.setNotaTeste(dataSnapshot.getValue(double.class));
+                if (dataSnapshot.getValue(int.class) >= 5) {
+                    final TesteRealizado novoTeste = new TesteRealizado();
+                    novoTeste.setIdConteudo(Integer.parseInt(dataSnapshot.getKey().substring(8)));
+                    novoTeste.setNotaTeste(dataSnapshot.getValue(double.class));
 
-                //Pegar nome do conteudo
-                conteudosRef.child("conteudo" + novoTeste.getIdConteudo()).child("titulo").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        novoTeste.setNomeConteudo(dataSnapshot.getValue(String.class));
-                        initTesteRealizadoListView(newTeste(novoTeste, testesRealizados));
-                    }
+                    //Pegar nome do conteudo
+                    conteudosRef.child("conteudo" + novoTeste.getIdConteudo()).child("titulo").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            novoTeste.setNomeConteudo(dataSnapshot.getValue(String.class));
+                            initTesteRealizadoListView(newTeste(novoTeste, testesRealizados));
+                        }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
 
             @Override
