@@ -34,6 +34,7 @@ public class PerfilActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference mUserRef;
+    DatabaseReference conteudosRef;
 
     String idUsuario;
 
@@ -42,6 +43,7 @@ public class PerfilActivity extends AppCompatActivity {
     String nomeUsuario;
     String emailUsuario;
     int progressoUsuario;
+    int progressoMax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +66,24 @@ public class PerfilActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         idUsuario = user.getUid();
 
-        mUserRef = mRootRef.child("usuarios").child(idUsuario);
+        conteudosRef = mRootRef.child("conteudos");
 
-        //initTesteRealizadoListView(mUserRef);
+        conteudosRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                progressoMax = (int) dataSnapshot.getChildrenCount() * 10;
+                pbarProgresso.setMax(progressoMax);
+                System.out.println(progressoMax + " hey");
+                conteudosRef.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mUserRef = mRootRef.child("usuarios").child(idUsuario);
 
         mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
