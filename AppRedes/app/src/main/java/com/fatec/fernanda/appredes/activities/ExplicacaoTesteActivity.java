@@ -159,7 +159,7 @@ public class ExplicacaoTesteActivity extends AppCompatActivity {
             nota = (nota * 10) / numQuestoes;
             txtNotaFinal.setText("Nota: " + nota);
 
-            if (nota > 5) {
+            if (nota >= 5) {
                 concluirConteudo();
                 calcPontuacao();
             }
@@ -193,11 +193,29 @@ public class ExplicacaoTesteActivity extends AppCompatActivity {
     }
 
     private void concluirConteudo() {
-        DatabaseReference conteudosConcluidosRef;
+        final DatabaseReference conteudosConcluidosRef;
         DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
         usuarioRef = usuarioRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         conteudosConcluidosRef = usuarioRef.child("conteudosConcluidos");
         conteudosConcluidosRef.child("conteudo" + idConteudo).setValue(nota);
+
+        DatabaseReference conteudos = FirebaseDatabase.getInstance().getReference().child("conteudos");
+        conteudos.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("conteudo" + (idConteudo + 1)).exists()) {
+                    conteudosConcluidosRef.child("conteudo" + (idConteudo + 1)).setValue(0);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     @Override
