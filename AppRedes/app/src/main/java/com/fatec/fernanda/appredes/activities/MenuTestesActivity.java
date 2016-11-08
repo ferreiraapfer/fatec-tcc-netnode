@@ -89,7 +89,8 @@ public class MenuTestesActivity extends AppCompatActivity {
 
                                             //Enviando id do Conteudo para a nova Activity
                                             testeIntent.putExtra("idConteudo",Integer.parseInt(c.getId().substring(8)));
-                                            testeIntent.putExtra("idQuestao", 1);
+                                            testeIntent.putExtra("idQuestao", 0);
+                                            testeIntent.putExtra("numQuestoes", 0);
 
                                             ArrayList<Teste> arrayMeuTeste = new ArrayList<>();
 

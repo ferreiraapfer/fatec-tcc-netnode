@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -21,10 +22,8 @@ import com.fatec.fernanda.appredes.models.DataWrapper;
 import com.fatec.fernanda.appredes.models.Questao;
 import com.fatec.fernanda.appredes.models.Resposta;
 import com.fatec.fernanda.appredes.models.Teste;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,12 +34,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 public class TesteActivity extends AppCompatActivity {
+
+    ProgressBar progBarTotalQuestoes;
 
     TextView txtPergunta;
     ImageView imgIlustracao;
@@ -59,18 +56,20 @@ public class TesteActivity extends AppCompatActivity {
     DatabaseReference respostasRef;
 
     Questao novaQuestao;
+
     ArrayList<Resposta> respostas;
     Resposta respostaCerta;
 
     DataWrapper dataWrapper;
 
+    ArrayList<String> idQuestoes;
     ArrayList<String> arrayStringRespostas;
 
     int idConteudo;
     int numQuestoes;
     int idProxQuestao;
-
     int qtdRespostas;
+    int contQuestao;
 
     ArrayList<Teste> arrayMeuTeste;
 
@@ -82,6 +81,8 @@ public class TesteActivity extends AppCompatActivity {
 
 
         //INICIALIZANDO VALORES
+        progBarTotalQuestoes = (ProgressBar) findViewById(R.id.progBarTotalQuestoes);
+
         txtPergunta = (TextView) findViewById(R.id.txtPergunta);
         imgIlustracao = (ImageView) findViewById(R.id.imgIlustracao);
 
@@ -100,6 +101,8 @@ public class TesteActivity extends AppCompatActivity {
         novaQuestao = new Questao();
         respostas = new ArrayList<>();
         respostaCerta = new Resposta();
+
+        contQuestao = 0;
 
         /*
         done Receber index da questao pelo intent (Colocar intent a partir da seleção no menu).
@@ -121,39 +124,68 @@ public class TesteActivity extends AppCompatActivity {
         novaQuestao.setId(originIntent.getExtras().getInt("idQuestao"));
         idConteudo = originIntent.getExtras().getInt("idConteudo");
         numQuestoes = originIntent.getExtras().getInt("numQuestoes");
+        contQuestao = originIntent.getExtras().getInt("contQuestao");
+        idQuestoes = originIntent.getExtras().getStringArrayList("idQuestoes");
 
         DataWrapper dw = (DataWrapper) getIntent().getSerializableExtra("data");
         arrayMeuTeste = dw.getArrayTeste();
-
         dataWrapper = new DataWrapper();
 
         questoesConteudoRef = FirebaseDatabase.getInstance().getReference().child("questoes").child("conteudo" + idConteudo);
-        questaoRef = questoesConteudoRef.child("questao" + novaQuestao.getId());
         respostasRef = FirebaseDatabase.getInstance().getReference().child("respostas");
 
+        //PEGA PRIMEIRA QUESTAO DO CONTEUDO, ID DE TODAS AS QUESTOES, NUM TOTAL DE QUESTOES, NUMQUESTAO ATUAL
+        //Se for a primeira questão do teste
+        if (novaQuestao.getId() == 0) {
+            idQuestoes = new ArrayList<>();
 
-        //CONTANDO QUANTAS QUESTOES TEM
-        if (novaQuestao.getId() == 1) {
-            questoesConteudoRef.addValueEventListener(new ValueEventListener() {
+            questoesConteudoRef.addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    numQuestoes = (int) dataSnapshot.getChildrenCount();
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    idQuestoes.add(dataSnapshot.getKey().substring(7));
 
+                    numQuestoes = numQuestoes + 1;
 
-                    //Se não for a ultima questão, novoIntent
-                    if (novaQuestao.getId() < numQuestoes) {
-                        idProxQuestao = novaQuestao.getId() + 1;
+                    if (novaQuestao.getId() == 0) {
+                        novaQuestao.setId(Integer.parseInt(dataSnapshot.getKey().substring(7)));
+                        questaoRef = questoesConteudoRef.child("questao" + novaQuestao.getId());
+
+                        getQuestao();
+                    }
+
+                    contQuestao = 1;
+
+                    //Se não for a última questão, novo Intent
+                    if (numQuestoes > 1) {
+                        idProxQuestao = Integer.parseInt(idQuestoes.get(contQuestao));
+
+                        btnProxQuestao.setVisibility(View.VISIBLE);
+                        btnConcluirTeste.setVisibility(View.INVISIBLE);
                     } else {
                         btnProxQuestao.setVisibility(View.INVISIBLE);
                         btnConcluirTeste.setVisibility(View.VISIBLE);
                     }
 
-
                     //CRIANDO INTENT
                     proxQuestaoIntent.putExtra("idQuestao", idProxQuestao);
                     proxQuestaoIntent.putExtra("numQuestoes", numQuestoes);
                     proxQuestaoIntent.putExtra("idConteudo", idConteudo);
+                    proxQuestaoIntent.putExtra("idQuestoes", idQuestoes);
+                    proxQuestaoIntent.putExtra("contQuestao", contQuestao + 1);
+                }
 
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
                 }
 
@@ -161,28 +193,106 @@ public class TesteActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
+
             });
         } else {
+            System.out.println("heyyy " + novaQuestao.getId());
 
             //Se não for a ultima questão, novoIntent
-            if (novaQuestao.getId() < numQuestoes) {
-                idProxQuestao = novaQuestao.getId() + 1;
+            if (contQuestao < numQuestoes) {
+                idProxQuestao = Integer.parseInt(idQuestoes.get(contQuestao + 1));
             } else {
                 btnProxQuestao.setVisibility(View.INVISIBLE);
                 btnConcluirTeste.setVisibility(View.VISIBLE);
             }
+
+            questaoRef = questoesConteudoRef.child("questao" + novaQuestao.getId());
+            getQuestao();
+
             //CRIANDO INTENT
             proxQuestaoIntent.putExtra("idQuestao", idProxQuestao);
             proxQuestaoIntent.putExtra("numQuestoes", numQuestoes);
             proxQuestaoIntent.putExtra("idConteudo", idConteudo);
-
+            proxQuestaoIntent.putExtra("contQuestao", contQuestao + 1);
         }
+
+        btnProxQuestao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (radioGroup.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(TesteActivity.this, "Selecione uma resposta para continuar", Toast.LENGTH_SHORT);
+                } else {
+                    novaQuestao.setRespostas(respostas);
+
+                    Teste meuTeste = new Teste();
+                    meuTeste.setQuestao(novaQuestao);
+                    meuTeste.setIdRespostaDada(radioGroup.getCheckedRadioButtonId());
+
+                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
+                    if (myResposta.equals(respostaCerta)) {
+                        meuTeste.setAcertou(Boolean.TRUE);
+                    }
+
+                    arrayMeuTeste.add(meuTeste);
+
+                    dataWrapper.setArrayTeste(arrayMeuTeste);
+
+                    proxQuestaoIntent.putExtra("data", dataWrapper);
+
+                    TesteActivity.this.startActivity(proxQuestaoIntent);
+                }
+
+            }
+        });
+
+        btnConcluirTeste.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (radioGroup.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(TesteActivity.this, "Selecione uma resposta para continuar", Toast.LENGTH_SHORT);
+                } else {
+
+                    novaQuestao.setRespostas(respostas);
+
+                    Teste meuTeste = new Teste();
+                    meuTeste.setQuestao(novaQuestao);
+                    meuTeste.setIdRespostaDada(radioGroup.getCheckedRadioButtonId());
+
+                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
+                    if (myResposta.equals(respostaCerta)) {
+                        meuTeste.setAcertou(Boolean.TRUE);
+                    }
+
+                    arrayMeuTeste.add(meuTeste);
+
+                    Intent explicacaoTeste = new Intent(TesteActivity.this, ExplicacaoTesteActivity.class);
+
+                    explicacaoTeste.putExtra("idConteudo", idConteudo);
+                    explicacaoTeste.putExtra("numQuestoes", numQuestoes);
+
+                    dataWrapper.setArrayTeste(arrayMeuTeste);
+
+                    explicacaoTeste.putExtra("data", dataWrapper);
+
+                    TesteActivity.this.startActivity(explicacaoTeste);
+                }
+            }
+        });
+
+    }
+
+    public void getQuestao() {
 
         questaoRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // exibir questao
                 txtPergunta.setText(dataSnapshot.child("descricao").getValue(String.class));
+
+                progBarTotalQuestoes.setProgress(contQuestao);
+                progBarTotalQuestoes.setMax(numQuestoes);
 
                 //Quantidade de repostas
                 qtdRespostas = (int) (dataSnapshot.child("respostas").getChildrenCount());
@@ -238,81 +348,6 @@ public class TesteActivity extends AppCompatActivity {
 
             }
         });
-
-
-        btnProxQuestao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (radioGroup.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(TesteActivity.this, "Selecione uma resposta para continuar", Toast.LENGTH_SHORT);
-                } else {
-                    novaQuestao.setRespostas(respostas);
-
-                    Teste meuTeste = new Teste();
-                    meuTeste.setQuestao(novaQuestao);
-                    meuTeste.setIdRespostaDada(radioGroup.getCheckedRadioButtonId());
-
-                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
-                    if (myResposta.equals(respostaCerta)) {
-                        meuTeste.setAcertou(Boolean.TRUE);
-                    }
-
-                    arrayMeuTeste.add(meuTeste);
-
-                    dataWrapper.setArrayTeste(arrayMeuTeste);
-
-                    proxQuestaoIntent.putExtra("data", dataWrapper);
-
-                    TesteActivity.this.startActivity(proxQuestaoIntent);
-                }
-
-
-                //pegar a resposta dada, colocar em um array? e colocar no intent
-                //validar se clicou em uma questao
-
-
-                //
-
-
-            }
-        });
-
-        btnConcluirTeste.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (radioGroup.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(TesteActivity.this, "Selecione uma resposta para continuar", Toast.LENGTH_SHORT);
-                } else {
-
-                    novaQuestao.setRespostas(respostas);
-
-                    Teste meuTeste = new Teste();
-                    meuTeste.setQuestao(novaQuestao);
-                    meuTeste.setIdRespostaDada(radioGroup.getCheckedRadioButtonId());
-
-                    String myResposta = "resposta" + radioGroup.getCheckedRadioButtonId();
-                    if (myResposta.equals(respostaCerta)) {
-                        meuTeste.setAcertou(Boolean.TRUE);
-                    }
-
-                    arrayMeuTeste.add(meuTeste);
-
-                    Intent explicacaoTeste = new Intent(TesteActivity.this, ExplicacaoTesteActivity.class);
-
-                    explicacaoTeste.putExtra("idConteudo", idConteudo);
-                    explicacaoTeste.putExtra("numQuestoes", numQuestoes);
-
-                    dataWrapper.setArrayTeste(arrayMeuTeste);
-
-                    explicacaoTeste.putExtra("data", dataWrapper);
-
-                    TesteActivity.this.startActivity(explicacaoTeste);
-                }
-            }
-        });
-
     }
 
     private void getImagem(int idQuestao) {
@@ -379,9 +414,6 @@ public class TesteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        //TODO EXIBIR MENSAGEM SE DESEJA VOLTAR AO MENU
-
         new AlertDialog.Builder(this)
                 .setTitle("Voltar ao menu")
                 .setMessage("Deseja voltar ao menu principal?")
