@@ -73,47 +73,47 @@ public class MenuTestesActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         //se já terminou o conteudo
-                        if (novoConteudo.getId().equals(dataSnapshot.getKey()) && dataSnapshot.getValue(double.class) >= 5) {
-                            child.setChecked();
-                            child.setClickable(Boolean.FALSE);
-                        }
+                        if (novoConteudo.getId().equals(dataSnapshot.getKey()) ) {
+                            if (dataSnapshot.getValue(int.class) > 5) {
+                                child.setChecked();
+                                child.setClickable(Boolean.FALSE);
+                            } else{ //se não terminou o conteudo
+                                child.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        for (Conteudo c : conteudos) {
+                                            if (c.getTitulo().equals(child.getCheckedTextView())) {
+                                                Intent testeIntent = new Intent(MenuTestesActivity.this, TesteActivity.class);
 
-                        //se não terminou o conteudo
-                        else {
-                            child.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    for (Conteudo c : conteudos) {
-                                        if (c.getTitulo().equals(child.getCheckedTextView())) {
-                                            Intent testeIntent = new Intent(MenuTestesActivity.this, TesteActivity.class);
+                                                //Enviando id do Conteudo para a nova Activity
+                                                testeIntent.putExtra("idConteudo",Integer.parseInt(c.getId().substring(8)));
+                                                testeIntent.putExtra("idQuestao", 0);
+                                                testeIntent.putExtra("numQuestoes", 0);
 
-                                            //Enviando id do Conteudo para a nova Activity
-                                            testeIntent.putExtra("idConteudo",Integer.parseInt(c.getId().substring(8)));
-                                            testeIntent.putExtra("idQuestao", 0);
-                                            testeIntent.putExtra("numQuestoes", 0);
+                                                ArrayList<Teste> arrayMeuTeste = new ArrayList<>();
 
-                                            ArrayList<Teste> arrayMeuTeste = new ArrayList<>();
+                                                DataWrapper dataWrapper = new DataWrapper();
+                                                dataWrapper.setArrayTeste(arrayMeuTeste);
+                                                testeIntent.putExtra("data", dataWrapper);
 
-                                            DataWrapper dataWrapper = new DataWrapper();
-                                            dataWrapper.setArrayTeste(arrayMeuTeste);
-                                            testeIntent.putExtra("data", dataWrapper);
+                                                //TODO Mandar no intent o numero da primeira questão do teste (procurar qual é a primeira)
 
-                                            //TODO Mandar no intent o numero da primeira questão do teste (procurar qual é a primeira)
-
-                                            MenuTestesActivity.this.startActivity(testeIntent);
+                                                MenuTestesActivity.this.startActivity(testeIntent);
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
+                            }
+                            conteudos.add(novoConteudo);
+
+                            try {
+                                linearLayout.addView(child);
+                            }catch (Exception e){
+
+                            }
+
                         }
 
-                        conteudos.add(novoConteudo);
-
-                        try {
-                            linearLayout.addView(child);
-                        }catch (Exception e){
-
-                        }
 
 
                     }
