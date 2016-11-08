@@ -168,7 +168,6 @@ public class ExplicacaoTesteActivity extends AppCompatActivity {
     }
 
     private void calcPontuacao() {
-
         final DatabaseReference usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("progresso");
 
