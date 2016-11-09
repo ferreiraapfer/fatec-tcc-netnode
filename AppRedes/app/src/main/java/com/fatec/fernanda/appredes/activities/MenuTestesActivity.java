@@ -39,8 +39,6 @@ public class MenuTestesActivity extends AppCompatActivity {
 
     ArrayList<Conteudo> conteudos;
 
-    ArrayList<MenuTestesChildView> childs;
-
     LinearLayout linearLayout;
 
     @Override
@@ -95,8 +93,6 @@ public class MenuTestesActivity extends AppCompatActivity {
                                                 DataWrapper dataWrapper = new DataWrapper();
                                                 dataWrapper.setArrayTeste(arrayMeuTeste);
                                                 testeIntent.putExtra("data", dataWrapper);
-
-                                                //TODO Mandar no intent o numero da primeira questão do teste (procurar qual é a primeira)
 
                                                 MenuTestesActivity.this.startActivity(testeIntent);
                                             }

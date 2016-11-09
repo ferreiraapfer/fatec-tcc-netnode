@@ -4,10 +4,37 @@
     android:id="@+id/activity_menu_revisoes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="@dimen/activity_vertical_margin"
     tools:context="com.fatec.fernanda.appredes.activities.MenuRevisoesActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linLayoutMenuRevisoes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="400dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnRealizarRevisao"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linLayoutMenuRevisoes"
+                android:text="Realizar Revisão" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

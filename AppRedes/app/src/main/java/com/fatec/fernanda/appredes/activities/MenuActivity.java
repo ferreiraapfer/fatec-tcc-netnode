@@ -56,8 +56,8 @@ public class MenuActivity extends AppCompatActivity {
         txtRevisoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //        Intent menuRevisoesIntent = new Intent(MenuActivity.this, MenuRevisoesActivity.class);
-                //        MenuActivity.this.startActivity(menuRevisoesIntent);
+                Intent menuRevisoesIntent = new Intent(MenuActivity.this, MenuRevisoesActivity.class);
+                MenuActivity.this.startActivity(menuRevisoesIntent);
             }
         });
     }

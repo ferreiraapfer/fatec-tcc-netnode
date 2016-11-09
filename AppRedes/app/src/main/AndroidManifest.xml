@@ -27,7 +27,8 @@
         <activity android:name=".activities.MenuTestesActivity" />
         <activity android:name=".activities.TesteActivity" />
         <activity android:name=".activities.ExplicacaoTesteActivity" />
-        <activity android:name=".activities.MenuRevisoesActivity"></activity>
+        <activity android:name=".activities.MenuRevisoesActivity" />
+        <activity android:name=".RevisaoActivity"></activity>
     </application>
 
 </manifest>
