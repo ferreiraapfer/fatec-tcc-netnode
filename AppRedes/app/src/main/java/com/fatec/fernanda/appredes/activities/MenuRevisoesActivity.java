@@ -156,6 +156,8 @@ public class MenuRevisoesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final ArrayList<String> idConteudos = new ArrayList<>();
 
+                numQuestoes = 0;
+
                 for (MenuRevisaoChildView child : childs) {
                     if (child.isChecked()) {
                         idConteudos.add("conteudo" + child.getIdConteudo());
