@@ -156,11 +156,13 @@ public class RevisaoActivity extends AppCompatActivity {
     }
 
     private void getRespostasFromQuestions(DataSnapshot dataSnapshot, Questao novaQuestao, final RevisaoFragment frag) {
-        final int[] numResposta = {0};
-
         final ArrayList<Resposta> respostas = new ArrayList<>();
 
         DatabaseReference respostasRef = FirebaseDatabase.getInstance().getReference().child("respostas");
+
+        final int totalRespostas = (int) dataSnapshot.getChildrenCount();
+
+        final int[] numResposta = {0};
 
         for (final DataSnapshot data : dataSnapshot.getChildren()) {
             respostasRef.child(data.getKey()).addValueEventListener(new ValueEventListener() {
@@ -168,8 +170,6 @@ public class RevisaoActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     numResposta[0] = numResposta[0] + 1;
-
-                    System.out.println(data.getKey());
 
                     Resposta novaResposta = new Resposta();
                     novaResposta.setId(Integer.parseInt(dataSnapshot.getKey().substring(8)));
@@ -187,10 +187,11 @@ public class RevisaoActivity extends AppCompatActivity {
                             break;
                         case 3:
                             frag.setRbtnResposta3(novaResposta.getDescricao());
-
-                            linLayout.addView(frag);
-                            System.out.println("nova view");
                             break;
+                    }
+
+                    if (numResposta[0] == totalRespostas) {
+                        addNewView(frag);
                     }
 
                 }
@@ -201,6 +202,10 @@ public class RevisaoActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void addNewView(RevisaoFragment frag) {
+        linLayout.addView(frag);
     }
 }
 
