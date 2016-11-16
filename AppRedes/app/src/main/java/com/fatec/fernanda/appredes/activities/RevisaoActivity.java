@@ -2,7 +2,10 @@ package com.fatec.fernanda.appredes.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.fragments.OnGetDataListener;
 import com.fatec.fernanda.appredes.fragments.RevisaoFragment;
+import com.fatec.fernanda.appredes.models.Conteudo;
 import com.fatec.fernanda.appredes.models.DataWrapper;
 import com.fatec.fernanda.appredes.models.Questao;
 import com.fatec.fernanda.appredes.models.Resposta;
@@ -25,6 +29,8 @@ import com.fatec.fernanda.appredes.models.Teste;
 import com.fatec.fernanda.appredes.service.RevisaoService;
 import com.fatec.fernanda.appredes.tasks.impl.AsyncTaskListener;
 import com.fatec.fernanda.appredes.tasks.impl.AsyncTaskRevisao;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.ChildEventListener;
@@ -35,6 +41,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -103,9 +111,12 @@ public class RevisaoActivity extends AppCompatActivity {
         questoes = new ArrayList<>();
 
 
-        for (String id : idConteudos) {
+        for (final String id : idConteudos) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                     .child("questoes").child(id);
+
+            final Conteudo conteudo = new Conteudo();
+            conteudo.setId(id);
 
             reference.addChildEventListener(new ChildEventListener() {
                 @Override
@@ -115,9 +126,10 @@ public class RevisaoActivity extends AppCompatActivity {
                     novaQuestao.setDescricao(dataSnapshot.child("descricao").getValue(String.class));
                     novaQuestao.setExplicacao(dataSnapshot.child("explicacao").getValue(String.class));
                     novaQuestao.setId(Integer.parseInt(dataSnapshot.getKey().substring(7)));
+                    novaQuestao.setConteudo(conteudo);
 
                     RevisaoFragment frag = addNewQuestion(novaQuestao);
-                    getRespostasFromQuestions(dataSnapshot.child("respostas"), novaQuestao, frag);
+                    getRespostasFromQuestion(dataSnapshot.child("respostas"), novaQuestao, frag);
 
                 }
 
@@ -146,16 +158,19 @@ public class RevisaoActivity extends AppCompatActivity {
 
     }
 
-    private RevisaoFragment addNewQuestion(Questao novaQuestao) {
+    private RevisaoFragment addNewQuestion(final Questao novaQuestao) {
 
-        RevisaoFragment revisaoFragment = new RevisaoFragment(this);
+        final RevisaoFragment revisaoFragment = new RevisaoFragment(this);
         revisaoFragment.setTxtPergunta(novaQuestao.getDescricao());
+
+        revisaoFragment.setImgIlustracao(novaQuestao.getId(),
+                Integer.parseInt(novaQuestao.getConteudo().getId().substring(8)));
 
         return revisaoFragment;
 
     }
 
-    private void getRespostasFromQuestions(DataSnapshot dataSnapshot, Questao novaQuestao, final RevisaoFragment frag) {
+    private void getRespostasFromQuestion(DataSnapshot dataSnapshot, Questao novaQuestao, final RevisaoFragment frag) {
         final ArrayList<Resposta> respostas = new ArrayList<>();
 
         DatabaseReference respostasRef = FirebaseDatabase.getInstance().getReference().child("respostas");

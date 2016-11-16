@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -16,13 +16,13 @@
 
     <ImageView
         android:id="@+id/imgIlustracao"
-        app:srcCompat="@mipmap/ic_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtPergunta"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:srcCompat="@mipmap/ic_launcher" />
 
     <RadioGroup
         android:id="@+id/rgrpRespostas"
@@ -53,5 +53,23 @@
             android:text="RadioButton"
             android:visibility="invisible" />
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtRespostaCerta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rgrpRespostas"
+        android:text="RESPOSTA CERTA"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/txtExplicacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtRespostaCerta"
+        android:text="Explicação"
+        android:visibility="invisible" />
 
 </RelativeLayout>
