@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
@@ -20,7 +21,7 @@ import com.google.firebase.storage.StorageReference;
  * Created by Fernanda on 12/11/2016.
  */
 
-public class RevisaoFragment extends LinearLayout {
+public class RevisaoFragment extends RelativeLayout {
 
     private TextView txtPergunta;
     private ImageView imgIlustracao;
@@ -31,7 +32,7 @@ public class RevisaoFragment extends LinearLayout {
     public RevisaoFragment(Context context) {
         super(context);
 
-        View.inflate(context, R.layout.lista_questao_revisao, this);
+        View.inflate(context, R.layout.fragment_questao_revisao, this);
 
         //MAPEAR COMPONENTES
         txtPergunta = (TextView) findViewById(R.id.txtPergunta);
