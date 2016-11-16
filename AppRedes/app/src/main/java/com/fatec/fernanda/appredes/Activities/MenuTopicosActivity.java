@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.fatec.fernanda.appredes.dao.FirebaseHelper;
+import com.fatec.fernanda.appredes.service.FirebaseHelper;
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.interfaces.MenuTopicosChildView;
+import com.fatec.fernanda.appredes.fragments.MenuTopicosFragment;
 import com.fatec.fernanda.appredes.models.Topico;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -84,7 +83,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
                         System.out.println(dataSnapshot.getKey());
                         novoTopico.setId(Integer.parseInt(dataSnapshot.getKey().substring(6)));
 
-                        final MenuTopicosChildView child = new MenuTopicosChildView(MenuTopicosActivity.this);
+                        final MenuTopicosFragment child = new MenuTopicosFragment(MenuTopicosActivity.this);
                         child.setCheckedTextView(novoTopico.getTitulo());
 
                         //VERIFICA SE JÁ CONCLUIU

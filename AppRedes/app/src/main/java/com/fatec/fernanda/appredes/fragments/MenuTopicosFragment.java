@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.interfaces;
+package com.fatec.fernanda.appredes.fragments;
 
 import android.content.Context;
 import android.view.View;
@@ -11,18 +11,17 @@ import com.fatec.fernanda.appredes.R;
  * Created by Fernanda on 07/11/2016.
  */
 
-
-public class MenuConteudosChildView extends LinearLayout {
+public class MenuTopicosFragment extends LinearLayout {
 
     CheckedTextView checkedTextView;
 
-    public MenuConteudosChildView(Context context){
+    public MenuTopicosFragment(Context context){
         super(context);
 
-        View.inflate(context, R.layout.lista_conteudos, this);
+        View.inflate(context, R.layout.lista_topicos, this);
 
         //MAPEAR COMPONENTES
-        checkedTextView = (CheckedTextView) findViewById(R.id.checkTxtTituloConteudo);
+        checkedTextView = (CheckedTextView) findViewById(R.id.checkTxtTituloTopico);
 
     }
 
@@ -37,5 +36,4 @@ public class MenuConteudosChildView extends LinearLayout {
     public void setChecked(){
         checkedTextView.setChecked(Boolean.TRUE);
     }
-
 }

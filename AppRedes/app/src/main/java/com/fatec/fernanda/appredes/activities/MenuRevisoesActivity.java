@@ -1,8 +1,6 @@
 package com.fatec.fernanda.appredes.activities;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,19 +8,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.RevisaoActivity;
-import com.fatec.fernanda.appredes.interfaces.MenuRevisaoChildView;
+import com.fatec.fernanda.appredes.fragments.MenuRevisaoFragment;
 import com.fatec.fernanda.appredes.models.Conteudo;
-import com.fatec.fernanda.appredes.models.DataWrapper;
-import com.fatec.fernanda.appredes.models.Teste;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -30,7 +23,7 @@ import java.util.ArrayList;
 public class MenuRevisoesActivity extends AppCompatActivity {
 
 
-    ArrayList<MenuRevisaoChildView> childs;
+    ArrayList<MenuRevisaoFragment> childs;
     ArrayList<Conteudo> conteudos;
 
     DatabaseReference conteudosConcluidosRef;
@@ -77,7 +70,7 @@ public class MenuRevisoesActivity extends AppCompatActivity {
 
                             conteudos.add(novoConteudo);
 
-                            final MenuRevisaoChildView child = new MenuRevisaoChildView(MenuRevisoesActivity.this);
+                            final MenuRevisaoFragment child = new MenuRevisaoFragment(MenuRevisoesActivity.this);
                             child.setCheckedTextView(novoConteudo.getTitulo());
                             child.setIdConteudo(novoConteudo.getId());
 
@@ -158,7 +151,7 @@ public class MenuRevisoesActivity extends AppCompatActivity {
 
                 numQuestoes = 0;
 
-                for (MenuRevisaoChildView child : childs) {
+                for (MenuRevisaoFragment child : childs) {
                     if (child.isChecked()) {
                         idConteudos.add("conteudo" + child.getIdConteudo());
                         numQuestoes = numQuestoes + child.getNumQuestoes();

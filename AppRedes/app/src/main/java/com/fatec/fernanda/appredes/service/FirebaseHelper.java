@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.dao;
+package com.fatec.fernanda.appredes.service;
 
 import android.util.Log;
 

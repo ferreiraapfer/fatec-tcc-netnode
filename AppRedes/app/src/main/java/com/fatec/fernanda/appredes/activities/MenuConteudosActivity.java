@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.dao.FirebaseHelper;
-import com.fatec.fernanda.appredes.interfaces.MenuConteudosChildView;
+import com.fatec.fernanda.appredes.fragments.MenuConteudosFragment;
 import com.fatec.fernanda.appredes.models.Conteudo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -50,7 +49,7 @@ public class MenuConteudosActivity extends AppCompatActivity {
                 novoConteudo.setTitulo(dataSnapshot.child("titulo").getValue(String.class));
                 novoConteudo.setId(dataSnapshot.getKey());
 
-                final MenuConteudosChildView child = new MenuConteudosChildView(MenuConteudosActivity.this);
+                final MenuConteudosFragment child = new MenuConteudosFragment(MenuConteudosActivity.this);
                 child.setCheckedTextView(novoConteudo.getTitulo());
 
                 //VERIFICAR SE JÁ TERMINOU

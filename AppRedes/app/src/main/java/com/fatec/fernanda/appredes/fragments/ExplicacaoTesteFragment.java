@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes.interfaces;
+package com.fatec.fernanda.appredes.fragments;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,7 +19,7 @@ import com.google.firebase.storage.StorageReference;
  * Created by Fernanda on 04/11/2016.
  */
 
-public class ExplicacaoTesteChildView extends LinearLayout {
+public class ExplicacaoTesteFragment extends LinearLayout {
 
     private TextView txtNumPergunta;
     private TextView txtPergunta;
@@ -27,7 +27,7 @@ public class ExplicacaoTesteChildView extends LinearLayout {
     private TextView txtResposta;
     private TextView txtExplicacao;
 
-    public ExplicacaoTesteChildView(Context context) {
+    public ExplicacaoTesteFragment(Context context) {
         super(context);
 
         View.inflate(context, R.layout.lista_correcao_teste, this);

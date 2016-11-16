@@ -1,4 +1,4 @@
-package com.fatec.fernanda.appredes;
+package com.fatec.fernanda.appredes.activities;
 
 import com.firebase.client.Firebase;
 

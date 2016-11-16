@@ -4,20 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.dao.FirebaseHelper;
-import com.fatec.fernanda.appredes.interfaces.MenuConteudosChildView;
-import com.fatec.fernanda.appredes.interfaces.MenuTestesChildView;
+import com.fatec.fernanda.appredes.fragments.MenuTestesFragment;
 import com.fatec.fernanda.appredes.models.Conteudo;
 import com.fatec.fernanda.appredes.models.DataWrapper;
 import com.fatec.fernanda.appredes.models.Teste;
@@ -27,10 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuTestesActivity extends AppCompatActivity {
 
@@ -63,7 +51,7 @@ public class MenuTestesActivity extends AppCompatActivity {
                 novoConteudo.setTitulo(dataSnapshot.child("titulo").getValue(String.class));
                 novoConteudo.setId(dataSnapshot.getKey());
 
-                final MenuTestesChildView child = new MenuTestesChildView(MenuTestesActivity.this);
+                final MenuTestesFragment child = new MenuTestesFragment(MenuTestesActivity.this);
                 child.setCheckedTextView(novoConteudo.getTitulo());
 
                 //VERIFICAR SE JÁ TERMINOU

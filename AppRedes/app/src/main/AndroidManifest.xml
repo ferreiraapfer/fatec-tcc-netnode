@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".AppRedes"
+        android:name=".activities.AppRedes"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,7 +28,7 @@
         <activity android:name=".activities.TesteActivity" />
         <activity android:name=".activities.ExplicacaoTesteActivity" />
         <activity android:name=".activities.MenuRevisoesActivity" />
-        <activity android:name=".RevisaoActivity"></activity>
+        <activity android:name=".activities.RevisaoActivity"></activity>
     </application>
 
 </manifest>
