@@ -52,48 +52,10 @@ public class RevisaoActivity extends AppCompatActivity {
     ArrayList<String> idConteudos;
     ArrayList<Revisao> arrayMinhaRevisao;
     int numQuestoesConteudos;
-
-    ProgressBar progBarTotalQuestoes;
-
-    TextView txtPergunta;
-    ImageView imgIlustracao;
-
-    RadioGroup radioGroup;
-
-    RadioButton rbResposta1;
-    RadioButton rbResposta2;
-    RadioButton rbResposta3;
-
-    Button btnProxQuestao;
-    Button btnConcluirRevisao;
-
-    DatabaseReference questaoRef;
-    DatabaseReference questoesConteudoRef;
-    DatabaseReference respostasRef;
-
-    Questao novaQuestao;
-
-    ArrayList<Resposta> respostas;
-    Resposta respostaCerta;
-
-    DataWrapper dataWrapper;
-
-    ArrayList<String> idQuestoes;
-    ArrayList<String> arrayStringRespostas;
-
-    int idConteudo;
-    int numQuestoes;
-    int idProxQuestao;
-    int qtdRespostas;
-    int contQuestao;
-
-    ArrayList<Teste> arrayMeuTeste;
-
-    Handler handler;
-
-
     ArrayList<Questao> questoes;
     LinearLayout linLayout;
+    Button btnConcluirRevisao;
+    ArrayList<RevisaoFragment> fragments;
 
 
     @Override
@@ -102,6 +64,9 @@ public class RevisaoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_revisao);
 
         linLayout = (LinearLayout) findViewById(R.id.linLayoutRevisao);
+        btnConcluirRevisao = (Button) findViewById(R.id.btnConcluirRevisao);
+        fragments = new ArrayList<>();
+
 
         Intent originIntent = getIntent();
         idConteudos = originIntent.getExtras().getStringArrayList("idConteudos");
@@ -109,7 +74,6 @@ public class RevisaoActivity extends AppCompatActivity {
         arrayMinhaRevisao = new ArrayList<>();
 
         questoes = new ArrayList<>();
-
 
         for (final String id : idConteudos) {
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
@@ -156,7 +120,37 @@ public class RevisaoActivity extends AppCompatActivity {
 
         }
 
+        btnConcluirRevisao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for (RevisaoFragment frag : fragments) {
+                    Questao questaoFragmento = new Questao();
+
+                    for (Questao questao : questoes) {
+                        if (questao.getDescricao().equals(frag.getTxtPergunta())) {
+                            questaoFragmento = questao;
+                            break;
+                        }
+                    }
+
+                    for (Resposta resposta : questaoFragmento.getRespostas()) {
+                        if (frag.getSelectedRadioButton().getText() == resposta.getDescricao()){
+                            if(questaoFragmento.getRespostaCorreta() == resposta){
+                                //acertou
+                            } else{
+                                //errou
+                            }
+                        }
+                    }
+                }
+
+
+            }
+        });
+
     }
+
 
     private RevisaoFragment addNewQuestion(final Questao novaQuestao) {
 
@@ -170,7 +164,7 @@ public class RevisaoActivity extends AppCompatActivity {
 
     }
 
-    private void getRespostasFromQuestion(DataSnapshot dataSnapshot, Questao novaQuestao, final RevisaoFragment frag) {
+    private void getRespostasFromQuestion(DataSnapshot dataSnapshot, final Questao novaQuestao, final RevisaoFragment frag) {
         final ArrayList<Resposta> respostas = new ArrayList<>();
 
         DatabaseReference respostasRef = FirebaseDatabase.getInstance().getReference().child("respostas");
@@ -191,22 +185,29 @@ public class RevisaoActivity extends AppCompatActivity {
                     novaResposta.setDescricao(dataSnapshot.child("descricao").getValue(String.class));
                     novaResposta.setExplicacao(dataSnapshot.child("explicacao").getValue(String.class));
 
+                    if (data.getValue(Boolean.class)) {
+                        novaQuestao.setRespostaCorreta(novaResposta);
+                    }
+
                     respostas.add(novaResposta);
 
                     switch (numResposta[0]) {
                         case 1:
                             frag.setRbtnResposta1(novaResposta.getDescricao());
+                            frag.getRbtnResposta1().setId(numResposta[0]);
                             break;
                         case 2:
                             frag.setRbtnResposta2(novaResposta.getDescricao());
+                            frag.getRbtnResposta2().setId(numResposta[0]);
                             break;
                         case 3:
                             frag.setRbtnResposta3(novaResposta.getDescricao());
+                            frag.getRbtnResposta3().setId(numResposta[0]);
                             break;
                     }
 
                     if (numResposta[0] == totalRespostas) {
-                        addNewView(frag);
+                        addNewView(frag, novaQuestao, respostas);
                     }
 
                 }
@@ -219,9 +220,16 @@ public class RevisaoActivity extends AppCompatActivity {
         }
     }
 
-    private void addNewView(RevisaoFragment frag) {
+    private void addNewView(RevisaoFragment frag, Questao questao, ArrayList<Resposta> respostas) {
+        questao.setRespostas(respostas);
+        questoes.add(questao);
+
         linLayout.addView(frag);
+        fragments.add(frag);
+
     }
+
+
 }
 
 

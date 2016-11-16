@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                tools:context="com.fatec.fernanda.appredes.activities.MenuActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    tools:context="com.fatec.fernanda.appredes.activities.MenuActivity">
+
+    <ImageView
+        android:id="@+id/icone_conteudos"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="130dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_conteudos" />
 
     <TextView
         android:id="@+id/conteudosLink"
@@ -19,44 +30,41 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="Conteúdos"
-        android:textSize="30sp"/>
-
-    <ImageView
-        android:id="@+id/icone_conteudos"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="130dp"
-        android:scaleType="centerInside"
-        android:src="@mipmap/ic_launcher"/>
-
-
-    <TextView
-        android:id="@+id/testesLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/conteudosLink"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/icone_testes"
-        android:ellipsize="end"
-        android:lines="1"
-        android:text="Testes"
-        android:textSize="30sp"/>
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/icone_testes"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/icone_conteudos"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/icone_conteudos"
+        android:layout_centerVertical="true"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_testes" />
+
+    <TextView
+        android:id="@+id/testesLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/conteudosLink"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/icone_testes"
+        android:layout_toRightOf="@+id/icone_testes"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="Testes"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/icone_revisoes"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignLeft="@+id/icone_testes"
+        android:layout_below="@+id/testesLink"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_revisoes" />
 
     <TextView
         android:id="@+id/revisoesLink"
@@ -64,25 +72,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/testesLink"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/icone_revisoes"
         android:layout_toRightOf="@+id/icone_testes"
         android:ellipsize="end"
         android:lines="1"
         android:text="Revisões"
-        android:textSize="30sp"/>
-
-    <ImageView
-        android:id="@+id/icone_revisoes"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/icone_testes"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp"
-        android:scaleType="centerInside"
-        android:src="@mipmap/ic_launcher"/>
+        android:textSize="30sp" />
 
 
 </RelativeLayout>

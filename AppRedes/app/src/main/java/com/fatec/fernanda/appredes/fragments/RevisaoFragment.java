@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class RevisaoFragment extends RelativeLayout {
 
     private TextView txtPergunta;
     private ImageView imgIlustracao;
+    private RadioGroup radioGroup;
     private RadioButton rbtnResposta1;
     private RadioButton rbtnResposta2;
     private RadioButton rbtnResposta3;
@@ -37,6 +39,7 @@ public class RevisaoFragment extends RelativeLayout {
         //MAPEAR COMPONENTES
         txtPergunta = (TextView) findViewById(R.id.txtPergunta);
         imgIlustracao = (ImageView) findViewById(R.id.imgIlustracao);
+        radioGroup = (RadioGroup) findViewById(R.id.rgrpRespostas);
         rbtnResposta1 = (RadioButton) findViewById(R.id.rbtnResposta1);
         rbtnResposta2 = (RadioButton) findViewById(R.id.rbtnResposta2);
         rbtnResposta3 = (RadioButton) findViewById(R.id.rbtnResposta3);
@@ -96,5 +99,28 @@ public class RevisaoFragment extends RelativeLayout {
     public void setRbtnResposta3(String rbtnResposta3) {
         this.rbtnResposta3.setText(rbtnResposta3);
         this.rbtnResposta3.setVisibility(View.VISIBLE);
+    }
+
+    public RadioGroup getRadioGroup() {
+        return radioGroup;
+    }
+
+    public void setRadioGroup(RadioGroup radioGroup) {
+        this.radioGroup = radioGroup;
+    }
+
+    public RadioButton getSelectedRadioButton() {
+        int id = radioGroup.getCheckedRadioButtonId();
+
+        switch (id) {
+            case 1:
+                return rbtnResposta1;
+            case 2:
+                return rbtnResposta2;
+            case 3:
+                return rbtnResposta3;
+            default:
+                return null;
+        }
     }
 }
