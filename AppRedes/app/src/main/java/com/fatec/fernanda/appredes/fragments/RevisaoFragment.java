@@ -123,4 +123,9 @@ public class RevisaoFragment extends RelativeLayout {
                 return null;
         }
     }
+
+    public void disableRadioGroup () {
+        radioGroup.setClickable(Boolean.FALSE);
+        radioGroup.setEnabled(Boolean.FALSE);
+    }
 }

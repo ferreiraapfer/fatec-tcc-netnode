@@ -124,31 +124,55 @@ public class RevisaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //TODO VALIDAR SE RESPONDEU TUDO
+
+                ArrayList<Teste> mRevisao = new ArrayList<Teste>();
+
                 for (RevisaoFragment frag : fragments) {
+                    Teste mTeste = new Teste();
                     Questao questaoFragmento = new Questao();
 
                     for (Questao questao : questoes) {
                         if (questao.getDescricao().equals(frag.getTxtPergunta())) {
                             questaoFragmento = questao;
+                            mTeste.setQuestao(questao);
                             break;
                         }
                     }
 
                     for (Resposta resposta : questaoFragmento.getRespostas()) {
-                        if (frag.getSelectedRadioButton().getText() == resposta.getDescricao()){
-                            if(questaoFragmento.getRespostaCorreta() == resposta){
-                                //acertou
-                            } else{
-                                //errou
+                        if (frag.getSelectedRadioButton().getText() == resposta.getDescricao()) {
+                            if (questaoFragmento.getRespostaCorreta() == resposta) {
+                                mTeste.setAcertou(Boolean.TRUE);
+                            } else {
+                                mTeste.setAcertou(Boolean.FALSE);
                             }
+
+                            mRevisao.add(mTeste);
                         }
                     }
                 }
 
-
+                showExplicacao(mRevisao);
             }
         });
 
+    }
+
+    private void showExplicacao(ArrayList<Teste> mRevisao) {
+
+        for(RevisaoFragment frag : fragments){
+            //desabilitar radio group
+            frag.disableRadioGroup();
+
+            
+
+        }
+
+
+        //exibir resposta certa
+        //exibir explicacao
+        //desabilitar botao
     }
 
 
