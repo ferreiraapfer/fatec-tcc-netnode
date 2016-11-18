@@ -325,7 +325,7 @@ public class TopicoActivity extends AppCompatActivity {
     private void invalidaBotao() {
         btnConcluirTopico.setEnabled(Boolean.FALSE);
         btnConcluirTopico.setText("Tópico Concluído");
-        btnConcluirTopico.setBackgroundColor(getResources().getColor(R.color.buttonUnenable));
+        btnConcluirTopico.setBackgroundColor(getResources().getColor(R.color.colorSecondaryText));
     }
 }
 

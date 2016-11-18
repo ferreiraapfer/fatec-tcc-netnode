@@ -5,7 +5,6 @@
     android:id="@+id/activity_menu_testes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context="com.fatec.fernanda.appredes.activities.MenuTestesActivity"
     android:orientation="horizontal"
     android:weightSum="1">
@@ -15,10 +14,36 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linLayoutMenuTestes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="MENU DE TESTES"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorIcons"
+                    android:textSize="@dimen/h2_txt" />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linLayoutMenuTestes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/default_layout_margin">
+
+        </LinearLayout>
 
 
         </LinearLayout>

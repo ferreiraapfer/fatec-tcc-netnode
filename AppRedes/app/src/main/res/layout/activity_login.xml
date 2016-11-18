@@ -1,69 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:layout_height="300px"
+        android:background="@color/colorPrimaryDark">
 
         <TextView
-            android:id="@+id/txtCadastro"
+            android:id="@+id/txtLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_margin="@dimen/default_layout_margin"
             android:text="Login do Usuário"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorIcons"
+            android:textSize="@dimen/h1_txt" />
 
-        <EditText
-            android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:hint="Email válido"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"/>
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/edtSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:hint="Senha (mínimo de 6 caracteres)"
-            android:imeOptions="actionNext"
-            android:inputType="textPassword"/>
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:hint="Email válido"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:background="@color/colorPrimary"
-            android:text="Login"
-            android:textColor="#ffffff"/>
+    <EditText
+        android:id="@+id/edtSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:hint="Senha (mínimo de 6 caracteres)"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:textSize="@dimen/h4_txt" />
 
-        <TextView
-            android:id="@+id/txtCadastroLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:text="Não possui cadastro?"
-            android:textAlignment="center"/>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:background="@color/colorPrimary"
+        android:text="Login"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/h4_txt" />
 
-        <TextView
+    <TextView
+        android:id="@+id/txtCadastroLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:text="Não possui cadastro?"
+        android:textAlignment="center"
+        android:textSize="@dimen/h4_txt" />
+
+    <TextView
         android:id="@+id/txtNovaSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_layout_margin"
         android:text="Esqueceu sua senha?"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textSize="@dimen/h4_txt" />
 
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

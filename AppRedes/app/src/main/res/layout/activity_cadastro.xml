@@ -1,70 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:layout_height="300px"
+        android:background="@color/colorPrimaryDark">
 
         <TextView
             android:id="@+id/txtCadastro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:textColor="@color/colorIcons"
             android:layout_margin="@dimen/default_layout_margin"
             android:text="Cadastro do Usuário"
             android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-        <EditText
-            android:id="@+id/edtNome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:hint="Nome completo"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"/>
-
-        <EditText
-            android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:hint="Email válido"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:id="@+id/edtSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:hint="Senha (mínimo de 6 caracteres)"
-            android:imeOptions="actionNext"
-            android:inputType="textPassword"/>
-
-        <Button
-            android:id="@+id/btnCadastrar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:background="@color/colorPrimary"
-            android:text="Cadastrar Usuário"
-            android:textColor="#ffffff"/>
-
-        <TextView
-            android:id="@+id/txtLoginLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_layout_margin"
-            android:text="Já possui cadastro? Faça Login aqui"
-            android:textAlignment="center"/>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/h1_txt"/>
 
     </LinearLayout>
-</RelativeLayout>
+
+
+    <EditText
+        android:id="@+id/edtNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:hint="Nome completo"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/h4_txt"/>
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:hint="Email válido"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
+        android:textSize="@dimen/h4_txt"/>
+
+    <EditText
+        android:id="@+id/edtSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:hint="Senha (mín. de 6 caracteres)"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:textSize="@dimen/h4_txt"/>
+
+    <Button
+        android:id="@+id/btnCadastrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:background="@color/colorPrimary"
+        android:text="Cadastrar Usuário"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/txtLoginLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:text="Já possui cadastro? Faça login aqui"
+        android:textAlignment="center"
+        android:textSize="@dimen/h4_txt"
+        android:linksClickable="true"/>
+
+</LinearLayout>

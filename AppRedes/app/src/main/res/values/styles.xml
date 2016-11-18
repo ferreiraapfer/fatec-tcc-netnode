@@ -1,11 +1,39 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryText">@color/colorPrimaryText</item>
+        <item name="colorSecondaryText">@color/colorSecondaryText</item>
+        <item name="colorIcons">@color/colorIcons</item>
+        <item name="colorDivider">@color/colorDivider</item>
+
+        <item name="buttonDisabled">@color/buttonDisabled</item>-->
     </style>
+
+    <style name="ActionBarPopUp" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize your theme here. -->
+
+        <item name="android:background">@color/colorPrimaryDark</item>
+
+        <!--<item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryText">@color/colorPrimaryText</item>
+        <item name="colorSecondaryText">@color/colorSecondaryText</item>
+        <item name="colorIcons">@color/colorIcons</item>
+        <item name="colorDivider">@color/colorDivider</item>
+
+        <item name="buttonDisabled">@color/buttonDisabled</item>-->
+    </style>
+
 
 </resources>

@@ -135,19 +135,32 @@ public class MenuTopicosActivity extends AppCompatActivity {
     private void getListFinish(final MenuTopicosFragment child, final Topico topico) {
         System.out.println("getListFinish");
 
+        usuarioRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    linearLayout.addView(child);
+                    return;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         usuarioRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                System.out.println(dataSnapshot.getKey());
-                System.out.println(topico.getId());
-
                 if (("topico" + topico.getId()).equals(dataSnapshot.getKey())) {
                     child.setChecked();
                     System.out.println("topico concluido");
+
+                    linearLayout.addView(child);
+                    return;
                 }
-                linearLayout.addView(child);
-                System.out.println("topico adicionado");
             }
 
             @Override
@@ -170,8 +183,6 @@ public class MenuTopicosActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
 }

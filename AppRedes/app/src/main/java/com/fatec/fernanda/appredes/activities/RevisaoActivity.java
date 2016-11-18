@@ -194,9 +194,11 @@ public class RevisaoActivity extends AppCompatActivity {
                         //ERROU
                         frag.setTxtRespostaCerta("ERROU \n Resposta certa: " + questao.getQuestao().getRespostaCorreta().getDescricao());
                         frag.setTxtExplicacao(questao.getQuestao().getExplicacao());
+                        frag.setErrou();
                     } else {
                         frag.setTxtRespostaCerta("Acertou");
                         frag.setTxtExplicacao(questao.getQuestao().getExplicacao());
+                        frag.setAcertou();
                     }
                 }
             }

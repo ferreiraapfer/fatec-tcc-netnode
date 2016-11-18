@@ -129,6 +129,14 @@ public class RevisaoFragment extends RelativeLayout {
         this.txtRespostaCerta.setVisibility(View.VISIBLE);
     }
 
+    public void setAcertou() {
+        txtRespostaCerta.setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+    }
+
+    public void setErrou() {
+        txtRespostaCerta.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
+    }
+
     public void setRadioGroup(RadioGroup radioGroup) {
         this.radioGroup = radioGroup;
     }

@@ -3,6 +3,7 @@ package com.fatec.fernanda.appredes.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,9 +30,13 @@ public class MenuActivity extends AppCompatActivity {
         txtTestes = (TextView) findViewById(R.id.testesLink);
         txtRevisoes = (TextView) findViewById(R.id.revisoesLink);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         firebaseAuth = FirebaseAuth.getInstance();
-        if (firebaseAuth.getCurrentUser() != null) {
-            Toast.makeText(this, "Usuário logado!", Toast.LENGTH_LONG).show();
+        if (firebaseAuth.getCurrentUser() == null) {
+            MenuActivity.this.startActivity(new Intent(this, LoginActivity.class));
         }
 
         txtConteudos.setOnClickListener(new View.OnClickListener() {

@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_topico"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/default_layout_margin"
+    android:orientation="vertical"
     tools:context="com.fatec.fernanda.appredes.activities.TopicoActivity">
 
-    <TextView
-        android:id="@+id/txtTituloTopico"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20px"
-        android:text="Título do Tópico"
-        android:textSize="40px" />
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtTituloTopico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TITULO"
+            android:textAlignment="center"
+            android:textColor="@color/colorIcons"
+            android:textSize="@dimen/h2_txt" />
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollTextoTopico"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtTituloTopico"
+        android:layout_height="match_parent"
         android:paddingBottom="20px">
 
         <LinearLayout
@@ -34,64 +42,52 @@
                 android:id="@+id/txtTopico1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:text="Conteúdo do tópico"
-                android:textSize="28px"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="@dimen/h4_txt" />
 
             <ImageView
                 android:id="@+id/imgTopico1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:visibility="invisible"/>
-
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/txtTopico2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:text="Conteúdo do tópico"
-                android:textSize="28px"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="@dimen/h4_txt" />
 
             <ImageView
                 android:id="@+id/imgTopico2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
 
             <TextView
                 android:id="@+id/txtTopico3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:text="Conteúdo do tópico"
-                android:textSize="28px"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="@dimen/h4_txt" />
 
             <ImageView
                 android:id="@+id/imgTopico3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/btnConcluirTopico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imgTopico3"
-                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorPrimary"
@@ -101,4 +97,4 @@
         </LinearLayout>
 
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>
