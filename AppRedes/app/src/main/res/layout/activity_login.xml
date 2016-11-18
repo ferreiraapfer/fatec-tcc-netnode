@@ -54,8 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_layout_margin"
-            android:text="Não possui cadastro? Cadastre-se aqui"
+            android:text="Não possui cadastro?"
             android:textAlignment="center"/>
+
+        <TextView
+        android:id="@+id/txtNovaSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_layout_margin"
+        android:text="Esqueceu sua senha?"
+        android:textAlignment="center"/>
 
     </LinearLayout>
 </RelativeLayout>

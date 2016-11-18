@@ -34,6 +34,13 @@
                 android:layout_height="wrap_content"
                 android:text="Concluir revisão" />
 
+            <Button
+                android:id="@+id/btnMenuPrincipal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Menu Principal"
+                android:visibility="invisible" />
+
         </LinearLayout>
 
     </ScrollView>

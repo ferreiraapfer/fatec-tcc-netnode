@@ -1,11 +1,13 @@
 package com.fatec.fernanda.appredes.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.fragments.OnGetDataListener;
@@ -55,6 +58,7 @@ public class RevisaoActivity extends AppCompatActivity {
     ArrayList<Questao> questoes;
     LinearLayout linLayout;
     Button btnConcluirRevisao;
+    Button btnMenuPrincipal;
     ArrayList<RevisaoFragment> fragments;
 
 
@@ -65,6 +69,7 @@ public class RevisaoActivity extends AppCompatActivity {
 
         linLayout = (LinearLayout) findViewById(R.id.linLayoutRevisao);
         btnConcluirRevisao = (Button) findViewById(R.id.btnConcluirRevisao);
+        btnMenuPrincipal = (Button) findViewById(R.id.btnMenuPrincipal);
         fragments = new ArrayList<>();
 
 
@@ -124,16 +129,27 @@ public class RevisaoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //TODO VALIDAR SE RESPONDEU TUDO
-
                 ArrayList<Teste> mRevisao = new ArrayList<Teste>();
 
+                for (int i = 0; i < fragments.size(); i++) {
+                    if (fragments.get(i).getSelectedRadioButton() == null) {
+
+                        new AlertDialog.Builder(RevisaoActivity.this)
+                                .setTitle("Termine a Revisão")
+                                .setMessage("Responda todas as questões antes de concluir a revisão")
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        return;
+                    }
+                }
+
                 for (RevisaoFragment frag : fragments) {
+
                     Teste mTeste = new Teste();
                     Questao questaoFragmento = new Questao();
 
                     for (Questao questao : questoes) {
-                        if (questao.getDescricao().equals(frag.getTxtPergunta())) {
+                        if (questao.getDescricao().equals(frag.getTxtPergunta().getText())) {
                             questaoFragmento = questao;
                             mTeste.setQuestao(questao);
                             break;
@@ -151,9 +167,17 @@ public class RevisaoActivity extends AppCompatActivity {
                             mRevisao.add(mTeste);
                         }
                     }
-                }
 
-                showExplicacao(mRevisao);
+                    showExplicacao(mRevisao);
+                }
+            }
+        });
+
+        btnMenuPrincipal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent menuPrincipal = new Intent(RevisaoActivity.this, MenuActivity.class);
+                RevisaoActivity.this.startActivity(menuPrincipal);
             }
         });
 
@@ -161,18 +185,26 @@ public class RevisaoActivity extends AppCompatActivity {
 
     private void showExplicacao(ArrayList<Teste> mRevisao) {
 
-        for(RevisaoFragment frag : fragments){
-            //desabilitar radio group
+        for (RevisaoFragment frag : fragments) {
             frag.disableRadioGroup();
 
-            
+            for (Teste questao : mRevisao) {
+                if (frag.getTxtPergunta().getText().equals(questao.getQuestao().getDescricao())) {
+                    if (questao.isAcertou() == Boolean.FALSE) {
+                        //ERROU
+                        frag.setTxtRespostaCerta("ERROU \n Resposta certa: " + questao.getQuestao().getRespostaCorreta().getDescricao());
+                        frag.setTxtExplicacao(questao.getQuestao().getExplicacao());
+                    } else {
+                        frag.setTxtRespostaCerta("Acertou");
+                        frag.setTxtExplicacao(questao.getQuestao().getExplicacao());
+                    }
+                }
+            }
+
+            btnConcluirRevisao.setVisibility(View.INVISIBLE);
+            btnMenuPrincipal.setVisibility(View.VISIBLE);
 
         }
-
-
-        //exibir resposta certa
-        //exibir explicacao
-        //desabilitar botao
     }
 
 

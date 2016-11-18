@@ -31,6 +31,9 @@ public class RevisaoFragment extends RelativeLayout {
     private RadioButton rbtnResposta2;
     private RadioButton rbtnResposta3;
 
+    private TextView txtRespostaCerta;
+    private TextView txtExplicacao;
+
     public RevisaoFragment(Context context) {
         super(context);
 
@@ -43,6 +46,9 @@ public class RevisaoFragment extends RelativeLayout {
         rbtnResposta1 = (RadioButton) findViewById(R.id.rbtnResposta1);
         rbtnResposta2 = (RadioButton) findViewById(R.id.rbtnResposta2);
         rbtnResposta3 = (RadioButton) findViewById(R.id.rbtnResposta3);
+
+        txtRespostaCerta = (TextView) findViewById(R.id.txtRespostaCerta);
+        txtExplicacao = (TextView) findViewById(R.id.txtExplicacao);
 
     }
 
@@ -105,6 +111,24 @@ public class RevisaoFragment extends RelativeLayout {
         return radioGroup;
     }
 
+    public TextView getTxtExplicacao() {
+        return txtExplicacao;
+    }
+
+    public void setTxtExplicacao(String txtExplicacao) {
+        this.txtExplicacao.setText(txtExplicacao);
+        this.txtExplicacao.setVisibility(View.VISIBLE);
+    }
+
+    public TextView getTxtRespostaCerta() {
+        return txtRespostaCerta;
+    }
+
+    public void setTxtRespostaCerta(String txtRespostaCerta) {
+        this.txtRespostaCerta.setText(txtRespostaCerta);
+        this.txtRespostaCerta.setVisibility(View.VISIBLE);
+    }
+
     public void setRadioGroup(RadioGroup radioGroup) {
         this.radioGroup = radioGroup;
     }
@@ -124,8 +148,16 @@ public class RevisaoFragment extends RelativeLayout {
         }
     }
 
-    public void disableRadioGroup () {
+    public void disableRadioGroup() {
+
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            radioGroup.getChildAt(i).setClickable(Boolean.FALSE);
+            radioGroup.getChildAt(i).setEnabled(Boolean.FALSE);
+
+        }
+
         radioGroup.setClickable(Boolean.FALSE);
         radioGroup.setEnabled(Boolean.FALSE);
+
     }
 }

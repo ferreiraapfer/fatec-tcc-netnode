@@ -1,11 +1,14 @@
 package com.fatec.fernanda.appredes.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -100,12 +104,42 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
                                 mUsuarioRef.child(user.getUid()).child("nome").setValue(nome);
                                 mUsuarioRef.child(user.getUid()).child("progresso").setValue(0);
+                                mUsuarioRef.child(user.getUid()).child("conteudosConcluidos").child("conteudo1").setValue(0);
 
                                 progressDialog.dismiss();
 
-                                startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                                user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d("CADASTRO", "Email sent.");
+                                        }
+                                    }
+                                });
+
+                                new AlertDialog.Builder(CadastroActivity.this)
+                                        .setTitle("Email de Verificação")
+                                        .setMessage("Cheque seu provedor de email para verificar o cadastro")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
                             } else {
-                                Toast.makeText(CadastroActivity.this, "Erro no cadastrado ao banco de dados. Por favor, tente novamente", Toast.LENGTH_LONG).show();
+                                new AlertDialog.Builder(CadastroActivity.this)
+                                        .setTitle("Erro no Cadastro")
+                                        .setMessage("Houve um erro no cadastro ao banco. Por favor, tente novamente")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
                             }
 
                         }
@@ -113,7 +147,40 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(CadastroActivity.this, "Erro no cadastrado. Por favor, tente novamente", Toast.LENGTH_LONG).show();
+
+                    task.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                            System.out.println(e.getMessage());
+
+                            if (e.getMessage() == "The email address is already in use by another account.") {
+                                new AlertDialog.Builder(CadastroActivity.this)
+                                        .setTitle("Email já cadastrado")
+                                        .setMessage("Esse endereço de email já está sendo usado em outra conta.\nEfetue o login pelo link abaixo.")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+                            } else {
+                                new AlertDialog.Builder(CadastroActivity.this)
+                                        .setTitle("Erro no Cadastro")
+                                        .setMessage("Houve um erro no cadastro. Verifique se sua senha está dentro do padrão e tente novamente")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                            }
+
+                        }
+                    });
                 }
             }
         });
