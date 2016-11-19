@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
+import com.fatec.fernanda.appredes.SistemaActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuActivity extends AppCompatActivity {
@@ -90,9 +91,13 @@ public class MenuActivity extends AppCompatActivity {
                 MenuActivity.this.startActivity(perfilIntent);
                 return true;
             case R.id.tutorialLink:
-
+                Intent tutorialIntent = new Intent(MenuActivity.this, TutorialActivity.class);
+                MenuActivity.this.startActivity(tutorialIntent);
+                return true;
             case R.id.sistemaLink:
-
+                Intent sistemaIntent = new Intent(MenuActivity.this, SistemaActivity.class);
+                MenuActivity.this.startActivity(sistemaIntent);
+                return true;
             case R.id.logoutLink:
                 firebaseAuth.signOut();
                 startActivity(new Intent(this, LoginActivity.class));

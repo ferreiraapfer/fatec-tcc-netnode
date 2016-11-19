@@ -61,7 +61,7 @@
         <ImageView
             android:id="@+id/ic_conteudos"
             android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_conteudos" />
@@ -88,9 +88,9 @@
         <ImageView
             android:id="@+id/ic_testes"
             android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_conteudos" />
+            android:src="@mipmap/ic_testes" />
 
         <TextView
             android:id="@+id/testesLink"
@@ -114,9 +114,9 @@
         <ImageView
             android:id="@+id/ic_revisoes"
             android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_conteudos" />
+            android:src="@mipmap/ic_revisoes" />
 
         <TextView
             android:id="@+id/revisoesLink"

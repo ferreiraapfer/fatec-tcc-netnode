@@ -14,6 +14,7 @@
         <activity android:name=".activities.CadastroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +29,8 @@
         <activity android:name=".activities.ExplicacaoTesteActivity" />
         <activity android:name=".activities.MenuRevisoesActivity" />
         <activity android:name=".activities.RevisaoActivity" />
+        <activity android:name=".activities.TutorialActivity" />
+        <activity android:name=".SistemaActivity"></activity>
     </application>
 
 </manifest>
