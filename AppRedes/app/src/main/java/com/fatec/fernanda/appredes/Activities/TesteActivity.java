@@ -104,18 +104,6 @@ public class TesteActivity extends AppCompatActivity {
 
         contQuestao = 0;
 
-        /*
-        done Receber index da questao pelo intent (Colocar intent a partir da seleção no menu).
-        done Exibir perguntas
-        done Exibir respostas
-        done Contar quantas questoes tem. Se essa não for aúltima, colocar o index no intent seguinte
-        done Botão de concluir teste
-        done Calcular respostas certas e nota
-        done Ao final, exibir botão de voltar ao menu principal
-        done Ao final, exibir teste com resposta certa e explicações
-         */
-
-
         final Intent proxQuestaoIntent = new Intent(TesteActivity.this, TesteActivity.class);
 
 
@@ -133,6 +121,7 @@ public class TesteActivity extends AppCompatActivity {
 
         questoesConteudoRef = FirebaseDatabase.getInstance().getReference().child("questoes").child("conteudo" + idConteudo);
         respostasRef = FirebaseDatabase.getInstance().getReference().child("respostas");
+
 
         //PEGA PRIMEIRA QUESTAO DO CONTEUDO, ID DE TODAS AS QUESTOES, NUM TOTAL DE QUESTOES, NUMQUESTAO ATUAL
         //Se for a primeira questão do teste
@@ -196,11 +185,10 @@ public class TesteActivity extends AppCompatActivity {
 
             });
         } else {
-            System.out.println("heyyy " + novaQuestao.getId());
 
             //Se não for a ultima questão, novoIntent
             if (contQuestao < numQuestoes) {
-                idProxQuestao = Integer.parseInt(idQuestoes.get(contQuestao + 1));
+                idProxQuestao = Integer.parseInt(idQuestoes.get(contQuestao));
             } else {
                 btnProxQuestao.setVisibility(View.INVISIBLE);
                 btnConcluirTeste.setVisibility(View.VISIBLE);
@@ -213,6 +201,7 @@ public class TesteActivity extends AppCompatActivity {
             proxQuestaoIntent.putExtra("idQuestao", idProxQuestao);
             proxQuestaoIntent.putExtra("numQuestoes", numQuestoes);
             proxQuestaoIntent.putExtra("idConteudo", idConteudo);
+            proxQuestaoIntent.putExtra("idQuestoes", idQuestoes);
             proxQuestaoIntent.putExtra("contQuestao", contQuestao + 1);
         }
 

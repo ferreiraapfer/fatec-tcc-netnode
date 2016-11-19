@@ -153,11 +153,11 @@ public class MenuTopicosActivity extends AppCompatActivity {
         usuarioRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+                System.out.println("if " + topico);
                 if (("topico" + topico.getId()).equals(dataSnapshot.getKey())) {
-                    child.setChecked();
-                    System.out.println("topico concluido");
-
+                    if (dataSnapshot.getValue(Boolean.class)) {
+                        child.setChecked();
+                    }
                     linearLayout.addView(child);
                     return;
                 }

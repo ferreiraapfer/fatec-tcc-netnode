@@ -1,54 +1,27 @@
 package com.fatec.fernanda.appredes.activities;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fatec.fernanda.appredes.R;
-import com.fatec.fernanda.appredes.fragments.OnGetDataListener;
 import com.fatec.fernanda.appredes.fragments.RevisaoFragment;
 import com.fatec.fernanda.appredes.models.Conteudo;
-import com.fatec.fernanda.appredes.models.DataWrapper;
 import com.fatec.fernanda.appredes.models.Questao;
 import com.fatec.fernanda.appredes.models.Resposta;
 import com.fatec.fernanda.appredes.models.Revisao;
 import com.fatec.fernanda.appredes.models.Teste;
-import com.fatec.fernanda.appredes.service.RevisaoService;
-import com.fatec.fernanda.appredes.tasks.impl.AsyncTaskListener;
-import com.fatec.fernanda.appredes.tasks.impl.AsyncTaskRevisao;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class RevisaoActivity extends AppCompatActivity {
 

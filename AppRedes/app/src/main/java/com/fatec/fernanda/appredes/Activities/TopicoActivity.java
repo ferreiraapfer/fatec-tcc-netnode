@@ -92,6 +92,8 @@ public class TopicoActivity extends AppCompatActivity {
         topico.setId(idTopico);
         topico.setTitulo(tituloTopico);
 
+        txtTituloTopico.setText(topico.getTitulo());
+
 
         //RECEBENDO ID DO CONTEUDO
 
@@ -104,7 +106,11 @@ public class TopicoActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //Se terminou o topico em questão
                 if (dataSnapshot.getKey().equals("topico" + idTopico)) {
-                    invalidaBotao();
+                    if (dataSnapshot.getValue(Boolean.class)) {
+                        invalidaBotao();
+
+                        usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).removeEventListener(this);
+                    }
                 }
             }
 
@@ -273,6 +279,7 @@ public class TopicoActivity extends AppCompatActivity {
                 usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(uIdUsuario);
 
                 usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).child("topico" + idTopico).setValue(true);
+                usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).child("topico" + (idTopico + 1)).setValue(false);
 
 
                 usuarioRef.child("progresso").addValueEventListener(new ValueEventListener() {
@@ -285,6 +292,8 @@ public class TopicoActivity extends AppCompatActivity {
                         novoProgresso = novoProgresso + 10;
 
                         usuarioRef.child("progresso").setValue(novoProgresso);
+                        usuarioRef.removeEventListener(this);
+
 
                     }
 
