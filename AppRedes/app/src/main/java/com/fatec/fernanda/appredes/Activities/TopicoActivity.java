@@ -281,28 +281,6 @@ public class TopicoActivity extends AppCompatActivity {
                 usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).child("topico" + idTopico).setValue(true);
                 usuarioRef.child("topicosConcluidos").child("conteudo" + idConteudo).child("topico" + (idTopico + 1)).setValue(false);
 
-
-                usuarioRef.child("progresso").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        stringProgUsuario[0] = dataSnapshot.getValue(Long.class);
-                        usuarioRef.child("progresso").removeEventListener(this);
-
-                        int novoProgresso = stringProgUsuario[0].intValue();
-                        novoProgresso = novoProgresso + 10;
-
-                        usuarioRef.child("progresso").setValue(novoProgresso);
-                        usuarioRef.removeEventListener(this);
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
                 invalidaBotao();
             }
         });
