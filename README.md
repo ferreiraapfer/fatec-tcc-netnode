@@ -16,7 +16,7 @@ Trabalho de Graduação FATEC 2016'2
 * Exibição do Perfil
 
 ##Instalação do APK
-* No [repositório] (https://github.com/fromnanda/NetNode_TG/blob/master/AppRedes/app/app-release.apk) 
+* No [repositório] (https://github.com/fromnanda/NetNode_TG/blob/master/AppRedes/app/NetNode.apk) 
 * No [Google Drive] (https://drive.google.com/drive/folders/0B2jFvqTG9wpUZ0h2OHk5TXROMGM?usp=sharing)
 
 Link para desbloquear instalação: [TecMundo - Habilitar fontes desconhecidas] (https://www.tecmundo.com.br/tutorial/51473-android-como-instalar-aplicativos-apk.htm)
