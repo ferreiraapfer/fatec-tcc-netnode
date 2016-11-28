@@ -57,7 +57,7 @@ public class MenuConteudosActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         if (novoConteudo.getId().equals(dataSnapshot.getKey())) {
-                            if (dataSnapshot.getValue(int.class) > 5) {
+                            if (dataSnapshot.getValue(int.class) >= 5) {
                                 child.setChecked();
                                 child.setClickable(Boolean.FALSE);
                             }
