@@ -4,29 +4,9 @@
     android:id="@+id/activity_topico"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/default_layout_margin"
     android:orientation="vertical"
     tools:context="com.fatec.fernanda.appredes.activities.TopicoActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="50dp"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/txtTituloTopico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="TITULO"
-            android:textAlignment="center"
-            android:textColor="@color/colorIcons"
-            android:textSize="@dimen/h2_txt" />
-
-    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollTextoTopico"
@@ -39,62 +19,94 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtTopico1"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal"
+                android:minHeight="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtTituloTopico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/default_layout_margin"
+                    android:text="TITULO"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorIcons"
+                    android:textSize="@dimen/h2_txt" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/h4_txt" />
+                android:layout_margin="@dimen/default_layout_margin"
 
-            <ImageView
-                android:id="@+id/imgTopico1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:visibility="invisible" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtTopico2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/h4_txt" />
+                <TextView
+                    android:id="@+id/txtTopico1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="sans-serif"
+                    android:lineSpacingExtra="10sp"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/h5_txt" />
 
-            <ImageView
-                android:id="@+id/imgTopico2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:visibility="invisible" />
+                <ImageView
+                    android:id="@+id/imgTopico1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/txtTopico2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/h5_txt" />
+
+                <ImageView
+                    android:id="@+id/imgTopico2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:visibility="invisible" />
 
 
-            <TextView
-                android:id="@+id/txtTopico3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/h4_txt" />
+                <TextView
+                    android:id="@+id/txtTopico3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/h5_txt" />
 
-            <ImageView
-                android:id="@+id/imgTopico3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:visibility="invisible" />
+                <ImageView
+                    android:id="@+id/imgTopico3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:visibility="invisible" />
 
-            <Button
-                android:id="@+id/btnConcluirTopico"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:background="@color/colorPrimary"
-                android:text="Concluir Tópico"
-                android:textColor="#ffffff" />
+                <Button
+                    android:id="@+id/btnConcluirTopico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorPrimary"
+                    android:text="Concluir Tópico"
+                    android:textColor="#ffffff" />
 
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

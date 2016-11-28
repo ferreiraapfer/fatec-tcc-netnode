@@ -42,7 +42,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     String nomeUsuario;
     String emailUsuario;
-    int progressoUsuario;
+    double progressoUsuario;
     int progressoMax;
 
     @Override
@@ -91,13 +91,13 @@ public class PerfilActivity extends AppCompatActivity {
 
                 nomeUsuario = dataSnapshot.child("nome").getValue(String.class);
                 emailUsuario = dataSnapshot.child("email").getValue(String.class);
-                progressoUsuario = dataSnapshot.child("progresso").getValue(Integer.class);
+                progressoUsuario = dataSnapshot.child("progresso").getValue(double.class);
 
                 txtNomeUsuario.setText(nomeUsuario);
                 txtEmailUsuario.setText(emailUsuario);
 
-                pbarProgresso.setProgress(progressoUsuario);
-                txtProgressoUsuario.setText(String.valueOf(progressoUsuario)); //TODO Porcentagem do total de conteudos
+                pbarProgresso.setProgress((int) progressoUsuario);
+                txtProgressoUsuario.setText(String.valueOf(progressoUsuario) + "/" + String.valueOf(progressoMax));
 
                 getConteudosConcluidos(mUserRef);
 

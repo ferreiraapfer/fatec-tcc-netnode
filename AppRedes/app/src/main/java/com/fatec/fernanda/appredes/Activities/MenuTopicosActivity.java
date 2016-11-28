@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -33,8 +34,8 @@ public class MenuTopicosActivity extends AppCompatActivity {
     DatabaseReference usuarioRef;
     DatabaseReference conteudoRef;
     int idConteudo;
-
-    ArrayList<MenuTopicosFragment> fragments;
+    ChildEventListener userListener;
+    ValueEventListener nullListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class MenuTopicosActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linLayoutMenuTopicos);
         topicos = new ArrayList<>();
         arrayStringTopicosConteudo = new ArrayList<>();
-        fragments = new ArrayList<>();
 
         //RECEBENDO O ID DO CONTEUDO
         Intent originIntent = getIntent();
@@ -58,8 +58,7 @@ public class MenuTopicosActivity extends AppCompatActivity {
                                               @Override
                                               public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                                   databaseRef = FirebaseDatabase.getInstance().getReference().child("topicos").child(dataSnapshot.getKey());
-                                                  usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios")
-                                                          .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("topicosConcluidos").child("conteudo" + idConteudo);
+                                                  usuarioRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("topicosConcluidos").child("conteudo" + idConteudo);
 
                                                   //pegando os atributos do topico
                                                   databaseRef.addValueEventListener(new ValueEventListener() {
@@ -79,23 +78,29 @@ public class MenuTopicosActivity extends AppCompatActivity {
                                                                                             child.setOnClickListener(new View.OnClickListener() {
                                                                                                 @Override
                                                                                                 public void onClick(View view) {
-                                                                                                    for (Topico t : topicos) {
-                                                                                                        if (t.getTitulo().equals(child.getCheckedTextView())) {
-                                                                                                            Intent topicoIntent = new Intent(MenuTopicosActivity.this, TopicoActivity.class);
 
-                                                                                                            topicoIntent.putExtra("idTopico", t.getId());
-                                                                                                            topicoIntent.putExtra("tituloTopico", t.getTitulo());
-                                                                                                            topicoIntent.putExtra("idConteudo", idConteudo);
+                                                                                                    Intent topicoIntent = new Intent(MenuTopicosActivity.this, TopicoActivity.class);
 
-                                                                                                            MenuTopicosActivity.this.startActivity(topicoIntent);
-                                                                                                        }
+                                                                                                    topicoIntent.putExtra("idTopico", novoTopico.getId());
+                                                                                                    topicoIntent.putExtra("tituloTopico", novoTopico.getTitulo());
+                                                                                                    topicoIntent.putExtra("idConteudo", idConteudo);
+
+                                                                                                    if (nullListener != null) {
+                                                                                                        usuarioRef.removeEventListener(nullListener);
+                                                                                                    }
+                                                                                                    if (userListener != null) {
+                                                                                                        usuarioRef.removeEventListener(userListener);
                                                                                                     }
 
+
+                                                                                                    MenuTopicosActivity.this.startActivity(topicoIntent);
                                                                                                 }
                                                                                             });
 
-                                                                                            fragments.add(child);
                                                                                             getListFinish(child, novoTopico);
+                                                                                            linearLayout.addView(child);
+
+
                                                                                         }
 
                                                                                         @Override
@@ -130,52 +135,53 @@ public class MenuTopicosActivity extends AppCompatActivity {
                                           }
 
         );
+
     }
 
     private void getListFinish(final MenuTopicosFragment child, final Topico topico) {
-        System.out.println("getListFinish");
 
-        usuarioRef.addValueEventListener(new ValueEventListener() {
+        System.out.println("- getListFinish");
+        System.out.println(child.getCheckedTextView());
+        System.out.println(topico.getId());
+
+        nullListener = usuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() == null) {
-                    linearLayout.addView(child);
-                    return;
+                    usuarioRef.removeEventListener(nullListener);
+                } else {
+                    userListener = usuarioRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            if (("topico" + topico.getId()).equals(dataSnapshot.getKey())) {
+                                if (dataSnapshot.getValue(Boolean.class) == Boolean.TRUE) {
+                                    child.setChecked();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        usuarioRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                System.out.println("if " + topico);
-                if (("topico" + topico.getId()).equals(dataSnapshot.getKey())) {
-                    if (dataSnapshot.getValue(Boolean.class)) {
-                        child.setChecked();
-                    }
-                    linearLayout.addView(child);
-                    return;
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override

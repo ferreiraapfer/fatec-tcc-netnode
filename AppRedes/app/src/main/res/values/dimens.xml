@@ -14,9 +14,9 @@
     <dimen name="txt_top_margin">30dp</dimen>
     <dimen name="max_htmlview">50dp</dimen>
 
-    <dimen name="h1_txt">30dp</dimen>
-    <dimen name="h2_txt">25dp</dimen>
-    <dimen name="h3_txt">20dp</dimen>
-    <dimen name="h4_txt">15dp</dimen>
-    <dimen name="h5_txt">10dp</dimen>
+    <dimen name="h1_txt">45sp</dimen>
+    <dimen name="h2_txt">34sp</dimen>
+    <dimen name="h3_txt">24sp</dimen>
+    <dimen name="h4_txt">20sp</dimen>
+    <dimen name="h5_txt">16sp</dimen>
 </resources>

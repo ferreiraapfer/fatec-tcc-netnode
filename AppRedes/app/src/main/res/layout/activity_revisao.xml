@@ -9,6 +9,7 @@
     tools:context="com.fatec.fernanda.appredes.activities.RevisaoActivity">
 
     <ScrollView
+        android:id="@+id/scrollRevisao"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

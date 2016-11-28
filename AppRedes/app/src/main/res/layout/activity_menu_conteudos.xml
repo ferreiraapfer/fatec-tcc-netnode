@@ -19,16 +19,19 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center_horizontal"
+                android:minHeight="50dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/txtTituloTopico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="MENU DE CONTEÚDOS"
+                    android:layout_margin="@dimen/default_layout_margin"
+                    android:text="CONTEÚDOS"
                     android:textAlignment="center"
                     android:textColor="@color/colorIcons"
                     android:textSize="@dimen/h2_txt" />

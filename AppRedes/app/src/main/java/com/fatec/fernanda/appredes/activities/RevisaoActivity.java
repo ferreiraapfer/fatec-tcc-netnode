@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.fatec.fernanda.appredes.R;
 import com.fatec.fernanda.appredes.fragments.RevisaoFragment;
@@ -21,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class RevisaoActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public class RevisaoActivity extends AppCompatActivity {
     LinearLayout linLayout;
     Button btnConcluirRevisao;
     Button btnMenuPrincipal;
+    ScrollView scrollRevisao;
     ArrayList<RevisaoFragment> fragments;
 
 
@@ -43,6 +46,7 @@ public class RevisaoActivity extends AppCompatActivity {
         linLayout = (LinearLayout) findViewById(R.id.linLayoutRevisao);
         btnConcluirRevisao = (Button) findViewById(R.id.btnConcluirRevisao);
         btnMenuPrincipal = (Button) findViewById(R.id.btnMenuPrincipal);
+        scrollRevisao = (ScrollView) findViewById(R.id.scrollRevisao);
         fragments = new ArrayList<>();
 
 
@@ -178,6 +182,7 @@ public class RevisaoActivity extends AppCompatActivity {
 
             btnConcluirRevisao.setVisibility(View.INVISIBLE);
             btnMenuPrincipal.setVisibility(View.VISIBLE);
+            scrollRevisao.fullScroll(ScrollView.FOCUS_UP);
 
         }
     }
