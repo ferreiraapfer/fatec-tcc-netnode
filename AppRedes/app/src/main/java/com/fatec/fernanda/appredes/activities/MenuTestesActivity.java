@@ -60,7 +60,7 @@ public class MenuTestesActivity extends AppCompatActivity {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         //se já terminou o conteudo
                         if (novoConteudo.getId().equals(dataSnapshot.getKey()) ) {
-                            if (dataSnapshot.getValue(int.class) > 5) {
+                            if (dataSnapshot.getValue(int.class) >= 5) {
                                 child.setChecked();
                                 child.setClickable(Boolean.FALSE);
                             } else{ //se não terminou o conteudo
