@@ -2,6 +2,7 @@
 Trabalho de Graduação FATEC 2016'2
 
 **Fernanda Aparecida Ferreira**
+
 **Orientação:** Antonio Tadeu Maffeis
 
 **Tema:** Aplicação para o auxílio no aprendizado na área de Redes de Computadores
@@ -20,4 +21,5 @@ Trabalho de Graduação FATEC 2016'2
 
 Link para desbloquear instalação: [TecMundo - Habilitar fontes desconhecidas] (https://www.tecmundo.com.br/tutorial/51473-android-como-instalar-aplicativos-apk.htm)
 
-##Versão
+##Feedback
+[ferreira.aparecidaf@gmail.com](mailto:ferreira.aparecidaf@gmail.com)
