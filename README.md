@@ -15,7 +15,13 @@ Trabalho de Graduação FATEC 2016'2
 * Realização de Revisões
 * Exibição do Perfil
 
+## Tecnologias Utilizadas
+Android
+
+Firebase
+
 ##Instalação do APK
+Em dispositivos Android, versão 4.1 (Jelly Bean) ou posterior
 * No [repositório] (https://github.com/fromnanda/NetNode_TG/blob/master/AppRedes/app/NetNode.apk) 
 * No [Google Drive] (https://drive.google.com/drive/folders/0B2jFvqTG9wpUZ0h2OHk5TXROMGM?usp=sharing)
 
